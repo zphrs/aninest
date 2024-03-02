@@ -1,0 +1,16 @@
+{
+  "name": "aninest",
+  "version": "1.0.0",
+  "description": "A nested animation library: typed, interuptable, extensible, and performant.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "zephiris",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
