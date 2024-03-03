@@ -63,14 +63,14 @@ export default function createLine(p1: Vec2, p2: Vec2) {
 ```
 
 Typically creating a non-jerky animation is hard. Aninest solves this issue by
-only storing the value of the property at the start of the animation and the target property value (set by `modifyTo()`). Then it only computes the current value of the property when `getCurrentState()` or `getCurrentStateWithChildren()` is called. This means that you can have a variable frame rate and the animation will still move smoothly. It also means that the animation is able to be interrupted.
+only storing the current value of the property when the animation is started and the target property value (set by `modifyTo()`). Then it only computes the current value of the property when `getCurrentState()` or `getCurrentStateWithChildren()` is called.
 
 When an animation is interrupted (by calling `modifyTo()` while the animation is running), the animation will store the current value of the property as the new start value and the new modifyTo value as the end value. This means that the animation will continue from the current value to the new value. While this will
 create a sudden change in velocity, the actual property value will remain continuous.
 
 The nice thing about recursive animations is that you can group related properties and subproperties together. This means that you can choose to only calculate certain subproperties on certain frames as needed. You can even make one property animate with a different interpolation function than another. This is useful for creating complex animations with ease.
 
-Here's a slightly more complex example:
+Here's a slightly more complex example with color, drawing the line to a 2D Canvas Context:
 
 ```ts
 import {

@@ -10,7 +10,7 @@ import {
   newVec2,
   removeRecursiveStartListener,
   updateAnimationInfo,
-} from "./index"
+} from "./src/index"
 
 type Color = { r: number; g: number; b: number }
 

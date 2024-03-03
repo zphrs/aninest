@@ -27,6 +27,6 @@
       "@lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "color-example.ts"],
   "exclude": ["src/main.ts"]
 }
