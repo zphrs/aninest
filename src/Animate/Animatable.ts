@@ -194,7 +194,6 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
   }
   info.time = 0
   info.to = completeTo
-  updateAnimationInfo(info, 0)
   broadcast(info.startListeners, completeTo)
   broadcast(info.recursiveStartListeners, undefined)
 }
@@ -401,7 +400,9 @@ export function changeInterpFunction<
 ) {
   info.timingFunction = interp
   info.time = 0
+  const to = getInterpingTo(info)
   saveState(info, getLocalState(info))
+  info.to = to
   broadcast(info.recursiveStartListeners, undefined)
   updateAnimationInfo(info, 0)
   // update children

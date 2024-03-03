@@ -63,7 +63,7 @@ export default function createLine(p1: Vec2, p2: Vec2) {
 ```
 
 Typically creating a non-jerky animation is hard. Aninest solves this issue by
-only storing the current value of the property when the animation is started and the target property value (set by `modifyTo()`). Then it only computes the current value of the property when `getCurrentState()` or `getCurrentStateWithChildren()` is called.
+only storing the current value of the property when the animation is started and the new target value (set by `modifyTo(animationInfo, targetValue)`). Then it only computes the current value of the property when `getCurrentState()` or `getCurrentStateWithChildren()` is called.
 
 When an animation is interrupted (by calling `modifyTo()` while the animation is running), the animation will store the current value of the property as the new start value and the new modifyTo value as the end value. This means that the animation will continue from the current value to the new value. While this will
 create a sudden change in velocity, the actual property value will remain continuous.
@@ -72,112 +72,4 @@ The nice thing about recursive animations is that you can group related properti
 
 Here's a slightly more complex example with color, drawing the line to a 2D Canvas Context:
 
-```ts
-import {
-  Vec2,
-  addListener,
-  addRecursiveStartListener,
-  changeInterpFunction,
-  createAnimationInfo,
-  getCurrentState,
-  getCurrentStateWithChildren,
-  getLinearInterp,
-  getSlerp,
-  modifyTo,
-  newVec2,
-  removeRecursiveStartListener,
-  updateAnimationInfo,
-} from "./index"
-
-type Color = { r: number; g: number; b: number }
-
-type Line = {
-  p1: { x: number; y: number }
-  p2: { x: number; y: number }
-  color: { r: number; g: number; b: number }
-}
-
-const BLACK: Color = { r: 0, g: 0, b: 0 }
-
-export default function createLine(
-  p1: Vec2,
-  p2: Vec2,
-  ctx: CanvasRenderingContext2D,
-  color: Color = BLACK
-) {
-  // set global interp function to slerp(1s)
-  const animInfo = createAnimationInfo<Line>({ p1, p2, color }, getSlerp(1))
-  // set interp function of color to linearInterp(0.5)
-  changeInterpFunction(animInfo.children.color, getLinearInterp(0.5))
-  const draw = (ctx: CanvasRenderingContext2D) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    const { p1, p2, color } = getCurrentStateWithChildren(animInfo, {
-      color: false,
-    })
-    ctx.save()
-    ctx.strokeStyle = `rgb(${color.r} ${color.g} ${color.b})`
-    ctx.beginPath()
-    ctx.moveTo(p1.x, p1.y)
-    ctx.lineTo(p2.x, p2.y)
-    ctx.stroke()
-    ctx.restore()
-  }
-  let lastTime: number = performance.now()
-  let playing = false
-  const animLoop = (time: number) => {
-    const dt = time - lastTime
-    lastTime = time
-    const updateAgain = updateAnimationInfo(animInfo, dt / 1000)
-    draw(ctx)
-    if (updateAgain) requestAnimationFrame(animLoop)
-    else playing = false
-  }
-  const onStart = () => {
-    if (playing) return
-    playing = true
-    lastTime = performance.now()
-    console.log("restarting")
-    requestAnimationFrame(animLoop)
-  }
-  addRecursiveStartListener(animInfo, onStart)
-  return {
-    setP1(p1: Vec2) {
-      modifyTo(animInfo, { p1 })
-    },
-    setP2(p2: Vec2) {
-      modifyTo(animInfo, { p2 })
-    },
-    setColor(color: Color) {
-      return modifyTo(animInfo, { color })
-    },
-    destroy() {
-      removeRecursiveStartListener(animInfo, onStart)
-    },
-  }
-}
-
-const canvas = document.createElement("canvas")
-document.body.appendChild(canvas)
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
-
-const line = createLine(newVec2(0, 0), newVec2(100, 100), ctx)
-
-const randPos = () =>
-  newVec2(Math.random() * canvas.width, Math.random() * canvas.height)
-
-const randColor = () => Math.floor(Math.random() * 255)
-
-const randomizeLine = () => {
-  line.setP1(randPos())
-  line.setP2(randPos())
-  line.setColor({
-    r: randColor(),
-    g: randColor(),
-    b: randColor(),
-  })
-  setTimeout(randomizeLine, 2000 * Math.random())
-}
-// even though the interval in between each refresh is randomized
-// the animation always moves smoothly regardless
-setTimeout(randomizeLine, 2000 * Math.random())
-```
+https://gitkraken.dev/link/dnNjb2RlOi8vZWFtb2Rpby5naXRsZW5zL2xpbmsvci81NThlZWE2N2E5OGI3YmZmMGE5MzFhNGMzNDk3Njk0NDFiMGQzMjk0P3VybD1odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZwbGV4aWdyYXBoJTJGYW5pbmVzdC5naXQ%3D?origin=gitlens
