@@ -21,6 +21,8 @@ import {
   addVec,
   normalize,
   mulScalar,
+  copy,
+  clamp,
 } from "./src/index"
 
 type Color = { r: number; g: number; b: number }
@@ -69,7 +71,22 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
 
     const screenMag = mag(newVec2(canvas.width, canvas.height))
 
-    changeInterpFunction(animInfo, getSlerp((diff / screenMag) * 10))
+    const sinceLastClick = Math.log(
+      (performance.now() - lastClicked) / 1000 + 1
+    )
+
+    changeInterpFunction(
+      animInfo,
+      getSlerp(
+        Math.min(
+          (diff / screenMag) *
+            (Math.random() + 0.2) *
+            10 *
+            Math.max(sinceLastClick, 0.5),
+          10
+        )
+      )
+    )
   }
   addListener(animInfo.children.shape.children.p1, "start", () =>
     onPointChange(animInfo.children.shape.children.p1)
@@ -100,7 +117,7 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
 }
 
 const increasinglySlower = (x: number) => {
-  return Math.exp(-Math.random() / x) * x
+  return Math.min(x, 1_000_000_000)
 }
 
 const canvas = document.createElement("canvas")
@@ -110,29 +127,30 @@ const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 type DrawableLine = ReturnType<typeof createLine>
 const lines: ReturnType<typeof createLine>[] = []
 
-const randColor = () => Math.floor(Math.random() * 200 + 50)
+const randColor = () => {
+  const sinceLastClick = (performance.now() - lastClicked) / 1000
+  const inv = 1 / (sinceLastClick + 1)
+  const brightness = inv * 155
+  const randomness = ((1 - inv) * 155 + 100) * Math.random()
+  return Math.floor(brightness + randomness)
+}
 
-const randomizeLine = async (
-  line: DrawableLine,
-  center: Vec2 = newVec2(canvas.width / 2, canvas.height / 2)
-) => {
+const randomizeLine = async (line: DrawableLine, withTimeout = true) => {
   // wait for a random amount of time
   const canvasMag = mag(newVec2(canvas.width, canvas.height))
-  // get random position within a 100px radius of p1
-  const r1 = canvasMag * (2 / 3) * Math.exp(-Math.random() * (3 / 2))
-  const theta1 = Math.random() * Math.PI * 2
-  const x1 = Math.cos(theta1) * r1
-  const y1 = Math.sin(theta1) * r1
-  const offset = newVec2(x1, y1)
-  const p1 = addVec(center, offset)
-  const r = canvasMag * 0.1 * Math.exp(-Math.random() * 10)
-  const toCenter = subVec(center, p1)
-  const toCenterNorm = normalize(toCenter)
-  // add a random amount of noise to toCenterNorm
-  toCenterNorm.x += (Math.random() - 0.5) * 0.5
-  toCenterNorm.y += (Math.random() - 0.5) * 0.5
-  const xOff = toCenterNorm.x * r
-  const yOff = toCenterNorm.y * r
+  const p1 = newVec2(
+    canvas.width * Math.random(),
+    canvas.height * Math.random()
+  )
+  const r = Math.max(canvasMag * 0.1 * Math.exp(-Math.random() * 10), 50)
+  // randomize the line
+  // toCenterNorm.x += Math.random() * 0.5 - 0.25
+  // toCenterNorm.y += Math.random() * 0.5 - 0.25
+  // const xOff = toCenterNorm.x * r
+  // const yOff = toCenterNorm.y * r
+  const theta = Math.random() < 0.5 ? Math.PI / 2 : 0
+  const xOff = Math.cos(theta) * r
+  const yOff = Math.sin(theta) * r
   line.setP1(p1)
   line.setP2({
     x: p1.x + xOff,
@@ -143,28 +161,32 @@ const randomizeLine = async (
     g: randColor(),
     b: randColor(),
   })
+  if (!withTimeout) return
+  const sinceLastClick = (performance.now() - lastClicked) / 1000
   setTimeout(
     () => randomizeLine(line),
-    increasinglySlower(10000 * Math.random())
+    increasinglySlower(1000 * Math.random() + 1000) * sinceLastClick +
+      1000 * Math.random()
   )
 }
 
-const randomizeLines = () => {
+const randomizeLines = (withTimeout = true) => {
+  const sinceLastClick = (performance.now() - lastClicked) / 1000
   for (let line of lines) {
     setTimeout(
-      () => randomizeLine(line),
-      increasinglySlower(10000 * Math.random())
+      () => randomizeLine(line, withTimeout),
+      increasinglySlower(
+        10000 * Math.random() * sinceLastClick + 1000 * sinceLastClick
+      )
     )
   }
 }
 
-const onUp = async e => {
+let lastClicked = performance.now()
+
+const onUp = async (e: PointerEvent) => {
   downCt = Math.max(0, downCt - 1)
-  for (let line of lines) {
-    const mouse = newVec2(e.clientX, e.clientY)
-    const toScreen = mulScalar(mouse, devicePixelRatio)
-    randomizeLine(line, toScreen)
-  }
+  randomizeLines(false)
 }
 
 let downCt = 0
@@ -178,6 +200,7 @@ const onMove = (e: PointerEvent) => {
     line.setP1(p)
     line.setP2(p)
   })
+  lastClicked = performance.now()
 }
 
 const onDown = (e: PointerEvent) => {
@@ -197,13 +220,16 @@ canvas.style.top = "0"
 canvas.style.left = "0"
 canvas.style.width = "100%"
 canvas.style.height = "100%"
+canvas.style.touchAction = "none"
 onResize()
 window.addEventListener("resize", onResize)
 
 canvas.addEventListener("pointerup", onUp)
 canvas.addEventListener("pointerdown", onDown)
 canvas.addEventListener("pointermove", onMove)
-for (let i = 0; i < 10000; i++) {
+// get the canvas magnitudes
+const canvasMag = mag(newVec2(canvas.width, canvas.height))
+for (let i = 0; i < canvasMag * 2; i++) {
   const canvasCenter = newVec2(canvas.width / 2, canvas.height / 2)
   lines.push(createLine(canvasCenter, canvasCenter))
 }
