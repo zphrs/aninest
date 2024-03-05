@@ -117,7 +117,7 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
 }
 
 const increasinglySlower = (x: number) => {
-  return Math.min(x, 1_000_000_000)
+  return Math.min(x, 100_000_000_000)
 }
 
 const canvas = document.createElement("canvas")
