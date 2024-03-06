@@ -19,7 +19,6 @@
     "predeploy": "pnpm build",
     "deploy": "gh-pages -d dist -t true",
     "prepublish": "pnpm build:pkg",
-    "publish": "pnpm publish --access=public",
     "preversion": "pnpm test",
     "version": "pnpm build:pkg"
   },
