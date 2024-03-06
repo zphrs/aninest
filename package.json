@@ -12,7 +12,11 @@
     "preview": "vite preview",
     "test": "jest",
     "predeploy": "pnpm build",
-    "deploy": "gh-pages -d dist -t true"
+    "deploy": "gh-pages -d dist -t true",
+    "prepublish": "pnpm build:pkg",
+    "publish": "pnpm publish --scope=@plexigraph --access=public",
+    "preversion": "pnpm test",
+    "version": "pnpm build:pkg"
   },
   "keywords": [],
   "author": "zephiris",
