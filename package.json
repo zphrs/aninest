@@ -4,6 +4,7 @@
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "index.js",
   "type": "module",
+  "private": false,
   "homepage": "https://plexigraph.github.io/aninest",
   "scripts": {
     "dev": "pnpm build && vite",
