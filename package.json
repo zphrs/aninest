@@ -1,6 +1,6 @@
 {
   "name": "@plexigraph/aninest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "index.js",
   "type": "module",
@@ -34,8 +34,5 @@
     "vite-plugin-pwa": "^0.19.2",
     "vite-plugin-top-level-await": "^1.4.1",
     "vite-plugin-wasm": "^3.3.0"
-  },
-  "dependencies": {
-    "animatable-rs": "link:pkg"
   }
 }
