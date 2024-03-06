@@ -1,11 +1,15 @@
 {
   "name": "@plexigraph/aninest",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "index.js",
   "type": "module",
   "private": false,
   "homepage": "https://plexigraph.github.io/aninest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plexigraph/aninest.git"
+  },
   "scripts": {
     "dev": "pnpm build && vite",
     "build": "vite build",
