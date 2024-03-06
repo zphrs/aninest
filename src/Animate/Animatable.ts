@@ -194,6 +194,7 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
   }
   info.time = 0
   info.to = completeTo
+  updateAnimationInfo(info, 0)
   broadcast(info.startListeners, completeTo)
   broadcast(info.recursiveStartListeners, undefined)
 }
@@ -351,15 +352,12 @@ export function getStateTree<Animating extends RecursiveAnimatable<unknown>>(
 }
 
 /**
- * @returns whether the animation needs to be updated again
+ * @returns {boolean} whether the animation needs to be updated again
  */
 export function updateAnimationInfo<
   Animating extends RecursiveAnimatable<unknown>
 >(info: AnimationInfo<Animating>, dt: number): boolean {
   info.time += dt
-  // needs two calls to animationNeedsUpdate
-  // because boundAnimation might call modifyTo for info
-  // which would make info need an update
   let out = animationNeedsUpdate(info)
   // update children
   for (const childInfo of Object.values<
@@ -378,6 +376,9 @@ export function updateAnimationInfo<
     saveState<Animating>(info, newState)
     boundAnimation(info)
     broadcast(info.endListeners, info.from)
+    // needs two calls to animationNeedsUpdate
+    // because boundAnimation might call modifyTo for info
+    // which would make info need an update
     out = animationNeedsUpdate(info)
     if (!out) {
       broadcast(info.endListeners, info.from)
@@ -400,7 +401,7 @@ export function changeInterpFunction<
 ) {
   info.timingFunction = interp
   info.time = 0
-  const to = getInterpingTo(info)
+  const to = getLocalInterpingTo(info)
   saveState(info, getLocalState(info))
   info.to = to
   broadcast(info.recursiveStartListeners, undefined)
@@ -418,19 +419,19 @@ export function changeInterpFunction<
   }
 }
 
-export function getInterpingTo<Animating extends RecursiveAnimatable<unknown>>(
-  info: AnimationInfo<Animating>
-) {
+export function getLocalInterpingTo<
+  Animating extends RecursiveAnimatable<unknown>
+>(info: AnimationInfo<Animating>) {
   if (info.to === null) {
     return info.from
   }
   return mergeDicts(info.from, info.to) as Animating
 }
 
-export function getInterpingToWithChildren<
+export function getInterpingToTree<
   Animating extends RecursiveAnimatable<unknown>
 >(info: AnimationInfo<Animating>): Animating {
-  const out = getInterpingTo(info) as Animating
+  const out = getLocalInterpingTo(info) as Animating
   for (const [key, childInfo] of Object.entries<
     AnimationInfo<RecursiveAnimatable<unknown>>
   >(
@@ -438,7 +439,7 @@ export function getInterpingToWithChildren<
       [s: string]: AnimationInfo<RecursiveAnimatable<unknown>>
     }
   )) {
-    out[key as keyof Animating] = getInterpingToWithChildren(
+    out[key as keyof Animating] = getInterpingToTree(
       childInfo
     ) as Animating[keyof Animating]
   }

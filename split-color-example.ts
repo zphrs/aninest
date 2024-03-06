@@ -11,18 +11,12 @@ import {
   removeRecursiveStartListener,
   updateAnimationInfo,
   getLocalState,
-  getInterpingToWithChildren,
+  getLocalInterpingTo,
   mag,
   addListener,
   subVec,
   AnimationInfo,
-  getInterpingTo,
   sleep,
-  addVec,
-  normalize,
-  mulScalar,
-  copy,
-  clamp,
 } from "./src/index"
 
 type Color = { r: number; g: number; b: number }
@@ -64,7 +58,7 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
     return updateAnimationInfo(animInfo, dt)
   }
   const onPointChange = (animInfo: AnimationInfo<Vec2>) => {
-    const oldPt = getInterpingTo(animInfo)
+    const oldPt = getLocalInterpingTo(animInfo)
     const newPt: Vec2 = getLocalState(animInfo)
     // subtract the vectors to get the difference
     const diff = Math.max(mag(subVec(newPt, oldPt)), 1)
@@ -185,8 +179,8 @@ const randomizeLines = (withTimeout = true) => {
 let lastClicked = performance.now()
 
 const onUp = async (e: PointerEvent) => {
+  if (downCt != 0) randomizeLines(false)
   downCt = Math.max(0, downCt - 1)
-  randomizeLines(false)
 }
 
 let downCt = 0
@@ -218,13 +212,18 @@ const onResize = () => {
 canvas.style.position = "fixed"
 canvas.style.top = "0"
 canvas.style.left = "0"
-canvas.style.width = "100%"
-canvas.style.height = "100%"
+canvas.style.width = window.innerWidth + "px"
+canvas.style.height = window.innerHeight + "px"
+canvas.style.overflow = "hidden"
 canvas.style.touchAction = "none"
 onResize()
 window.addEventListener("resize", onResize)
+// also call when the device is rotated or the pixel ratio changes
+window.addEventListener("orientationchange", onResize)
+window.addEventListener("devicePixelRatio", onResize)
 
 canvas.addEventListener("pointerup", onUp)
+canvas.addEventListener("pointerleave", onUp)
 canvas.addEventListener("pointerdown", onDown)
 canvas.addEventListener("pointermove", onMove)
 // get the canvas magnitudes
@@ -254,6 +253,8 @@ const animLoop = (time: number) => {
     running = false
   }
 }
+
+animLoop(0)
 
 for (let line of lines) {
   line.addStartListener(() => {

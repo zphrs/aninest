@@ -3,7 +3,7 @@ import {
   addRecursiveStartListener,
   changeInterpFunction,
   createAnimationInfo,
-  getInterpingToWithChildren,
+  getInterpingToTree,
   getLinearInterp,
   getStateTree,
   modifyAnimationBounds,
@@ -63,6 +63,7 @@ describe("bound animation", () => {
         a: { x: 0.5 },
       },
     })
+    console.log(anim.children.a.bounds)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 1 } })
   })
   test("empty", () => {
@@ -116,12 +117,12 @@ describe("get interping to", () => {
   const anim = createAnimationInfo({ a: newVec2(0, 0) }, getLinearInterp(1))
   test("get interping to", () => {
     modifyTo(anim, { a: newVec2(1, 1) })
-    expect(getInterpingToWithChildren(anim)).toStrictEqual({
+    expect(getInterpingToTree(anim)).toStrictEqual({
       a: { x: 1, y: 1 },
     })
     updateAnimationInfo(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 0.5 } })
-    expect(getInterpingToWithChildren(anim)).toStrictEqual({
+    expect(getInterpingToTree(anim)).toStrictEqual({
       a: { x: 1, y: 1 },
     })
   })
