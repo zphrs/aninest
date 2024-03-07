@@ -63,7 +63,6 @@ describe("bound animation", () => {
         a: { x: 0.5 },
       },
     })
-    console.log(anim.children.a.bounds)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 1 } })
   })
   test("empty", () => {

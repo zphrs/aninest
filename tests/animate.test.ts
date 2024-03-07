@@ -14,7 +14,6 @@ describe("non-interrupted animation", () => {
   let animationInfo: AnimationInfo<{ a: number; b: number }>
   test("creates animation info", () => {
     animationInfo = createAnimationInfo({ a: 2, b: 1 }, getLinearInterp(1))
-    console.log(animationInfo)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 2,
       b: 1,
