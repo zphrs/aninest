@@ -32,4 +32,4 @@ getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:731](https://github.com/plexigraph/aninest/blob/6b65c5b/src/Animate/Animatable.ts#L731)
+[Animate/Animatable.ts:733](https://github.com/plexigraph/aninest/blob/2f19e55/src/Animate/Animatable.ts#L733)

@@ -27,4 +27,4 @@ const bounds = {
 
 ## Source
 
-[Animate/Animatable.ts:47](https://github.com/plexigraph/aninest/blob/6b65c5b/src/Animate/Animatable.ts#L47)
+[Animate/Animatable.ts:47](https://github.com/plexigraph/aninest/blob/2f19e55/src/Animate/Animatable.ts#L47)

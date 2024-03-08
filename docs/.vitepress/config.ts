@@ -17,6 +17,9 @@ export default defineConfig({
   description:
     "A nested animation library: typed, interruptible, extensible, and performant.",
   themeConfig: {
+    search: {
+      provider: "local",
+    },
     // https://vitepress.dev/reference/default-theme-config
     aside: false,
     siteTitle: "Aninest",
