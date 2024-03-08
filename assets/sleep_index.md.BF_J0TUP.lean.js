@@ -1,1 +1,0 @@
-import{_ as e,c as t,o as a,a4 as n}from"./chunks/framework.nQaBHiNx.js";const u=JSON.parse('{"title":"sleep","description":"","frontmatter":{},"headers":[],"relativePath":"sleep/index.md","filePath":"sleep/index.md"}'),s={name:"sleep/index.md"},i=n("",6),o=[i];function l(r,d,p,c,h,_){return a(),t("div",null,o)}const x=e(s,[["render",l]]);export{u as __pageData,x as default};
