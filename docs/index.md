@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Aninest"
-  text: "A nested animation library:"
+  text: "A nested animation library"
   tagline: typed, interruptible, extensible, and performant.
   actions:
     - theme: brand

@@ -54,4 +54,4 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## Source
 
-[Animate/Animatable.ts:352](https://github.com/plexigraph/aninest/blob/2f19e55/src/Animate/Animatable.ts#L352)
+[Animate/Animatable.ts:351](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L351)

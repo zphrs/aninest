@@ -171,7 +171,6 @@ function getProgress<Animating extends Animatable>(anim: Animation<Animating>) {
 /**
  * Returns whether the animation needs to be updated.
  * @group Status
- * @group Utils
  * @param anim The animation object
  * @returns whether the animation needs to be updated
  */

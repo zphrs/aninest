@@ -9,7 +9,7 @@ boundAnimation<Animating>(anim, bounds): void
 Modifies the bounds of an object, changing what the animation is currently interpolating to.
 Note: you might have to call [updateAnimation](updateAnimation.md) after this to make sure the animation is updated,
 if the current state is outside the new bounds.
-You can also call [animationNeedsUpdate](animationNeedsUpdate-1.md) to check if the animation needs to be updated before calling [updateAnimation](updateAnimation.md).
+You can also call [animationNeedsUpdate](animationNeedsUpdate.md) to check if the animation needs to be updated before calling [updateAnimation](updateAnimation.md).
 
 ## Type parameters
 
@@ -44,4 +44,4 @@ lower: { b: -1 },
 
 ## Source
 
-[Animate/Animatable.ts:478](https://github.com/plexigraph/aninest/blob/2f19e55/src/Animate/Animatable.ts#L478)
+[Animate/Animatable.ts:477](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L477)

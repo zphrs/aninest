@@ -26,4 +26,4 @@ whether the animation needs to be updated
 
 ## Source
 
-[Animate/Animatable.ts:178](https://github.com/plexigraph/aninest/blob/2f19e55/src/Animate/Animatable.ts#L178)
+[Animate/Animatable.ts:177](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L177)

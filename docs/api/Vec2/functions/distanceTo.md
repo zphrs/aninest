@@ -26,4 +26,4 @@ A scalar.
 
 ## Source
 
-[Utils/vec2.ts:195](https://github.com/plexigraph/aninest/blob/2f19e55/src/Utils/vec2.ts#L195)
+[Utils/vec2.ts:195](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Utils/vec2.ts#L195)

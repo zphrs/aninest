@@ -12,7 +12,7 @@ This module deals with creating and modifying animations.
 | :------ | :------ |
 | [Bounds](type-aliases/Bounds.md) | The bounds of the animation. The animation will be loosely clamped to these bounds. |
 | [PartialBounds](type-aliases/PartialBounds.md) | The partial bounds of the animation, making the lower and upper bounds optional. |
-| [boundAnimation](functions/boundAnimation.md) | Modifies the bounds of an object, changing what the animation is currently interpolating to.<br />Note: you might have to call [updateAnimation](functions/updateAnimation.md) after this to make sure the animation is updated,<br />if the current state is outside the new bounds.<br />You can also call [animationNeedsUpdate](functions/animationNeedsUpdate-1.md) to check if the animation needs to be updated before calling [updateAnimation](functions/updateAnimation.md). |
+| [boundAnimation](functions/boundAnimation.md) | Modifies the bounds of an object, changing what the animation is currently interpolating to.<br />Note: you might have to call [updateAnimation](functions/updateAnimation.md) after this to make sure the animation is updated,<br />if the current state is outside the new bounds.<br />You can also call [animationNeedsUpdate](functions/animationNeedsUpdate.md) to check if the animation needs to be updated before calling [updateAnimation](functions/updateAnimation.md). |
 
 ### Construction
 
@@ -66,10 +66,4 @@ This module deals with creating and modifying animations.
 
 | Function | Description |
 | :------ | :------ |
-| [animationNeedsUpdate](functions/animationNeedsUpdate-1.md) | Returns whether the animation needs to be updated. |
-
-### Utils
-
-| Function | Description |
-| :------ | :------ |
-| [animationNeedsUpdate](functions/animationNeedsUpdate-1.md) | Returns whether the animation needs to be updated. |
+| [animationNeedsUpdate](functions/animationNeedsUpdate.md) | Returns whether the animation needs to be updated. |
