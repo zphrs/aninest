@@ -1,6 +1,6 @@
 {
   "name": "@plexigraph/aninest",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "lib/index.js",
   "type": "module",
