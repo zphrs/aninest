@@ -37,4 +37,4 @@ readonly children: { [P in keyof Animating]: Animating[P] extends number ? undef
 
 ## Source
 
-[Animate/Animatable.ts:153](https://github.com/plexigraph/aninest/blob/ed5e272/src/Animate/Animatable.ts#L153)
+[Animate/Animatable.ts:153](https://github.com/plexigraph/aninest/blob/6b65c5b/src/Animate/Animatable.ts#L153)

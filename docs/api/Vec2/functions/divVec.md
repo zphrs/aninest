@@ -34,4 +34,4 @@ y: number;
 
 ## Source
 
-[Utils/vec2.ts:100](https://github.com/plexigraph/aninest/blob/ed5e272/src/Utils/vec2.ts#L100)
+[Utils/vec2.ts:100](https://github.com/plexigraph/aninest/blob/6b65c5b/src/Utils/vec2.ts#L100)

@@ -688,9 +688,11 @@ export function changeInterpFunction<
   ) as [keyof Animating, Animation<RecursiveAnimatable<unknown>>][]
   for (const [key, childInfo] of filteredChildren) {
     changeInterpFunction(
-      childInfo as Animation<Animatable>,
+      childInfo as Animation<RecursiveAnimatable<unknown>>,
       interp,
-      mask[key as keyof typeof mask] as Partial<Mask<Animatable>>
+      mask[key as keyof typeof mask] as Partial<
+        Mask<RecursiveAnimatable<unknown>>
+      >
     )
   }
 }
