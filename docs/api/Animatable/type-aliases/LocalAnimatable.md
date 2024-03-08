@@ -25,4 +25,4 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 
 ## Source
 
-[Animate/Animatable.ts:91](https://github.com/plexigraph/aninest/blob/6d904f7/src/Animate/Animatable.ts#L91)
+[Animate/Animatable.ts:91](https://github.com/plexigraph/aninest/blob/ed5e272/src/Animate/Animatable.ts#L91)

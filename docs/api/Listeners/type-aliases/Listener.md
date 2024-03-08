@@ -40,4 +40,4 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 ## Source
 
-[Listeners.ts:15](https://github.com/plexigraph/aninest/blob/6d904f7/src/Listeners.ts#L15)
+[Listeners.ts:15](https://github.com/plexigraph/aninest/blob/ed5e272/src/Listeners.ts#L15)

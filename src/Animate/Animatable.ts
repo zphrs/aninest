@@ -7,19 +7,64 @@ import { clamp, lerpFunc } from "../Utils/vec2"
 import { broadcast, type Listener, type Listeners } from "../Listeners"
 import type { Interp } from "./Interp"
 
+/**
+ * The local state of the animation, meaning only the numbers in the topmost level of the input animation.
+ * @group State Types
+ * @example
+const startingState = {a: {x: 0, y: 0}, b: 0}
+// Looking at the root level:
+{b: 0}
+// Looking at the 'a' child:
+{ x: 0, y: 0 }
+ */
 export type Animatable = { [key: string]: number }
 
+/**
+ * The bounds of the animation. The animation will be loosely clamped to these bounds.
+ * @group Bounds
+ * @example
+// Assuming the animation is of type {a: Vec2, b: Vec2}:
+const bounds = {
+  lower: { a: {x: 0, y: 0}, b: {x: 0} },
+  upper: { a: {x: 1, y: 1} }
+} // note that b.y is not bounded and that b.x only has a lower bound. This is perfectly valid.
+ */
 export type Bounds<T> = {
   lower: Partial<T>
   upper: Partial<T>
 }
 
+/**
+ * The partial bounds of the animation, making the lower and upper bounds optional.
+ * @group Bounds
+ * @see {@link Bounds} for the full bounds type and for further explanation of the bounds.
+ * @example
+// Assuming the animation is of type {a: Vec2, b: Vec2}:
+const bounds = {
+  lower: { a: {x: 0, y: 0}, b: {x: 0} },
+} // Note that there are no upper bounds
+ */
 export type PartialBounds<T> = Partial<Bounds<T>>
 
+/**
+ * The various event types that are emitted by the animation.
+ * Here are the possible events:
+ * - **start**: when the animation's target state is changed by calling {@link modifyTo}
+ * and the new state is different from the current state.
+ * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with only the changed values.
+ * - **end**: when the animation fully comes to a stop, provides the resting state
+ * Returns an {@link LocalAnimatable Animatable} of the new local state with the final resting state.
+ * - **bounce**: when the animation bounces off a bound
+ * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with only the bounced values.
+ * - **interrupt**: when a new `modifyTo` is called before the animation is finished
+ * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with all of the currently in progress values.
+ * @group Events
+ */
 export type AnimatableEvents = "start" | "end" | "bounce" | "interrupt"
 
 /**
- * @description The generic type of the animation state.
+ * The generic type of the animation state.
+ * @group State Types
  * @example 
 { 
   a: {x: 0, y: 0},
@@ -32,7 +77,18 @@ export type RecursiveAnimatable<T> = {
     : number
 }
 
-export type LocalRecursiveAnimatable<T> = {
+/**
+ * A local slice of the Animatable type.
+ * @group State Types
+ * @example
+const startingState = {a: {x: 0, y: 0}, b: 0}
+// the following are the local slices of the type of the startingState:
+// looking at the root level
+{b: 0}
+// looking at the 'a' child
+{ x: 0, y: 0 }
+ */
+export type LocalAnimatable<T> = {
   [P in keyof T]: T[P] extends number ? number : undefined
 } & Animatable
 
@@ -40,27 +96,60 @@ type ChildrenOfRecursiveAnimatable<T> = {
   [P in keyof T]: T[P] extends RecursiveAnimatable<unknown> ? T[P] : undefined
 }
 
+/**
+ * A subtree of the Animatable type.
+ * @group State Types
+ * @example
+const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y: 0}}
+// the following are all valid partial states of the type of the startingState:
+// example 3
+{
+ a: {x: 1, y: 1}
+}
+// example 2
+{
+  a: {x: 1}
+}
+// example 1
+{}
+ */
 export type PartialRecursiveAnimatable<T> = {
   [P in keyof T]?: T[P] extends number
     ? number
     : PartialRecursiveAnimatable<T[P]>
 }
 
-export type Mask<T> = {
+type Mask<T> = {
   [P in keyof T]: T[P] | boolean
 }
 
-export type AnimationWithoutChildren<
-  Animating extends RecursiveAnimatable<unknown>
-> = {
-  _time: number
-  _timingFunction: Interp
-  _from: LocalRecursiveAnimatable<Animating>
-  _to: Partial<LocalRecursiveAnimatable<Animating>> | null
-  _bounds: Bounds<LocalRecursiveAnimatable<Animating>>
-} & Listeners<AnimatableEvents, Partial<LocalRecursiveAnimatable<Animating>>> &
-  Listeners<"recursiveStart", undefined>
+/**
+ * The local animation object. This is a recursive type, meaning that it can contain other animations.
+ */
+type AnimationWithoutChildren<Animating extends RecursiveAnimatable<unknown>> =
+  {
+    _time: number
+    _timingFunction: Interp
+    _from: LocalAnimatable<Animating>
+    _to: Partial<LocalAnimatable<Animating>> | null
+    _bounds: Bounds<LocalAnimatable<Animating>>
+  } & Listeners<AnimatableEvents, Partial<LocalAnimatable<Animating>>> &
+    Listeners<"recursiveStart", undefined>
 
+/**
+ * The animation object. This is a recursive type, meaning that it can contain other animations.
+ * @group Construction
+ * @example const anim: Animation<{a: Vec2}> = createAnimationInfo({a: {x: 0, y: 0}}) 
+ // the anim object will look like this:
+  {
+    <private fields>
+    children: {
+    a: {
+      // holds the state of a, which is currently {x: 0, y: 0}
+      <private fields>
+    }
+  }
+ */
 export type Animation<Animating extends RecursiveAnimatable<unknown>> =
   AnimationWithoutChildren<Animating> & {
     readonly children: {
@@ -80,7 +169,8 @@ function getProgress<Animating extends Animatable>(anim: Animation<Animating>) {
   return clamp(0, anim._timingFunction(anim._time), 1)
 }
 /**
- * @module Animation
+ * Returns whether the animation needs to be updated.
+ * @group Status
  * @group Utils
  * @param anim The animation object
  * @returns whether the animation needs to be updated
@@ -111,9 +201,9 @@ function copyObject<T>(obj: T) {
 }
 
 function createLocalAnimation<Animating extends RecursiveAnimatable<unknown>>(
-  init: LocalRecursiveAnimatable<Animating>,
+  init: LocalAnimatable<Animating>,
   timing: Interp,
-  bounds: PartialBounds<LocalRecursiveAnimatable<Animating>>
+  bounds: PartialBounds<LocalAnimatable<Animating>>
 ): AnimationWithoutChildren<Animating> {
   const initCpy = copyObject(init)
   const boundsCpy = copyObject(bounds)
@@ -122,7 +212,7 @@ function createLocalAnimation<Animating extends RecursiveAnimatable<unknown>>(
     _timingFunction: timing,
     _from: initCpy,
     _to: null,
-    _bounds: boundsCpy as Bounds<LocalRecursiveAnimatable<Animating>>,
+    _bounds: boundsCpy as Bounds<LocalAnimatable<Animating>>,
     startListeners: new Set(),
     endListeners: new Set(),
     bounceListeners: new Set(),
@@ -133,13 +223,13 @@ function createLocalAnimation<Animating extends RecursiveAnimatable<unknown>>(
 
 function separateChildren<T extends RecursiveAnimatable<unknown>>(
   obj: T
-): [LocalRecursiveAnimatable<T>, ChildrenOfRecursiveAnimatable<T>] {
-  const anim = {} as LocalRecursiveAnimatable<T>
+): [LocalAnimatable<T>, ChildrenOfRecursiveAnimatable<T>] {
+  const anim = {} as LocalAnimatable<T>
   const children = {} as ChildrenOfRecursiveAnimatable<T>
   for (const key in obj) {
     const value = obj[key]
     if (typeof value === "number") {
-      anim[key] = value as LocalRecursiveAnimatable<T>[Extract<keyof T, string>]
+      anim[key] = value as LocalAnimatable<T>[Extract<keyof T, string>]
     } else {
       children[key] =
         value as unknown as ChildrenOfRecursiveAnimatable<T>[Extract<
@@ -153,6 +243,7 @@ function separateChildren<T extends RecursiveAnimatable<unknown>>(
 
 /**
  * Creates an animation info object, automatically inferring type from the init object.
+ * @group Construction
  * @example
 const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
   upper: { a: 1, b: 1 },
@@ -203,6 +294,7 @@ export function createAnimation<Init extends RecursiveAnimatable<unknown>>(
 /**
  * Sets the final stopping point of the animation.
  * The animation will start to interpolate to the new state.
+ * @group State Modification
  * @example modifyTo<{a: number, b: number}>(anim, { a: 1, b: 1 })
  * @example modifyTo<{a: Vec2, b: Vec2}>(anim, {a: {x: 1}})
  * @example modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
@@ -226,7 +318,7 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
     modifyTo(childInfo, child as PartialRecursiveAnimatable<unknown>)
   }
   if (Object.keys(localTo).length === 0) return
-  let completeTo = localTo as Partial<LocalRecursiveAnimatable<Animating>>
+  let completeTo = localTo as Partial<LocalAnimatable<Animating>>
   if (anim._to) {
     completeTo = mergeDicts(anim._to, localTo)
     saveState(anim, getLocalState(anim))
@@ -245,6 +337,7 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
  * - bounce: hitting a bound
  * - interrupt: when a new `modifyTo` is called before the animation is finished
  * Animation listeners are scoped to only trigger when the current level of the animation is modified.
+ * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 addListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
@@ -261,13 +354,14 @@ export function addLocalListener<
 >(
   anim: Animation<Animating>,
   type: AnimatableEvents,
-  listener: Listener<Partial<LocalRecursiveAnimatable<Animating>>>
+  listener: Listener<Partial<LocalAnimatable<Animating>>>
 ) {
   anim[`${type}Listeners`].add(listener)
 }
 
 /**
  * Removes a listener from the animation
+ * @group Events
  * @see {@link addLocalListener} to add a listener to an animation
  * @example
 // setup
@@ -286,13 +380,14 @@ removeListener(anim, "start", listener)
 export function removeListener<Animating extends RecursiveAnimatable<unknown>>(
   anim: Animation<Animating>,
   type: AnimatableEvents,
-  listener: Listener<Partial<LocalRecursiveAnimatable<Animating>>>
+  listener: Listener<Partial<LocalAnimatable<Animating>>>
 ) {
   anim[`${type}Listeners`].delete(listener)
 }
 
 /**
  * Adds a recursive start listener to the animation. This listener will trigger on any child modification.
+ * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 addRecursiveStartListener(anim, () => console.log("started")) // will trigger
@@ -316,6 +411,7 @@ export function addRecursiveStartListener<
 
 /**
  * Removes a recursive start listener from the animation
+ * @group Events
  * @example
 // setup
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
@@ -363,9 +459,10 @@ function mergeDicts<T1 extends object, T2 extends object>(
 
 /**
  * Modifies the bounds of an object, changing what the animation is currently interpolating to.
- * Note: you might have to call `updateAnimationInfo` after this to make sure the animation is updated,
+ * Note: you might have to call {@link updateAnimation} after this to make sure the animation is updated,
  * if the current state is outside the new bounds.
- * You can also call `animationNeedsUpdate` to check if the animation needs to be updated before calling `updateAnimationInfo`.
+ * You can also call {@link animationNeedsUpdate} to check if the animation needs to be updated before calling {@link updateAnimation}.
+ * @group Bounds
  * @example
 const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
  upper: { a: 1, b: 1 },
@@ -397,7 +494,7 @@ export function boundAnimation<Animating extends RecursiveAnimatable<unknown>>(
     lower: mergeDicts(anim._bounds?.lower, lowerBoundsAnim),
     upper: mergeDicts(anim._bounds?.upper, upperBoundsAnim),
   }
-  anim._bounds = localBounds as Bounds<LocalRecursiveAnimatable<Animating>>
+  anim._bounds = localBounds as Bounds<LocalAnimatable<Animating>>
   for (const [key, child] of Object.entries(anim.children)) {
     const childBounds = {
       upper: upperBoundsChildren[key as keyof typeof upperBoundsChildren],
@@ -434,7 +531,7 @@ function boundLocalAnimation<Animating extends Animatable>(
 
 function saveState<Animating extends RecursiveAnimatable<unknown>>(
   anim: Animation<Animating>,
-  state: LocalRecursiveAnimatable<Animating>
+  state: LocalAnimatable<Animating>
 ) {
   anim._from = copyObject(state)
   anim._to = null
@@ -449,6 +546,7 @@ const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInte
 const localState = getLocalState(anim) // {}
 const localStateA = getLocalState(anim.children.a) // {x: 0, y: 0}
 const localStateB = getLocalState(anim.children.b) // {x: 1, y: 1}
+  * @group State Retrieval
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: 1 }, NO_INTERP)
 const localState = getLocalState(anim) // { b: 1 }
@@ -467,11 +565,12 @@ export function getLocalState<Animating extends RecursiveAnimatable<unknown>>(
     anim._from,
     anim._to,
     progress
-  ) as LocalRecursiveAnimatable<Animating>
+  ) as LocalAnimatable<Animating>
 }
 
 /**
  * Gets the total state of the animation, including all children.
+ * @group State Retrieval
  * @example
 const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInterp(1))
 const state = getStateTree(anim) // {a: {x: 0, y: 0}, b: {x: 1, y: 1}}
@@ -493,7 +592,8 @@ export function getStateTree<Animating extends RecursiveAnimatable<unknown>>(
 }
 
 /**
- * Updates the animation by incrementing the current timestamp of the animation by `dt`.
+ * Moves forward in the animation by a certain amount of time.
+ * @group State Modification
  * @param anim The animation object
  * @param dt The time to increment the animation by. Must be positive. If negative or zero then no-op.
  * @returns {boolean} whether the animation needs to be updated again
@@ -521,7 +621,6 @@ export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
     const newState = mergeDicts(anim._from, anim._to)
     saveState<Animating>(anim, newState)
     boundLocalAnimation(anim)
-    broadcast(anim.endListeners, anim._from)
     // needs two calls to animationNeedsUpdate
     // because boundAnimation might call modifyTo for info
     // which would make info need an update
@@ -555,6 +654,7 @@ export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
  * ```ts
  * const {x: {value: x}, y: {value: y}} = getStateTree(anim.children.a)
  * ```
+ * @group Interpolation
  * @example
 const anim = createAnimation({a: newVec2(0, 0), b: newVec2(0, 0)}, getLinearInterp(1))
 modifyTo(anim, {a: newVec2(1, 1), b: newVec2(1, 1)})
@@ -599,6 +699,7 @@ export function changeInterpFunction<
  * If the animation is not headed to any state, it will return the current state.
  * This only returns the local state of the animation, meaning only the numbers
  * in the topmost level of the input animation.
+ * @group Interpolation
  * @example
 const anim = createAnimation({a: newVec(0, 0), b: 0, c: 0}, getLinearInterp(1))
 getLocalInterpingTo(anim) // {b: 0, c: 0}
@@ -608,7 +709,7 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
  * @returns The local target state of the animation
  */
 export function getLocalInterpingTo<
-  Animating extends Partial<LocalRecursiveAnimatable<unknown>>
+  Animating extends Partial<LocalAnimatable<unknown>>
 >(anim: Animation<Animating>) {
   if (anim._to === null) {
     return anim._from
@@ -618,6 +719,7 @@ export function getLocalInterpingTo<
 /**
  * Gets the total target state that the animation is currently headed to.
  * If the animation is not headed to any state, it will return the current state.
+ * @group State Retrieval
  * @example
 const anim = createAnimation({a: newVec(0, 0), b: 0, c: 0}, getLinearInterp(1))
 getInterpingToTree(anim) // {a: {x: 0, y: 0}, b: 0, c: 0}

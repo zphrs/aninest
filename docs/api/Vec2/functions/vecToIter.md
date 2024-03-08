@@ -21,4 +21,4 @@ An array with the x and y components of the vector in the format [x, y].
 
 ## Source
 
-[Utils/vec2.ts:115](https://github.com/plexigraph/aninest/blob/6d904f7/src/Utils/vec2.ts#L115)
+[Utils/vec2.ts:115](https://github.com/plexigraph/aninest/blob/ed5e272/src/Utils/vec2.ts#L115)

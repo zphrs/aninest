@@ -126,7 +126,7 @@ html.dark {
   transition: transform 0.3s;
 }
 
-.VPSidebarItem.is-active .link > .text::before {
+.VPSidebarItem.is-active > div > .link > .text::before {
   background-color: var(--vp-c-brand-1);
   transform: scale(1) translateY(-50%);
 }
@@ -138,34 +138,45 @@ html.dark {
   background-color: var(--vp-c-bg);
 }
 
-a[href^="./functions/"] {
-  color: var(--vp-c-success-2);
+a[href*="./functions/"] {
+  color: var(--vp-c-success-3);
 }
 
-td:first-child a[href^="./functions/"]::after {
-  content: "function";
-  background-color: var(--vp-c-success-3);
-  display: inline-block;
+td:first-child {
+  white-space: nowrap;
+}
+
+td:first-child a[href^="./functions/"]::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  content: "Fn";
+  border: 1px solid currentColor;
   padding: 0 0.5em;
   font-size: 0.8em;
-  margin-left: 0.5em;
-  border-radius: 1em;
-  color: var(--vp-c-bg);
+  height: 1.25rem;
+  margin-right: 0.5em;
+  border-radius: 1.5em;
+}
+a[href*="./functions/"]::after {
+  content: "()";
 }
 
 a[href^="./type-aliases/"] {
-  color: var(--vp-c-warning-2);
+  color: var(--vp-c-warning-3);
 }
 
-td:first-child a[href^="./type-aliases/"]::after {
-  content: "type";
-  background-color: var(--vp-c-warning-3);
-  display: inline-block;
+td:first-child a[href^="./type-aliases/"]::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.25rem;
+  content: "Type";
+  border: 1px solid currentColor;
   padding: 0 0.5em;
   font-size: 0.8em;
-  margin-left: 0.5em;
-  border-radius: 1em;
-  color: var(--vp-c-bg);
+  margin-right: 0.5em;
+  border-radius: 1.5em;
 }
 
 :root {

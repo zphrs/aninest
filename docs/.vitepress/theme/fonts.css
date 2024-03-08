@@ -29,3 +29,10 @@
   src: url(./fonts/Atkinson_Hyperlegible/AtkinsonHyperlegible-BoldItalic.ttf)
     format("truetype");
 }
+
+@font-face {
+  font-family: "Fira Code";
+  src: url(fonts/Fira_Code/FiraCode-VariableFont_wght.ttf) format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+}
