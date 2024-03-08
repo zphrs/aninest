@@ -37,7 +37,7 @@ const {x: {value: x}, y: {value: y}} = getStateTree(anim.children.a)
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 • **interp**: `Interp`
 
@@ -64,4 +64,4 @@ getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
 
 ## Source
 
-[Animate/Animatable.ts:571](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L571)
+[Animate/Animatable.ts:579](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L579)

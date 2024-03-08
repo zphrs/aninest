@@ -17,7 +17,7 @@ in the topmost level of the input animation.
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -38,4 +38,4 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:610](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L610)
+[Animate/Animatable.ts:618](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L618)

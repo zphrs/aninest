@@ -15,7 +15,7 @@ The animation will start to interpolate to the new state.
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -49,4 +49,4 @@ modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
 
 ## Source
 
-[Animate/Animatable.ts:215](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L215)
+[Animate/Animatable.ts:223](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L223)

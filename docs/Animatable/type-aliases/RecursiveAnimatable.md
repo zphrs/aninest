@@ -6,8 +6,6 @@
 type RecursiveAnimatable<T>: { [P in keyof T]: T[P] extends RecursiveAnimatable<unknown> ? RecursiveAnimatable<T[P]> : number };
 ```
 
-## Description
-
 The generic type of the animation state.
 
 ## Example
@@ -25,4 +23,4 @@ The generic type of the animation state.
 
 ## Source
 
-[Animate/Animatable.ts:29](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L29)
+[Animate/Animatable.ts:29](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L29)

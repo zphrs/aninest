@@ -15,7 +15,7 @@ To access the local state of a child, use `anim.children.childName` as the input
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -44,4 +44,4 @@ const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 
 ## Source
 
-[Animate/Animatable.ts:459](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L459)
+[Animate/Animatable.ts:467](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L467)

@@ -10,7 +10,8 @@ This module deals with creating and modifying animations.
 
 | Type alias | Description |
 | :------ | :------ |
-| [RecursiveAnimatable](type-aliases/RecursiveAnimatable.md) | - |
+| [Animation](type-aliases/Animation.md) | The animation object. This is a recursive type, meaning that it can contain other animations. |
+| [RecursiveAnimatable](type-aliases/RecursiveAnimatable.md) | The generic type of the animation state. |
 
 ### Functions
 

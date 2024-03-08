@@ -17,7 +17,7 @@ Removes a listener from the animation
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -53,4 +53,4 @@ modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
 
 ## Source
 
-[Animate/Animatable.ts:286](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L286)
+[Animate/Animatable.ts:294](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L294)

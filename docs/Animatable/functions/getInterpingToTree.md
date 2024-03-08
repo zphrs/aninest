@@ -15,7 +15,7 @@ If the animation is not headed to any state, it will return the current state.
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 ## Returns
 
@@ -32,4 +32,4 @@ getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:629](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L629)
+[Animate/Animatable.ts:637](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L637)

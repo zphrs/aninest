@@ -31,7 +31,7 @@ Optional bounds for the animation. The animation will be loosely clamped to thes
 
 ## Returns
 
-`Animation`\<`Init`\>
+[`Animation`](../type-aliases/Animation.md)\<`Init`\>
 
 The animation info object.
 
@@ -46,4 +46,4 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
 
 ## Source
 
-[Animate/Animatable.ts:166](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L166)
+[Animate/Animatable.ts:174](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L174)

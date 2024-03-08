@@ -22,7 +22,7 @@ Animation listeners are scoped to only trigger when the current level of the ani
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -54,4 +54,4 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## Source
 
-[Animate/Animatable.ts:259](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L259)
+[Animate/Animatable.ts:267](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L267)

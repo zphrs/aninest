@@ -14,7 +14,7 @@ Gets the total state of the animation, including all children.
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 ## Returns
 
@@ -31,4 +31,4 @@ const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:483](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L483)
+[Animate/Animatable.ts:491](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L491)

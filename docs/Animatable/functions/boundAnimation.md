@@ -17,7 +17,7 @@ You can also call `animationNeedsUpdate` to check if the animation needs to be u
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation to modify
 
@@ -44,4 +44,4 @@ lower: { b: -1 },
 
 ## Source
 
-[Animate/Animatable.ts:381](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L381)
+[Animate/Animatable.ts:389](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L389)

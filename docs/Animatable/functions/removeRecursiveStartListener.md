@@ -14,7 +14,7 @@ Removes a recursive start listener from the animation
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 • **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
 
@@ -38,4 +38,4 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 
 ## Source
 
-[Animate/Animatable.ts:332](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L332)
+[Animate/Animatable.ts:340](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L340)

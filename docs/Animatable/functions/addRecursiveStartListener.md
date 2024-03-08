@@ -14,7 +14,7 @@ Adds a recursive start listener to the animation. This listener will trigger on 
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 • **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
 
@@ -31,4 +31,4 @@ addRecursiveStartListener(anim, () => console.log("started")) // will trigger
 
 ## Source
 
-[Animate/Animatable.ts:302](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L302)
+[Animate/Animatable.ts:310](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L310)

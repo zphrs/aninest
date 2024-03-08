@@ -14,7 +14,7 @@ Updates the animation by incrementing the current timestamp of the animation by 
 
 ## Parameters
 
-• **anim**: `Animation`\<`Animating`\>
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -30,4 +30,4 @@ whether the animation needs to be updated again
 
 ## Source
 
-[Animate/Animatable.ts:501](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L501)
+[Animate/Animatable.ts:509](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L509)
