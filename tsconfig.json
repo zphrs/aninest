@@ -14,7 +14,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "outDir": "dist-package",
+    "outDir": "lib",
 
     /* Linting */
     "strict": true,
@@ -27,6 +27,5 @@
       "@lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["src/main.ts"]
+  "include": ["src"]
 }
