@@ -188,6 +188,7 @@ td:first-child a[href^="./type-aliases/"]::before {
   --vp-font-family-mono: "Fira Code", ui-monospace, SFMono-Regular, "SF Mono",
     Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 16px;
+  font-weight: 400;
 }
 
 :root {

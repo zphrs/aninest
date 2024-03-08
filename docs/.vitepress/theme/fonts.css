@@ -1,15 +1,8 @@
 @font-face {
   font-family: "Atkinson Hyperlegible";
   font-style: normal;
-  font-weight: 400;
-  src: url(.fonts/Atkinson_Hyperlegible/AtkinsonHyperlegible-Regular.ttf)
-    format("truetype");
-}
-
-@font-face {
-  font-family: "Atkinson Hyperlegible";
-  font-style: normal;
-  font-weight: 700;
+  font-weight: bold;
+  font-display: swap;
   src: url(./fonts/Atkinson_Hyperlegible/AtkinsonHyperlegible-Bold.ttf)
     format("truetype");
 }
@@ -17,7 +10,8 @@
 @font-face {
   font-family: "Atkinson Hyperlegible";
   font-style: italic;
-  font-weight: 400;
+  font-weight: normal;
+  font-display: swap;
   src: url(./fonts/Atkinson_Hyperlegible/AtkinsonHyperlegible-Italic.ttf)
     format("truetype");
 }
@@ -25,8 +19,18 @@
 @font-face {
   font-family: "Atkinson Hyperlegible";
   font-style: italic;
-  font-weight: 700;
+  font-weight: bold;
+  font-display: swap;
   src: url(./fonts/Atkinson_Hyperlegible/AtkinsonHyperlegible-BoldItalic.ttf)
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url(./fonts/Atkinson_Hyperlegible/AtkinsonHyperlegible-Regular.ttf)
     format("truetype");
 }
 
