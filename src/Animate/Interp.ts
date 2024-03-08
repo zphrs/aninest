@@ -1,21 +1,26 @@
-import { bezierFunc, clamp } from '../Utils/vec2'
+/**
+ * Several interpolation function constructors.
+ * @module Interp
+ */
+
+import { bezierFunc, clamp } from "../Utils/vec2"
 
 export type Interp = (t: number) => number
 
 export const NO_INTERP = (_t: number) => 1
 
 function getProgress(t: number, duration: number) {
-	return clamp(0, t / duration, 1)
+  return clamp(0, t / duration, 1)
 }
 
 export function getLinearInterp(duration: number): Interp {
-	if (duration == 0) return NO_INTERP
-	return (t) => t / duration
+  if (duration == 0) return NO_INTERP
+  return t => t / duration
 }
 
 export function getSlerp(duration: number): Interp {
-	if (duration == 0) return NO_INTERP
-	return (t) => Math.sin(getProgress(t, duration) * (Math.PI / 2))
+  if (duration == 0) return NO_INTERP
+  return t => Math.sin(getProgress(t, duration) * (Math.PI / 2))
 }
 /**
  *
@@ -33,10 +38,14 @@ export function getSlerp(duration: number): Interp {
  */
 
 function cubicBezier(progress: number, c1: number, c2: number) {
-	return bezierFunc(progress, 0, c1, c2, 1)
+  return bezierFunc(progress, 0, c1, c2, 1)
 }
 
-export function getCubicBezier(duration: number, c1: number, c2: number): Interp {
-	if (duration == 0) return NO_INTERP
-	return (t) => cubicBezier(getProgress(t, duration), c1, c2)
+export function getCubicBezier(
+  duration: number,
+  c1: number,
+  c2: number
+): Interp {
+  if (duration == 0) return NO_INTERP
+  return t => cubicBezier(getProgress(t, duration), c1, c2)
 }

@@ -1,3 +1,8 @@
+/**
+ * This module deals with creating and modifying animations.
+ * @module Animatable
+ */
+
 import { clamp, lerpFunc } from "../Utils/vec2"
 import { broadcast, type Listener, type Listeners } from "../Listeners"
 import type { Interp } from "./Interp"
@@ -14,17 +19,12 @@ export type PartialBounds<T> = Partial<Bounds<T>>
 export type AnimatableEvents = "start" | "end" | "bounce" | "interrupt"
 
 /**
- * @example
- * {
- *   a: {
- *     x: 0,
- *     y: 0,
- * },
- *   b: {
- *     x: 1,
- *     y: 1,
- *   }
- * }
+ * @description The generic type of the animation state.
+ * @example 
+{ 
+  a: {x: 0, y: 0},
+  b: {x: 0, y: 0} 
+}
  */
 export type RecursiveAnimatable<T> = {
   [P in keyof T]: T[P] extends RecursiveAnimatable<unknown>
@@ -40,13 +40,13 @@ type ChildrenOfRecursiveAnimatable<T> = {
   [P in keyof T]: T[P] extends RecursiveAnimatable<unknown> ? T[P] : undefined
 }
 
-type PartialRecursiveAnimatable<T> = {
+export type PartialRecursiveAnimatable<T> = {
   [P in keyof T]?: T[P] extends number
     ? number
     : PartialRecursiveAnimatable<T[P]>
 }
 
-type Mask<T> = {
+export type Mask<T> = {
   [P in keyof T]: T[P] | boolean
 }
 
@@ -61,9 +61,6 @@ export type AnimationWithoutChildren<
 } & Listeners<AnimatableEvents, Partial<LocalRecursiveAnimatable<Animating>>> &
   Listeners<"recursiveStart", undefined>
 
-/**
- * @namespace Animation
- */
 export type Animation<Animating extends RecursiveAnimatable<unknown>> =
   AnimationWithoutChildren<Animating> & {
     readonly children: {
@@ -78,16 +75,13 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] }
 type WritableAnimation<T extends RecursiveAnimatable<unknown>> = Writeable<
   Animation<T>
 >
-/**
- *
- * @param anim
- * @returns
- */
+
 function getProgress<Animating extends Animatable>(anim: Animation<Animating>) {
   return clamp(0, anim._timingFunction(anim._time), 1)
 }
 /**
- * @namespace Animation
+ * @module Animation
+ * @group Utils
  * @param anim The animation object
  * @returns whether the animation needs to be updated
  */
@@ -158,7 +152,7 @@ function separateChildren<T extends RecursiveAnimatable<unknown>>(
 }
 
 /**
- * @description Creates an animation info object, automatically inferring type from the init object.
+ * Creates an animation info object, automatically inferring type from the init object.
  * @example
  * const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
  *   upper: { a: 1, b: 1 },
@@ -207,7 +201,7 @@ export function createAnimation<Init extends RecursiveAnimatable<unknown>>(
   return info as Animation<Init>
 }
 /**
- * @description Sets the final stopping point of the animation.
+ * Sets the final stopping point of the animation.
  * The animation will start to interpolate to the new state.
  * @example
  * modifyTo<{a: number, b: number}>(anim, { a: 1, b: 1 })
@@ -248,7 +242,7 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
   broadcast(anim.recursiveStartListeners, undefined)
 }
 /**
- * @description adds a local listener to the animation. You can listen to the following events:
+ * Adds a local listener to the animation. You can listen to the following events:
  * - start
  * - end
  * - bounce: hitting a bound
@@ -277,7 +271,7 @@ export function addLocalListener<
 
 /**
  * Removes a listener from the animation
- * @see {@link addListener} to add a listener to an animation
+ * @see {@link addLocalListener} to add a listener to an animation
  * @example
  * // setup
  * const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
@@ -541,6 +535,7 @@ export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
   }
   return out
 }
+
 /**
  * Changes the interpolation function of specific subproperties based on the mask.
  *

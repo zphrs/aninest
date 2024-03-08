@@ -1,3 +1,3 @@
 export * from "./Animate"
-export * from "./Listeners"
+export type { Listener } from "./Listeners"
 export * from "./Utils"
