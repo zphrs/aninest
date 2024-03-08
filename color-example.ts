@@ -2,14 +2,14 @@ import {
   Vec2,
   addRecursiveStartListener,
   changeInterpFunction,
-  createAnimationInfo,
+  createAnimation,
   getStateTree,
   getLinearInterp,
   getSlerp,
   modifyTo,
   newVec2,
   removeRecursiveStartListener,
-  updateAnimationInfo,
+  updateAnimation,
 } from "./src/index"
 
 type Color = { r: number; g: number; b: number }
@@ -29,7 +29,7 @@ export default function createLine(
   color: Color = BLACK
 ) {
   // set global interp function to slerp(1s)
-  const animInfo = createAnimationInfo<Line>({ p1, p2, color }, getSlerp(1))
+  const animInfo = createAnimation<Line>({ p1, p2, color }, getSlerp(1))
   // set interp function of color to linearInterp(0.5)
   changeInterpFunction(animInfo, getLinearInterp(0.5), { p1: false, p2: false })
   const draw = (ctx: CanvasRenderingContext2D) => {
@@ -48,7 +48,7 @@ export default function createLine(
   const animLoop = (time: number) => {
     const dt = time - lastTime
     lastTime = time
-    const updateAgain = updateAnimationInfo(animInfo, dt / 1000)
+    const updateAgain = updateAnimation(animInfo, dt / 1000)
     draw(ctx)
     if (updateAgain) requestAnimationFrame(animLoop)
     else playing = false

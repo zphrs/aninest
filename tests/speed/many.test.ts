@@ -1,16 +1,16 @@
 import {
-  createAnimationInfo,
+  createAnimation,
   newVec2,
   getLinearInterp,
   getStateTree,
   modifyTo,
-  updateAnimationInfo,
+  updateAnimation,
   getLocalState,
 } from "../../src"
 
 describe("speed of updating 1,000 objects", () => {
   const anims = Array.from({ length: 1_000 }, () =>
-    createAnimationInfo(
+    createAnimation(
       { p1: newVec2(0, 0), p2: newVec2(1, 1) },
       getLinearInterp(10)
     )
@@ -34,7 +34,7 @@ describe("speed of updating 1,000 objects", () => {
 
     function updateFrame(dt: number) {
       for (let anim of anims) {
-        updateAnimationInfo(anim, dt)
+        updateAnimation(anim, dt)
         const p1 = getLocalState(anim.children.p1)
         if (p1.x < 0 || p1.x > 1 || p1.y < 0 || p1.y > 1) console.log("p1", p1)
       }

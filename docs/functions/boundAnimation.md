@@ -1,0 +1,49 @@
+**@plexigraph/aninest** • [Readme](../README.md) \| [API](../globals.md)
+
+***
+
+[@plexigraph/aninest](../README.md) / boundAnimation
+
+# Function: boundAnimation()
+
+> **boundAnimation**\<`Animating`\>(`anim`, `bounds`): `void`
+
+Modifies the bounds of an object, changing what the animation is currently interpolating to.
+Note: you might have to call `updateAnimationInfo` after this to make sure the animation is updated,
+if the current state is outside the new bounds.
+You can also call `animationNeedsUpdate` to check if the animation needs to be updated before calling `updateAnimationInfo`.
+
+## Type parameters
+
+• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+
+## Parameters
+
+• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+
+The animation to modify
+
+• **bounds**: `undefined` \| `Partial`\<[`Bounds`](../type-aliases/Bounds.md)\<`PartialRecursiveAnimatable`\<`Animating`\>\>\>
+
+The new bounds to set. They can be partial and will be merged with the old bounds.
+
+## Returns
+
+`void`
+
+## Example
+
+```ts
+const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
+ upper: { a: 1, b: 1 },
+})
+modifyTo(anim, { a: 2 }) // will animate out to `a: 2` and then bounce back to `a: 1`
+...// run updateAnimationInfo in a loop here
+modifyAnimationBounds(anim, {
+lower: { b: -1 },
+})
+```
+
+## Source
+
+[Animate/Animatable.ts:390](https://github.com/plexigraph/aninest/blob/b607a0c/src/Animate/Animatable.ts#L390)

@@ -2,20 +2,20 @@ import {
   Vec2,
   addRecursiveStartListener,
   changeInterpFunction,
-  createAnimationInfo,
+  createAnimation,
   getStateTree,
   getLinearInterp,
   getSlerp,
   modifyTo,
   newVec2,
   removeRecursiveStartListener,
-  updateAnimationInfo,
+  updateAnimation,
   getLocalState,
   getLocalInterpingTo,
   mag,
-  addListener,
+  addLocalListener,
   subVec,
-  AnimationInfo,
+  Animation,
   sleep,
 } from "./src/index"
 
@@ -33,7 +33,7 @@ const WHITE: Color = { r: 255, g: 255, b: 255 }
 
 export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
   // set global interp function to slerp(1s)
-  const animInfo = createAnimationInfo<Line>(
+  const animInfo = createAnimation<Line>(
     { shape: { p1, p2 }, color },
     getSlerp(1)
   )
@@ -55,9 +55,9 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
     drawLine(ctx)
   }
   const animLoop = (dt: number) => {
-    return updateAnimationInfo(animInfo, dt)
+    return updateAnimation(animInfo, dt)
   }
-  const onPointChange = (animInfo: AnimationInfo<Vec2>) => {
+  const onPointChange = (animInfo: Animation<Vec2>) => {
     const oldPt = getLocalInterpingTo(animInfo)
     const newPt: Vec2 = getLocalState(animInfo)
     // subtract the vectors to get the difference
@@ -82,10 +82,10 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
       )
     )
   }
-  addListener(animInfo.children.shape.children.p1, "start", () =>
+  addLocalListener(animInfo.children.shape.children.p1, "start", () =>
     onPointChange(animInfo.children.shape.children.p1)
   )
-  addListener(animInfo.children.shape.children.p2, "start", () =>
+  addLocalListener(animInfo.children.shape.children.p2, "start", () =>
     onPointChange(animInfo.children.shape.children.p2)
   )
 

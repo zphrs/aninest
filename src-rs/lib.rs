@@ -160,7 +160,7 @@ fn guarantee_object(obj: &Object) -> Object {
 
 #[wasm_bindgen(typescript_custom_section)]
 const CREATE_ANIMATION_INFO: &'static str = r#"
-export function createAnimationInfo<Init extends RecursiveAnimatable<unknown>>(
+export function createAnimation<Init extends RecursiveAnimatable<unknown>>(
     init: Init,
     timing: Interp,
     bounds?: Bounds<Init>
@@ -168,7 +168,7 @@ export function createAnimationInfo<Init extends RecursiveAnimatable<unknown>>(
 "#;
 #[wasm_bindgen(skip_typescript, skip_jsdoc)]
 #[allow(non_snake_case)]
-pub fn createAnimationInfo(init: &Object, timing: &Function, bounds: &Object) -> Object {
+pub fn createAnimation(init: &Object, timing: &Function, bounds: &Object) -> Object {
     let (anim, children) = separate_children(init);
     let bounds: Object = guarantee_object(bounds);
 
@@ -192,7 +192,7 @@ pub fn createAnimationInfo(init: &Object, timing: &Function, bounds: &Object) ->
         let lower_bounds_children_key: Object = js!(&lower_bounds_children[key]).into();
         js!(&child_bounds["upper"] = &upper_bounds_children_key);
         js!(&child_bounds["lower"] = &lower_bounds_children_key);
-        let child_info = createAnimationInfo(&child, timing, &child_bounds);
+        let child_info = createAnimation(&child, timing, &child_bounds);
         js!(&info_children[key] = &child_info);
     }
     info

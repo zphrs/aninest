@@ -71,5 +71,3 @@ create a sudden change in velocity, the actual property value will remain contin
 The nice thing about recursive animations is that you can group related properties and subproperties together. This means that you can choose to only calculate certain subproperties on certain frames as needed. You can even make one property animate with a different interpolation function than another. This is useful for creating complex animations with ease.
 
 Here's a slightly more complex example with color, drawing the line to a 2D Canvas Context:
-
-https://gitkraken.dev/link/dnNjb2RlOi8vZWFtb2Rpby5naXRsZW5zL2xpbmsvci81NThlZWE2N2E5OGI3YmZmMGE5MzFhNGMzNDk3Njk0NDFiMGQzMjk0P3VybD1odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZwbGV4aWdyYXBoJTJGYW5pbmVzdC5naXQ%3D?origin=gitlens

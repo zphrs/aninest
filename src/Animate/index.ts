@@ -1,7 +1,7 @@
 // export {
 //   getProgress,
 //   animationNeedsUpdate,
-//   createAnimationInfo,
+//   createAnimation,
 //   modifyTo,
 //   addListener,
 //   removeListener,

@@ -1,19 +1,19 @@
 import {
-  AnimationInfo,
-  addListener,
-  createAnimationInfo,
+  Animation,
+  addLocalListener,
+  createAnimation,
   getLocalState,
   getStateTree,
   getLinearInterp,
   modifyTo,
   newVec2,
   removeListener,
-  updateAnimationInfo,
+  updateAnimation,
 } from "../src"
 describe("non-interrupted animation", () => {
-  let animationInfo: AnimationInfo<{ a: number; b: number }>
+  let animationInfo: Animation<{ a: number; b: number }>
   test("creates animation info", () => {
-    animationInfo = createAnimationInfo({ a: 2, b: 1 }, getLinearInterp(1))
+    animationInfo = createAnimation({ a: 2, b: 1 }, getLinearInterp(1))
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 2,
       b: 1,
@@ -24,20 +24,20 @@ describe("non-interrupted animation", () => {
       a: 1,
       b: 2,
     })
-    let needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    let needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 1.5,
       b: 1.5,
     })
-    expect(animationInfo.time).toBe(0.5)
+    expect(animationInfo._time).toBe(0.5)
     expect(needUpdate).toBe(true)
-    needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 1,
       b: 2,
     })
     expect(needUpdate).toBe(false)
-    needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 1,
       b: 2,
@@ -46,18 +46,18 @@ describe("non-interrupted animation", () => {
   })
 })
 describe("interrupted animation", () => {
-  let animationInfo = createAnimationInfo({ a: 2, b: 1 }, getLinearInterp(1))
+  let animationInfo = createAnimation({ a: 2, b: 1 }, getLinearInterp(1))
   test("updates animation info", () => {
     modifyTo(animationInfo, {
       a: 4,
       b: 3,
     })
-    let needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    let needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 3,
       b: 2,
     })
-    expect(animationInfo.time).toBe(0.5)
+    expect(animationInfo._time).toBe(0.5)
     expect(needUpdate).toBe(true)
   })
   test("interrupts animation", () => {
@@ -65,13 +65,13 @@ describe("interrupted animation", () => {
       a: 3,
       b: 4,
     })
-    let needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    let needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 3,
       b: 3,
     })
     expect(needUpdate).toBe(true)
-    needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 3,
       b: 4,
@@ -80,18 +80,18 @@ describe("interrupted animation", () => {
   })
 })
 describe("interrupted animation events", () => {
-  let animationInfo = createAnimationInfo({ a: 2, b: 1 }, getLinearInterp(1))
+  let animationInfo = createAnimation({ a: 2, b: 1 }, getLinearInterp(1))
   test("updates animation info", () => {
     modifyTo(animationInfo, {
       a: 4,
       b: 3,
     })
-    let needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    let needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 3,
       b: 2,
     })
-    expect(animationInfo.time).toBe(0.5)
+    expect(animationInfo._time).toBe(0.5)
     expect(needUpdate).toBe(true)
   })
   test("interrupts animation events", done => {
@@ -100,18 +100,18 @@ describe("interrupted animation events", () => {
       removeListener(animationInfo, "interrupt", onInterrupt)
       done()
     }
-    addListener(animationInfo, "interrupt", onInterrupt)
+    addLocalListener(animationInfo, "interrupt", onInterrupt)
     modifyTo(animationInfo, {
       a: 3,
       b: 4,
     })
-    let needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    let needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 3,
       b: 3,
     })
     expect(needUpdate).toBe(true)
-    needUpdate = updateAnimationInfo(animationInfo, 0.5)
+    needUpdate = updateAnimation(animationInfo, 0.5)
     expect(getLocalState(animationInfo)).toStrictEqual({
       a: 3,
       b: 4,
@@ -121,7 +121,7 @@ describe("interrupted animation events", () => {
 })
 
 describe("nested animation", () => {
-  const anim = createAnimationInfo(
+  const anim = createAnimation(
     { a: newVec2(0, 0), b: newVec2(1, 1) },
     getLinearInterp(1)
   )
@@ -137,13 +137,13 @@ describe("nested animation", () => {
       a: newVec2(1, 1),
       b: newVec2(0, 0),
     })
-    let needUpdate = updateAnimationInfo(anim, 0.5)
+    let needUpdate = updateAnimation(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 0.5, y: 0.5 },
       b: { x: 0.5, y: 0.5 },
     })
     expect(needUpdate).toBe(true)
-    needUpdate = updateAnimationInfo(anim, 0.5)
+    needUpdate = updateAnimation(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 1, y: 1 },
       b: { x: 0, y: 0 },
@@ -153,7 +153,7 @@ describe("nested animation", () => {
 })
 
 describe("bounds", () => {
-  const anim = createAnimationInfo({ a: newVec2(0, 0) }, getLinearInterp(1), {
+  const anim = createAnimation({ a: newVec2(0, 0) }, getLinearInterp(1), {
     lower: {
       a: newVec2(-1, -1),
     },
@@ -170,19 +170,19 @@ describe("bounds", () => {
     modifyTo(anim, {
       a: newVec2(2, 2),
     })
-    let needUpdate = updateAnimationInfo(anim, 1)
+    let needUpdate = updateAnimation(anim, 1)
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 2, y: 2 },
     })
     expect(needUpdate).toBe(true)
   })
   test("bounces", () => {
-    let needUpdate = updateAnimationInfo(anim, 0.5)
+    let needUpdate = updateAnimation(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 1.5, y: 1.5 },
     })
     expect(needUpdate).toBe(true)
-    needUpdate = updateAnimationInfo(anim, 0.5)
+    needUpdate = updateAnimation(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 1, y: 1 },
     })

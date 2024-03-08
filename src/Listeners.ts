@@ -1,7 +1,13 @@
 /**
  * @returns true if listener should be removed
+ * @example
+ * () => true // remove listener
+ * () => false // keep listener
+ * () => {} // keep listener
+ * @example
+ * ({a, b}) => console.log(a, b)
  */
-export type Listener<T> = (newValue: T) => boolean | void
+export type Listener<T> = (currentLocalState: T) => boolean | void
 
 type ListenerSet<T> = Set<Listener<T>>
 

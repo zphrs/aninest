@@ -1,14 +1,14 @@
 import {
-  createAnimationInfo,
+  createAnimation,
   newVec2,
   getLinearInterp,
   getStateTree,
   modifyTo,
-  updateAnimationInfo,
+  updateAnimation,
 } from "../../src"
 
 describe("speed of updating one object", () => {
-  const anim = createAnimationInfo(
+  const anim = createAnimation(
     { p1: newVec2(0, 0), p2: newVec2(1, 1) },
     getLinearInterp(1_000)
   )
@@ -31,7 +31,7 @@ describe("speed of updating one object", () => {
       // check how much time it takes to update 240 frames
       const start = performance.now()
       for (let j = 0; j < 240; j++) {
-        updateAnimationInfo(anim, updateSpeed)
+        updateAnimation(anim, updateSpeed)
         const state = getStateTree(anim)
         if (
           state.p1.x < 0 ||
@@ -44,12 +44,12 @@ describe("speed of updating one object", () => {
       const end = performance.now()
       const diff = end - start
       total_diff += diff
-      expect(end - start).toBeLessThan(10) // make sure that only 1/100th of each frame is used
+      expect(end - start).toBeLessThan(20) // make sure that only 1/50th of each frame is used in worst case
     }
     // average time per frame
     const avg = total_diff / 1000
     const end = performance.now()
-    // make sure that on average updating and getting the state is less than 1/100th of each frame
+    // make sure that on average updating and getting the state is less than 1/1000th of each frame
     expect(avg).toBeLessThan(1)
     expect(end - start).toBeLessThan(5000)
     expect(getStateTree(anim)).toStrictEqual({

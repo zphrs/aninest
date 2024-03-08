@@ -1,10 +1,10 @@
 import {
   Vec2,
-  createAnimationInfo,
+  createAnimation,
   getLocalState,
   getLinearInterp,
   modifyTo,
-  updateAnimationInfo,
+  updateAnimation,
 } from "./index"
 
 type Line = {
@@ -13,7 +13,7 @@ type Line = {
 }
 
 export default function createLine(p1: Vec2, p2: Vec2) {
-  const animInfo = createAnimationInfo<Line>({ p1, p2 }, getLinearInterp(0.5))
+  const animInfo = createAnimation<Line>({ p1, p2 }, getLinearInterp(0.5))
   return {
     getP1(): Vec2 {
       return getLocalState(animInfo.children.p1)
@@ -28,7 +28,7 @@ export default function createLine(p1: Vec2, p2: Vec2) {
       modifyTo(animInfo, { p2 })
     },
     update(dt: number) {
-      updateAnimationInfo(animInfo, dt)
+      updateAnimation(animInfo, dt)
     },
   }
 }
