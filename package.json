@@ -1,6 +1,6 @@
 {
   "name": "@plexigraph/aninest",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "index.js",
   "type": "module",
@@ -22,6 +22,7 @@
     "predeploy": "pnpm docs:build",
     "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
     "prepublish": "pnpm build:pkg",
+    "publish": "dist-package",
     "preversion": "pnpm test",
     "version": "pnpm build:pkg",
     "docs:dev": "pnpm --filter ./docs run docs:dev",
