@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1709911951118" clover="3.2.0">
+  <project timestamp="1709911951118" name="All files">
+    <metrics statements="212" coveredstatements="186" conditionals="38" coveredconditionals="33" methods="58" coveredmethods="29" elements="308" coveredelements="248" complexity="0" loc="212" ncloc="212" packages="3" files="8" classes="8"/>
+    <package name="src">
+      <metrics statements="6" coveredstatements="5" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="Listeners.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Listeners.ts">
+        <metrics statements="4" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="33" count="6114" type="stmt"/>
+        <line num="34" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="35" count="0" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/index.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.Animate">
+      <metrics statements="153" coveredstatements="147" conditionals="35" coveredconditionals="31" methods="31" coveredmethods="25"/>
+      <file name="Animatable.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Animate/Animatable.ts">
+        <metrics statements="138" coveredstatements="138" conditionals="32" coveredconditionals="31" methods="22" coveredmethods="22"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="169" count="8161100" type="stmt"/>
+        <line num="178" count="4" type="stmt"/>
+        <line num="181" count="7924125" type="cond" truecount="2" falsecount="0"/>
+        <line num="189" count="2879028" type="stmt"/>
+        <line num="190" count="2879028" type="stmt"/>
+        <line num="191" count="5758054" type="stmt"/>
+        <line num="192" count="5758054" type="stmt"/>
+        <line num="196" count="2879028" type="stmt"/>
+        <line num="200" count="8110" type="stmt"/>
+        <line num="208" count="3036" type="stmt"/>
+        <line num="209" count="3036" type="stmt"/>
+        <line num="210" count="3036" type="stmt"/>
+        <line num="227" count="12196" type="stmt"/>
+        <line num="228" count="12196" type="stmt"/>
+        <line num="229" count="12196" type="stmt"/>
+        <line num="230" count="12164" type="stmt"/>
+        <line num="231" count="12164" type="cond" truecount="2" falsecount="0"/>
+        <line num="232" count="8114" type="stmt"/>
+        <line num="234" count="4050" type="stmt"/>
+        <line num="241" count="12196" type="stmt"/>
+        <line num="257" count="4" type="stmt"/>
+        <line num="262" count="3036" type="stmt"/>
+        <line num="263" count="3036" type="cond" truecount="2" falsecount="0"/>
+        <line num="267" count="3036" type="stmt"/>
+        <line num="270" count="3036" type="stmt"/>
+        <line num="273" count="3036" type="stmt"/>
+        <line num="278" count="3036" type="stmt"/>
+        <line num="279" count="3036" type="stmt"/>
+        <line num="280" count="2020" type="stmt"/>
+        <line num="284" count="2020" type="stmt"/>
+        <line num="292" count="3036" type="stmt"/>
+        <line num="307" count="4" type="stmt"/>
+        <line num="311" count="3050" type="stmt"/>
+        <line num="315" count="3050" type="stmt"/>
+        <line num="316" count="2021" type="stmt"/>
+        <line num="317" count="2021" type="cond" truecount="1" falsecount="0"/>
+        <line num="318" count="2020" type="stmt"/>
+        <line num="320" count="3050" type="cond" truecount="1" falsecount="0"/>
+        <line num="321" count="2035" type="stmt"/>
+        <line num="322" count="2035" type="cond" truecount="1" falsecount="0"/>
+        <line num="323" count="6" type="stmt"/>
+        <line num="324" count="6" type="stmt"/>
+        <line num="325" count="6" type="stmt"/>
+        <line num="327" count="2035" type="stmt"/>
+        <line num="328" count="2035" type="stmt"/>
+        <line num="329" count="2035" type="stmt"/>
+        <line num="330" count="2035" type="stmt"/>
+        <line num="331" count="2035" type="stmt"/>
+        <line num="352" count="4" type="stmt"/>
+        <line num="359" count="1" type="stmt"/>
+        <line num="380" count="4" type="stmt"/>
+        <line num="385" count="1" type="stmt"/>
+        <line num="397" count="4" type="stmt"/>
+        <line num="400" count="2" type="stmt"/>
+        <line num="407" count="1" type="stmt"/>
+        <line num="409" count="2" type="stmt"/>
+        <line num="428" count="4" type="stmt"/>
+        <line num="431" count="2" type="stmt"/>
+        <line num="438" count="1" type="stmt"/>
+        <line num="440" count="2" type="stmt"/>
+        <line num="448" count="2075" type="stmt"/>
+        <line num="449" count="2075" type="cond" truecount="1" falsecount="0"/>
+        <line num="450" count="2075" type="stmt"/>
+        <line num="451" count="4080" type="stmt"/>
+        <line num="454" count="2075" type="stmt"/>
+        <line num="455" count="4071" type="stmt"/>
+        <line num="457" count="2075" type="stmt"/>
+        <line num="478" count="4" type="stmt"/>
+        <line num="482" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="486" count="19" type="stmt"/>
+        <line num="489" count="19" type="stmt"/>
+        <line num="493" count="19" type="stmt"/>
+        <line num="497" count="19" type="stmt"/>
+        <line num="498" count="19" type="stmt"/>
+        <line num="499" count="10" type="stmt"/>
+        <line num="503" count="10" type="stmt"/>
+        <line num="509" count="19" type="stmt"/>
+        <line num="515" count="2047" type="stmt"/>
+        <line num="516" count="2047" type="stmt"/>
+        <line num="517" count="2047" type="stmt"/>
+        <line num="518" count="4084" type="stmt"/>
+        <line num="519" count="4084" type="stmt"/>
+        <line num="520" count="4084" type="stmt"/>
+        <line num="521" count="4084" type="stmt"/>
+        <line num="522" count="4084" type="cond" truecount="1" falsecount="0"/>
+        <line num="523" count="8" type="stmt"/>
+        <line num="527" count="8" type="stmt"/>
+        <line num="536" count="2038" type="stmt"/>
+        <line num="537" count="2038" type="stmt"/>
+        <line num="538" count="2038" type="stmt"/>
+        <line num="557" count="4" type="stmt"/>
+        <line num="560" count="3126102" type="cond" truecount="1" falsecount="0"/>
+        <line num="561" count="247074" type="stmt"/>
+        <line num="563" count="2879028" type="stmt"/>
+        <line num="564" count="2879028" type="stmt"/>
+        <line num="582" count="4" type="stmt"/>
+        <line num="585" count="726081" type="stmt"/>
+        <line num="586" count="726081" type="stmt"/>
+        <line num="587" count="484046" type="stmt"/>
+        <line num="591" count="726081" type="stmt"/>
+        <line num="601" count="4" type="stmt"/>
+        <line num="605" count="7922097" type="cond" truecount="0" falsecount="1"/>
+        <line num="606" count="7922097" type="stmt"/>
+        <line num="607" count="7922097" type="stmt"/>
+        <line num="609" count="7922097" type="stmt"/>
+        <line num="616" count="5280029" type="cond" truecount="1" falsecount="0"/>
+        <line num="617" count="5278011" type="stmt"/>
+        <line num="620" count="7922097" type="cond" truecount="3" falsecount="0"/>
+        <line num="621" count="2028" type="stmt"/>
+        <line num="622" count="2028" type="stmt"/>
+        <line num="623" count="2028" type="stmt"/>
+        <line num="627" count="2028" type="stmt"/>
+        <line num="628" count="2028" type="cond" truecount="1" falsecount="0"/>
+        <line num="629" count="2026" type="stmt"/>
+        <line num="632" count="7922097" type="stmt"/>
+        <line num="671" count="4" type="stmt"/>
+        <line num="678" count="4" type="stmt"/>
+        <line num="679" count="4" type="stmt"/>
+        <line num="680" count="4" type="stmt"/>
+        <line num="681" count="4" type="stmt"/>
+        <line num="682" count="4" type="stmt"/>
+        <line num="683" count="4" type="stmt"/>
+        <line num="684" count="4" type="stmt"/>
+        <line num="686" count="4" type="stmt"/>
+        <line num="687" count="4" type="stmt"/>
+        <line num="689" count="4" type="stmt"/>
+        <line num="690" count="2" type="stmt"/>
+        <line num="713" count="4" type="stmt"/>
+        <line num="716" count="2055" type="cond" truecount="1" falsecount="0"/>
+        <line num="717" count="2052" type="stmt"/>
+        <line num="719" count="3" type="stmt"/>
+        <line num="733" count="4" type="stmt"/>
+        <line num="736" count="4" type="stmt"/>
+        <line num="737" count="4" type="stmt"/>
+        <line num="744" count="2" type="stmt"/>
+        <line num="748" count="4" type="stmt"/>
+      </file>
+      <file name="Interp.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Animate/Interp.ts">
+        <metrics statements="13" coveredstatements="7" conditionals="3" coveredconditionals="0" methods="9" coveredmethods="3"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="20" count="13" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="1012" type="cond" truecount="0" falsecount="1"/>
+        <line num="31" count="8161087" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="67" count="0" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Animate/index.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.Utils">
+      <metrics statements="53" coveredstatements="34" conditionals="2" coveredconditionals="2" methods="26" coveredmethods="3"/>
+      <file name="index.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Utils/index.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+      </file>
+      <file name="sleep.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Utils/sleep.ts">
+        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+      </file>
+      <file name="vec2.ts" path="/Users/zephyrjones/Documents/programming/aninest/src/Utils/vec2.ts">
+        <metrics statements="49" coveredstatements="31" conditionals="2" coveredconditionals="2" methods="24" coveredmethods="3"/>
+        <line num="15" count="5758049" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="49" count="4" type="stmt"/>
+        <line num="54" count="8165184" type="stmt"/>
+        <line num="55" count="8165184" type="cond" truecount="1" falsecount="0"/>
+        <line num="56" count="8161108" type="stmt"/>
+        <line num="58" count="8165184" type="cond" truecount="1" falsecount="0"/>
+        <line num="59" count="8161123" type="stmt"/>
+        <line num="61" count="8165184" type="stmt"/>
+        <line num="67" count="4034" type="stmt"/>
+        <line num="72" count="4" type="stmt"/>
+        <line num="78" count="4" type="stmt"/>
+        <line num="84" count="4" type="stmt"/>
+        <line num="92" count="4" type="stmt"/>
+        <line num="100" count="4" type="stmt"/>
+        <line num="107" count="4" type="stmt"/>
+        <line num="115" count="4" type="stmt"/>
+        <line num="122" count="4" type="stmt"/>
+        <line num="129" count="4" type="stmt"/>
+        <line num="137" count="4" type="stmt"/>
+        <line num="145" count="4" type="stmt"/>
+        <line num="153" count="4" type="stmt"/>
+        <line num="161" count="4" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="174" count="4" type="stmt"/>
+        <line num="175" count="0" type="stmt"/>
+        <line num="176" count="0" type="stmt"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="179" count="0" type="stmt"/>
+        <line num="187" count="4" type="stmt"/>
+        <line num="195" count="4" type="stmt"/>
+        <line num="200" count="4" type="stmt"/>
+        <line num="201" count="0" type="stmt"/>
+        <line num="210" count="4" type="stmt"/>
+        <line num="211" count="0" type="stmt"/>
+        <line num="220" count="4" type="stmt"/>
+        <line num="221" count="0" type="stmt"/>
+        <line num="232" count="4" type="stmt"/>
+        <line num="240" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
