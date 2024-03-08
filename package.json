@@ -20,7 +20,7 @@
     "preview": "vite preview",
     "test": "jest",
     "predeploy": "pnpm docs:build",
-    "deploy": "gh-pages -d ./docs/dist -t true",
+    "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
     "prepublish": "pnpm build:pkg",
     "preversion": "pnpm test",
     "version": "pnpm build:pkg",
