@@ -20,4 +20,4 @@ Returns a [PartialAnimatable](LocalAnimatable.md) of the new local state with al
 
 ## Source
 
-[Animate/Animatable.ts:63](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L63)
+[Animate/Animatable.ts:63](https://github.com/plexigraph/aninest/blob/6d904f7/src/Animate/Animatable.ts#L63)

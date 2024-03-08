@@ -53,4 +53,4 @@ modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
 
 ## Source
 
-[Animate/Animatable.ts:380](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L380)
+[Animate/Animatable.ts:380](https://github.com/plexigraph/aninest/blob/6d904f7/src/Animate/Animatable.ts#L380)

@@ -22,4 +22,4 @@ A scalar.
 
 ## Source
 
-[Utils/vec2.ts:145](https://github.com/plexigraph/aninest/blob/6141dee/src/Utils/vec2.ts#L145)
+[Utils/vec2.ts:145](https://github.com/plexigraph/aninest/blob/6d904f7/src/Utils/vec2.ts#L145)

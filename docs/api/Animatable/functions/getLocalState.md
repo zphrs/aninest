@@ -45,4 +45,4 @@ const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 
 ## Source
 
-[Animate/Animatable.ts:557](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L557)
+[Animate/Animatable.ts:557](https://github.com/plexigraph/aninest/blob/6d904f7/src/Animate/Animatable.ts#L557)

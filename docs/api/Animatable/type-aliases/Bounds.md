@@ -38,4 +38,4 @@ upper: Partial<T>;
 
 ## Source
 
-[Animate/Animatable.ts:32](https://github.com/plexigraph/aninest/blob/6141dee/src/Animate/Animatable.ts#L32)
+[Animate/Animatable.ts:32](https://github.com/plexigraph/aninest/blob/6d904f7/src/Animate/Animatable.ts#L32)

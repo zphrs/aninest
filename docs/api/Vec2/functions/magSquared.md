@@ -18,4 +18,4 @@ Squares the magnitude of a vector.
 
 ## Source
 
-[Utils/vec2.ts:122](https://github.com/plexigraph/aninest/blob/6141dee/src/Utils/vec2.ts#L122)
+[Utils/vec2.ts:122](https://github.com/plexigraph/aninest/blob/6d904f7/src/Utils/vec2.ts#L122)
