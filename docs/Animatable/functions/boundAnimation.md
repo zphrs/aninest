@@ -33,7 +33,7 @@ The new bounds to set. They can be partial and will be merged with the old bound
 
 ```ts
 const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
- upper: { a: 1, b: 1 },
+upper: { a: 1, b: 1 },
 })
 modifyTo(anim, { a: 2 }) // will animate out to `a: 2` and then bounce back to `a: 1`
 ...// run updateAnimationInfo in a loop here
@@ -44,4 +44,4 @@ lower: { b: -1 },
 
 ## Source
 
-[Animate/Animatable.ts:384](https://github.com/plexigraph/aninest/blob/55953ac/src/Animate/Animatable.ts#L384)
+[Animate/Animatable.ts:381](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L381)

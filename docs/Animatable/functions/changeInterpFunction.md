@@ -64,4 +64,4 @@ getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
 
 ## Source
 
-[Animate/Animatable.ts:574](https://github.com/plexigraph/aninest/blob/55953ac/src/Animate/Animatable.ts#L574)
+[Animate/Animatable.ts:571](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L571)

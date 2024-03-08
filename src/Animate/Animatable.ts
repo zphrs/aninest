@@ -154,10 +154,10 @@ function separateChildren<T extends RecursiveAnimatable<unknown>>(
 /**
  * Creates an animation info object, automatically inferring type from the init object.
  * @example
- * const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
- *   upper: { a: 1, b: 1 },
- *   lower: { a: -1, b: -1 },
- * })
+const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
+  upper: { a: 1, b: 1 },
+  lower: { a: -1, b: -1 },
+})
  * @param init The initial state of the animation
  * @param timing The timing function. See [Interp.ts](./Interp.ts) for some common timing functions
  * @param bounds Optional bounds for the animation. The animation will be loosely clamped to these bounds
@@ -203,12 +203,9 @@ export function createAnimation<Init extends RecursiveAnimatable<unknown>>(
 /**
  * Sets the final stopping point of the animation.
  * The animation will start to interpolate to the new state.
- * @example
- * modifyTo<{a: number, b: number}>(anim, { a: 1, b: 1 })
- * @example
- * modifyTo<{a: Vec2, b: Vec2}>(anim, {a: {x: 1}})
- * @example
- * modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
+ * @example modifyTo<{a: number, b: number}>(anim, { a: 1, b: 1 })
+ * @example modifyTo<{a: Vec2, b: Vec2}>(anim, {a: {x: 1}})
+ * @example modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
  * @param anim The animation object
  * @param to The new partial state of the animation. A partial state
  * means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
@@ -249,10 +246,10 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
  * - interrupt: when a new `modifyTo` is called before the animation is finished
  * Animation listeners are scoped to only trigger when the current level of the animation is modified.
  * @example
- * const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
- * addListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
- * addListener(anim.children.a, "start", state => console.log("started", state)) // will trigger
- * modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
+const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
+addListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
+addListener(anim.children.a, "start", state => console.log("started", state)) // will trigger
+modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @see {@link addRecursiveStartListener} for a recursive listener which triggers on any child modification
  * @see {@link removeListener} to remove a listener from an animation
  * @param anim The animation object
@@ -273,14 +270,14 @@ export function addLocalListener<
  * Removes a listener from the animation
  * @see {@link addLocalListener} to add a listener to an animation
  * @example
- * // setup
- * const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
- * const listener = state => console.log("started", state)
- * addListener(anim, "start", listener)
+// setup
+const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
+const listener = state => console.log("started", state)
+addListener(anim, "start", listener)
  *
- * modifyTo(anim, {a: {x: 1}}) // will trigger the listener
+modifyTo(anim, {a: {x: 1}}) // will trigger the listener
  *
- * removeListener(anim, "start", listener)
+removeListener(anim, "start", listener)
  * modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
  * @param anim The animation object
  * @param type "start", "end", "bounce", "interrupt" - the type used to add the listener
@@ -297,8 +294,8 @@ export function removeListener<Animating extends RecursiveAnimatable<unknown>>(
 /**
  * Adds a recursive start listener to the animation. This listener will trigger on any child modification.
  * @example
- * const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
- * addRecursiveStartListener(anim, () => console.log("started")) // will trigger
+const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
+addRecursiveStartListener(anim, () => console.log("started")) // will trigger
  * @param anim
  * @param listener
  */
@@ -320,17 +317,17 @@ export function addRecursiveStartListener<
 /**
  * Removes a recursive start listener from the animation
  * @example
- * // setup
- * const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
- * const listener = () => console.log("started")
- * addRecursiveStartListener(anim, listener)
- *
- * modifyTo(anim.children.a, {x: 1}) // will trigger the listener
- *
- * removeRecursiveStartListener(anim, listener)
- * modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
- * @param anim
- * @param listener
+// setup
+const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
+const listener = () => console.log("started")
+addRecursiveStartListener(anim, listener)
+
+modifyTo(anim.children.a, {x: 1}) // will trigger the listener
+
+removeRecursiveStartListener(anim, listener)
+modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
+@param anim
+@param listener
  */
 export function removeRecursiveStartListener<
   Animating extends RecursiveAnimatable<unknown>
@@ -370,14 +367,14 @@ function mergeDicts<T1 extends object, T2 extends object>(
  * if the current state is outside the new bounds.
  * You can also call `animationNeedsUpdate` to check if the animation needs to be updated before calling `updateAnimationInfo`.
  * @example
- * const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
- *  upper: { a: 1, b: 1 },
- * })
- * modifyTo(anim, { a: 2 }) // will animate out to `a: 2` and then bounce back to `a: 1`
- * ...// run updateAnimationInfo in a loop here
- * modifyAnimationBounds(anim, {
- * lower: { b: -1 },
- * })
+const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
+ upper: { a: 1, b: 1 },
+})
+modifyTo(anim, { a: 2 }) // will animate out to `a: 2` and then bounce back to `a: 1`
+...// run updateAnimationInfo in a loop here
+modifyAnimationBounds(anim, {
+lower: { b: -1 },
+})
  * @param anim The animation to modify
  * @param bounds The new bounds to set. They can be partial and will be merged with the old bounds.
  */
@@ -448,14 +445,14 @@ function saveState<Animating extends RecursiveAnimatable<unknown>>(
  * Gets the current local state of the animation, meaning only the numbers in the topmost level of the input animation.
  * To access the local state of a child, use `anim.children.childName` as the input.
  * @example
- * const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInterp(1))
- * const localState = getLocalState(anim) // {}
- * const localStateA = getLocalState(anim.children.a) // {x: 0, y: 0}
- * const localStateB = getLocalState(anim.children.b) // {x: 1, y: 1}
+const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInterp(1))
+const localState = getLocalState(anim) // {}
+const localStateA = getLocalState(anim.children.a) // {x: 0, y: 0}
+const localStateB = getLocalState(anim.children.b) // {x: 1, y: 1}
  * @example
- * const anim = createAnimation({ a: newVec2(0, 0), b: 1 }, NO_INTERP)
- * const localState = getLocalState(anim) // { b: 1 }
- * const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
+const anim = createAnimation({ a: newVec2(0, 0), b: 1 }, NO_INTERP)
+const localState = getLocalState(anim) // { b: 1 }
+const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
  * @param anim The animation object
  * @returns The local state of the animation
  */
@@ -476,10 +473,10 @@ export function getLocalState<Animating extends RecursiveAnimatable<unknown>>(
 /**
  * Gets the total state of the animation, including all children.
  * @example
- * const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInterp(1))
- * const state = getStateTree(anim) // {a: {x: 0, y: 0}, b: {x: 1, y: 1}}
- * const stateA = getStateTree(anim.children.a) // {x: 0, y: 0}
- * const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
+const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInterp(1))
+const state = getStateTree(anim) // {a: {x: 0, y: 0}, b: {x: 1, y: 1}}
+const stateA = getStateTree(anim.children.a) // {x: 0, y: 0}
+const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
  * @param anim
  * @returns
  */
@@ -559,14 +556,14 @@ export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
  * const {x: {value: x}, y: {value: y}} = getStateTree(anim.children.a)
  * ```
  * @example
- * const anim = createAnimation({a: newVec2(0, 0), b: newVec2(0, 0)}, getLinearInterp(1))
- * modifyTo(anim, {a: newVec2(1, 1), b: newVec2(1, 1)})
- * getStateTree(anim) // {a: {x: 0, y: 0}, b: {x: 0, y: 0}}
- * updateAnimation(anim, 0.5)
- * getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.5, y: 0.5}}
- * changeInterpFunction(anim, getLinearInterp(2), {a: false}) // doesn't change a, does change b
- * updateAnimation(anim, 0.5)
- * getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
+const anim = createAnimation({a: newVec2(0, 0), b: newVec2(0, 0)}, getLinearInterp(1))
+modifyTo(anim, {a: newVec2(1, 1), b: newVec2(1, 1)})
+getStateTree(anim) // {a: {x: 0, y: 0}, b: {x: 0, y: 0}}
+updateAnimation(anim, 0.5)
+getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.5, y: 0.5}}
+changeInterpFunction(anim, getLinearInterp(2), {a: false}) // doesn't change a, does change b
+updateAnimation(anim, 0.5)
+getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
  * @param anim
  * @param interp
  * @param mask Assumes default of true for all keys. It is optional.
@@ -603,10 +600,10 @@ export function changeInterpFunction<
  * This only returns the local state of the animation, meaning only the numbers
  * in the topmost level of the input animation.
  * @example
- * const anim = createAnimation({a: newVec(0, 0), b: 0, c: 0}, getLinearInterp(1))
- * getLocalInterpingTo(anim) // {b: 0, c: 0}
- * modifyTo(anim, {a: newVec(1, 1), b: 1})
- * getLocalInterpingTo(anim) // {b: 1, c: 0}
+const anim = createAnimation({a: newVec(0, 0), b: 0, c: 0}, getLinearInterp(1))
+getLocalInterpingTo(anim) // {b: 0, c: 0}
+modifyTo(anim, {a: newVec(1, 1), b: 1})
+getLocalInterpingTo(anim) // {b: 1, c: 0}
  * @param anim The animation object
  * @returns The local target state of the animation
  */
@@ -622,10 +619,10 @@ export function getLocalInterpingTo<
  * Gets the total target state that the animation is currently headed to.
  * If the animation is not headed to any state, it will return the current state.
  * @example
- * const anim = createAnimation({a: newVec(0, 0), b: 0, c: 0}, getLinearInterp(1))
- * getInterpingToTree(anim) // {a: {x: 0, y: 0}, b: 0, c: 0}
- * modifyTo(anim, {a: newVec(1, 1), b: 1})
- * getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0}
+const anim = createAnimation({a: newVec(0, 0), b: 0, c: 0}, getLinearInterp(1))
+getInterpingToTree(anim) // {a: {x: 0, y: 0}, b: 0, c: 0}
+modifyTo(anim, {a: newVec(1, 1), b: 1})
+getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0}
  * @param anim
  * @returns
  */

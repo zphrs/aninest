@@ -24,4 +24,4 @@ await sleep(1) // sleep for 1 second
 
 ## Source
 
-[Utils/sleep.ts:9](https://github.com/plexigraph/aninest/blob/55953ac/src/Utils/sleep.ts#L9)
+[Utils/sleep.ts:9](https://github.com/plexigraph/aninest/blob/b36f74d/src/Utils/sleep.ts#L9)

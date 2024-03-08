@@ -39,11 +39,11 @@ The animation info object.
 
 ```ts
 const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
-  upper: { a: 1, b: 1 },
-  lower: { a: -1, b: -1 },
+ upper: { a: 1, b: 1 },
+ lower: { a: -1, b: -1 },
 })
 ```
 
 ## Source
 
-[Animate/Animatable.ts:166](https://github.com/plexigraph/aninest/blob/55953ac/src/Animate/Animatable.ts#L166)
+[Animate/Animatable.ts:166](https://github.com/plexigraph/aninest/blob/b36f74d/src/Animate/Animatable.ts#L166)

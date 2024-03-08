@@ -24,4 +24,4 @@ y: number = 0;
 
 ## Source
 
-[Utils/vec2.ts:40](https://github.com/plexigraph/aninest/blob/55953ac/src/Utils/vec2.ts#L40)
+[Utils/vec2.ts:40](https://github.com/plexigraph/aninest/blob/b36f74d/src/Utils/vec2.ts#L40)
