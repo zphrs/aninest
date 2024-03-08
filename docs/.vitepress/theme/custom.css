@@ -202,3 +202,16 @@ td:first-child a[href^="./type-aliases/"]::before {
   --vp-button-alt-active-text: var(--vp-c-brand-1);
   --vp-button-alt-active-bg: transparent;
 }
+
+.VPFeature .icon {
+  letter-spacing: -1em;
+  padding-right: 1.5rem;
+}
+
+.VPImage {
+  border-radius: 6px;
+  width: 50px;
+  height: 50px;
+  padding: 13px;
+  background-color: var(--vp-c-default-soft);
+}

@@ -87,6 +87,7 @@ const ctx = canvas.getContext("2d")!
 document.body.appendChild(canvas)
 const line = createLine({ x: 0, y: 0 }, { x: 100, y: 100 })
 let lastTime: number | undefined = undefined
+// draw loop
 function draw(time: number) {
   const dt = lastTime ? time - lastTime : 0
   const needsUpdate = line.update(dt / 1000)
