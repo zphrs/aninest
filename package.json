@@ -23,7 +23,7 @@
     "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
     "prepublish": "pnpm build:lib",
     "preversion": "pnpm test",
-    "version": "pnpm build:pkg",
+    "version": "pnpm run build:lib && pnpm run predeploy && pnpm run deploy",
     "docs:dev": "pnpm --filter ./docs run docs:dev",
     "docs:build": "pnpm --filter ./docs run docs:build",
     "docs:preview": "pnpm --filter ./docs run docs:preview",

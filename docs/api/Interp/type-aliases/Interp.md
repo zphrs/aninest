@@ -20,4 +20,4 @@ Time in milliseconds. Guaranteed to be positive.
 
 ## Source
 
-[Animate/Interp.ts:14](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Interp.ts#L14)
+[Animate/Interp.ts:14](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Interp.ts#L14)

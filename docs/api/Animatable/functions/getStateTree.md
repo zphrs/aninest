@@ -31,4 +31,4 @@ const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:581](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L581)
+[Animate/Animatable.ts:665](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L665)

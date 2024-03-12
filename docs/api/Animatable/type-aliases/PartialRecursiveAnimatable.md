@@ -31,4 +31,4 @@ a: {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:116](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L116)
+[Animate/Animatable.ts:121](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L121)

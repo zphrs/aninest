@@ -1,9 +1,12 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / removeRecursiveStartListener
+[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / removeRecursiveListener
 
-# removeRecursiveStartListener()
+# removeRecursiveListener()
 
 ```ts
-removeRecursiveStartListener<Animating>(anim, listener): void
+removeRecursiveListener<Animating>(
+   anim, 
+   type, 
+   listener): void
 ```
 
 Removes a recursive start listener from the animation
@@ -15,6 +18,8 @@ Removes a recursive start listener from the animation
 ## Parameters
 
 • **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+
+• **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
 • **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
 
@@ -28,14 +33,14 @@ Removes a recursive start listener from the animation
 // setup
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 const listener = () => console.log("started")
-addRecursiveStartListener(anim, listener)
+addRecursiveListener(anim, "start", listener)
 
 modifyTo(anim.children.a, {x: 1}) // will trigger the listener
 
-removeRecursiveStartListener(anim, listener)
+removeRecursiveListener(anim, "start", listener)
 modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 ```
 
 ## Source
 
-[Animate/Animatable.ts:427](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L427)
+[Animate/Animatable.ts:507](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L507)

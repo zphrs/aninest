@@ -30,4 +30,4 @@ whether the animation needs to be updated again
 
 ## Source
 
-[Animate/Animatable.ts:600](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L600)
+[Animate/Animatable.ts:684](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L684)

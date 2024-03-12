@@ -18,4 +18,4 @@ Returns a linear interpolation function.
 
 ## Source
 
-[Animate/Interp.ts:29](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Interp.ts#L29)
+[Animate/Interp.ts:29](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Interp.ts#L29)

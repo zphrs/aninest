@@ -55,4 +55,4 @@ y: number;
 
 ## Source
 
-[Utils/vec2.ts:232](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Utils/vec2.ts#L232)
+[Utils/vec2.ts:232](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L232)

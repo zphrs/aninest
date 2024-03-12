@@ -44,4 +44,4 @@ lower: { b: -1 },
 
 ## Source
 
-[Animate/Animatable.ts:477](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L477)
+[Animate/Animatable.ts:561](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L561)

@@ -46,4 +46,4 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
 
 ## Source
 
-[Animate/Animatable.ts:256](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L256)
+[Animate/Animatable.ts:311](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L311)

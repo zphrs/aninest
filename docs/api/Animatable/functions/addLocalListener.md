@@ -49,9 +49,9 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## See
 
- - [addRecursiveStartListener](addRecursiveStartListener.md) for a recursive listener which triggers on any child modification
+ - addRecursiveStartListener for a recursive listener which triggers on any child modification
  - [removeListener](removeListener.md) to remove a listener from an animation
 
 ## Source
 
-[Animate/Animatable.ts:351](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L351)
+[Animate/Animatable.ts:426](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L426)

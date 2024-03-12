@@ -1,9 +1,12 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / addRecursiveStartListener
+[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / addRecursiveListener
 
-# addRecursiveStartListener()
+# addRecursiveListener()
 
 ```ts
-addRecursiveStartListener<Animating>(anim, listener): void
+addRecursiveListener<Animating>(
+   anim, 
+   type, 
+   listener): void
 ```
 
 Adds a recursive start listener to the animation. This listener will trigger on any child modification.
@@ -16,7 +19,11 @@ Adds a recursive start listener to the animation. This listener will trigger on 
 
 • **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
+• **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+
 • **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
+
+() => boolean Returns whether to remove the listener. Void or false to keep the listener.
 
 ## Returns
 
@@ -26,9 +33,9 @@ Adds a recursive start listener to the animation. This listener will trigger on 
 
 ```ts
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
-addRecursiveStartListener(anim, () => console.log("started")) // will trigger
+addRecursiveListener(anim, "start", () => console.log("started")) // will trigger
 ```
 
 ## Source
 
-[Animate/Animatable.ts:396](https://github.com/plexigraph/aninest/blob/c1a56b4/src/Animate/Animatable.ts#L396)
+[Animate/Animatable.ts:472](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L472)
