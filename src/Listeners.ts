@@ -29,10 +29,17 @@ export type Listeners<Events extends string, T> = {
 /**
  * @internal
  */
-export function broadcast<T>(listeners: Set<Listener<T>>, value: T) {
+export function broadcast<T>(
+  listeners: Set<Listener<T>>,
+  value: T,
+  onRemove?: (listener: Listener<T>) => void
+) {
   for (const listener of listeners) {
     if (listener(value)) {
       listeners.delete(listener)
+      if (onRemove) {
+        onRemove(listener)
+      }
     }
   }
 }

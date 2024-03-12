@@ -4,8 +4,13 @@
  */
 
 import { clamp, lerpFunc } from "../Utils/vec2"
-import { broadcast, type Listener, type Listeners } from "../Listeners"
-import type { Interp } from "./Interp"
+import {
+  broadcast,
+  ListenerSet,
+  type Listener,
+  type Listeners,
+} from "../Listeners"
+import { NO_INTERP, type Interp } from "./Interp"
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost level of the input animation.
@@ -133,8 +138,9 @@ type AnimationWithoutChildren<Animating extends RecursiveAnimatable<unknown>> =
     _from: LocalAnimatable<Animating>
     _to: Partial<LocalAnimatable<Animating>> | null
     _bounds: Bounds<LocalAnimatable<Animating>>
-  } & Listeners<AnimatableEvents, Partial<LocalAnimatable<Animating>>> &
-    Listeners<"recursiveStart", undefined>
+  } & Listeners<AnimatableEvents, Partial<LocalAnimatable<Animating>>> & {
+      [key in `recursive${Capitalize<AnimatableEvents>}Listeners`]: ListenerSet<undefined>
+    }
 
 /**
  * The animation object. This is a recursive type, meaning that it can contain other animations.
@@ -217,6 +223,9 @@ function createLocalAnimation<Animating extends RecursiveAnimatable<unknown>>(
     bounceListeners: new Set(),
     interruptListeners: new Set(),
     recursiveStartListeners: new Set(),
+    recursiveEndListeners: new Set(),
+    recursiveBounceListeners: new Set(),
+    recursiveInterruptListeners: new Set(),
   }
 }
 
@@ -238,6 +247,52 @@ function separateChildren<T extends RecursiveAnimatable<unknown>>(
     }
   }
   return [anim, children]
+}
+
+/**
+ * Will loop the animation, meaning that it will loop from the initial state to the target state and jump back to the initial state.
+ * @group Helpers
+ * @example
+const anim = createAnimation({a: 0, b: 0}, getLinearInterp(1))
+loopAnimation(anim)
+anim.modifyTo({a: 1, b: 1})
+anim.updateAnimation(0.5)
+anim.getStateTree() // {a: 0.5, b: 0.5}
+anim.updateAnimation(0.49)
+anim.getStateTree() // {a: ~1, b: ~1}
+anim.updateAnimation(0.01) // will trigger the loop
+anim.getStateTree() // {a: 0, b: 0}
+ * @param anim
+ * @returns A function that will stop the loop when called
+ */
+export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
+  anim: Animation<Animating>
+) {
+  // only one init/towards at a time
+  let init: PartialRecursiveAnimatable<Animating> | null = null
+  let towards: PartialRecursiveAnimatable<Animating> | null = null
+  const onEnd = () => {
+    if (init === null || towards === null) return
+    const currInterpFunction = anim._timingFunction
+    removeRecursiveListener(anim, "start", onStart) // must remove to prevent infinite recursion
+    removeRecursiveListener(anim, "end", onEnd)
+    changeInterpFunction(anim, NO_INTERP)
+    modifyTo(anim, init) // will apply immediately because of NO_INTERP
+    changeInterpFunction(anim, currInterpFunction)
+    modifyTo(anim, towards)
+    addRecursiveListener(anim, "start", onStart)
+    return true // will remove the listener
+  }
+  const onStart = () => {
+    init = getStateTree(anim)
+    towards = getInterpingToTree(anim)
+    addRecursiveListener(anim, "end", onEnd)
+  }
+  addRecursiveListener(anim, "start", onStart)
+  return () => {
+    removeRecursiveListener(anim, "start", onStart)
+    removeRecursiveListener(anim, "end", onEnd)
+  }
 }
 
 /**
@@ -288,6 +343,27 @@ export function createAnimation<Init extends RecursiveAnimatable<unknown>>(
       ? undefined
       : Animation<RecursiveAnimatable<Init[keyof Init]>>
   }
+  // add the recursive listeners
+  addLocalListener(info, "start", () => {
+    broadcast(info.recursiveStartListeners, undefined, listener => {
+      removeRecursiveListener(info, "start", listener)
+    })
+  })
+  addLocalListener(info, "end", () => {
+    broadcast(info.recursiveEndListeners, undefined, listener => {
+      removeRecursiveListener(info, "end", listener)
+    })
+  })
+  addLocalListener(info, "bounce", () => {
+    broadcast(info.recursiveBounceListeners, undefined, listener => {
+      removeRecursiveListener(info, "bounce", listener)
+    })
+  })
+  addLocalListener(info, "interrupt", () => {
+    broadcast(info.recursiveInterruptListeners, undefined, listener => {
+      removeRecursiveListener(info, "interrupt", listener)
+    })
+  })
   return info as Animation<Init>
 }
 /**
@@ -327,7 +403,6 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
   anim._to = completeTo
   updateAnimation(anim, 0)
   broadcast(anim.startListeners, completeTo)
-  broadcast(anim.recursiveStartListeners, undefined)
 }
 /**
  * Adds a local listener to the animation. You can listen to the following events:
@@ -389,23 +464,28 @@ export function removeListener<Animating extends RecursiveAnimatable<unknown>>(
  * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
-addRecursiveStartListener(anim, () => console.log("started")) // will trigger
+addRecursiveListener(anim, "start", () => console.log("started")) // will trigger
  * @param anim
- * @param listener
+ * @param type
+ * @param listener () => boolean Returns whether to remove the listener. Void or false to keep the listener.
  */
-export function addRecursiveStartListener<
+export function addRecursiveListener<
   Animating extends RecursiveAnimatable<unknown>
->(anim: Animation<Animating>, listener: Listener<undefined>) {
-  for (const childInfo of Object.values<
-    Animation<RecursiveAnimatable<unknown>>
-  >(
+>(
+  anim: Animation<Animating>,
+  type: AnimatableEvents,
+  listener: Listener<Partial<undefined>>
+) {
+  const capitalizedType = (type.charAt(0).toUpperCase() +
+    type.slice(1)) as Capitalize<AnimatableEvents>
+  anim[`recursive${capitalizedType}Listeners`].add(listener)
+  for (const childInfo of Object.values(
     anim.children as unknown as {
       [s: string]: Animation<RecursiveAnimatable<unknown>>
     }
   )) {
-    addRecursiveStartListener(childInfo, listener)
+    addRecursiveListener(childInfo, type, listener)
   }
-  anim.recursiveStartListeners.add(listener)
 }
 
 /**
@@ -415,28 +495,32 @@ export function addRecursiveStartListener<
 // setup
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 const listener = () => console.log("started")
-addRecursiveStartListener(anim, listener)
+addRecursiveListener(anim, "start", listener)
 
 modifyTo(anim.children.a, {x: 1}) // will trigger the listener
 
-removeRecursiveStartListener(anim, listener)
+removeRecursiveListener(anim, "start", listener)
 modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 @param anim
 @param listener
- */
-export function removeRecursiveStartListener<
+*/
+export function removeRecursiveListener<
   Animating extends RecursiveAnimatable<unknown>
->(anim: Animation<Animating>, listener: Listener<undefined>) {
-  for (const childInfo of Object.values<
-    Animation<RecursiveAnimatable<unknown>>
-  >(
+>(
+  anim: Animation<Animating>,
+  type: AnimatableEvents,
+  listener: Listener<Partial<undefined>>
+) {
+  const capitalizedType = (type.charAt(0).toUpperCase() +
+    type.slice(1)) as Capitalize<AnimatableEvents>
+  anim[`recursive${capitalizedType}Listeners`].delete(listener)
+  for (const childInfo of Object.values(
     anim.children as unknown as {
       [s: string]: Animation<RecursiveAnimatable<unknown>>
     }
   )) {
-    removeRecursiveStartListener(childInfo, listener)
+    removeRecursiveListener(childInfo, type, listener)
   }
-  anim.recursiveStartListeners.delete(listener)
 }
 
 function mergeDicts<T1 extends object, T2 extends object>(
@@ -679,7 +763,6 @@ export function changeInterpFunction<
   const to = getLocalInterpingTo(anim)
   saveState(anim, getLocalState(anim))
   anim._to = to
-  broadcast(anim.recursiveStartListeners, undefined)
   updateAnimation(anim, 0)
   // update children
   const filteredChildren = Object.entries(anim.children).filter(

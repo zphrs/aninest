@@ -1,6 +1,6 @@
 import {
   NO_INTERP,
-  addRecursiveStartListener,
+  addRecursiveListener,
   changeInterpFunction,
   createAnimation,
   getInterpingToTree,
@@ -9,8 +9,9 @@ import {
   boundAnimation,
   modifyTo,
   newVec2,
-  removeRecursiveStartListener,
+  removeRecursiveListener,
   updateAnimation,
+  addLocalListener,
   getLocalState,
 } from "../src"
 
@@ -33,12 +34,39 @@ describe("add recursive start listener", () => {
         clearTimeout(timeout)
         timeout = setTimeout(() => {
           done()
-          removeRecursiveStartListener(anim, listener)
+          removeRecursiveListener(anim, "start", listener)
         }, 100)
       }
     }
-    addRecursiveStartListener(anim, listener)
+    addRecursiveListener(anim, "start", listener)
     modifyTo(anim.children.a, newVec2(1, 1))
+    modifyTo(anim, { a: newVec2(1, 1) })
+  })
+})
+
+describe("remove recursive start listener", () => {
+  const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
+  test("modify after removal", done => {
+    let ct = 0
+    let timeout: NodeJS.Timeout
+    const listener = () => {
+      ct++
+      if (ct === 2) {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+          removeRecursiveListener(anim, "start", listener)
+          done()
+        }, 100)
+      } else if (ct === 3) {
+        clearTimeout(timeout)
+        // report error
+        throw new Error("Recursive listener was not removed properly")
+      }
+    }
+    addRecursiveListener(anim, "start", listener)
+    modifyTo(anim.children.a, newVec2(1, 1))
+    modifyTo(anim, { a: newVec2(1, 1) })
+    removeRecursiveListener(anim, "start", listener)
     modifyTo(anim, { a: newVec2(1, 1) })
   })
 })
@@ -231,3 +259,12 @@ test("verbose mask", () => {
     b: { x: 0.5, y: 0.5 },
   })
 })
+
+test("end event of parent", done => {
+  let anim = createAnimation({ a: newVec2(2, 2) }, getLinearInterp(1))
+  modifyTo(anim, { a: { x: 1 } })
+  addLocalListener(anim.children.a, "end", () => {
+    done()
+  })
+  updateAnimation(anim, 1)
+}, 200)

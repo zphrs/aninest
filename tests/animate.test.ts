@@ -9,6 +9,7 @@ import {
   newVec2,
   removeListener,
   updateAnimation,
+  loopAnimation,
 } from "../src"
 describe("non-interrupted animation", () => {
   let animationInfo: Animation<{ a: number; b: number }>
@@ -188,4 +189,18 @@ describe("bounds", () => {
     })
     expect(needUpdate).toBe(false)
   })
+})
+
+test("loop animation", () => {
+  const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1))
+  loopAnimation(anim)
+  modifyTo(anim, { a: 1, b: 1 })
+  updateAnimation(anim, 0.5)
+  expect(getStateTree(anim)).toStrictEqual({ a: 0.5, b: 0.5 }) // {a: 0.5, b: 0.5}
+  updateAnimation(anim, 0.49)
+  expect(getStateTree(anim)).toStrictEqual({ a: 0.99, b: 0.99 }) // {a: ~1, b: ~1}
+  updateAnimation(anim, 0.01) // will trigger the loop
+  expect(getStateTree(anim)).toStrictEqual({ a: 0, b: 0 }) // {a: 0, b: 0}
+  updateAnimation(anim, 0.5)
+  expect(getStateTree(anim)).toStrictEqual({ a: 0.5, b: 0.5 }) // {a: 0.5, b: 0.5}
 })
