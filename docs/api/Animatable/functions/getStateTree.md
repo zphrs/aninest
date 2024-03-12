@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / getStateTree
+[aninest](../../index.md) / [Animatable](../index.md) / getStateTree
 
 # getStateTree()
 
@@ -31,4 +31,4 @@ const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:665](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L665)
+[Animate/Animatable.ts:665](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L665)

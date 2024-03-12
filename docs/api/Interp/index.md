@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../index.md) / Interp
+[aninest](../index.md) / Interp
 
 # Interp
 

@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / distanceTo
+[aninest](../../index.md) / [Vec2](../index.md) / distanceTo
 
 # distanceTo()
 
@@ -26,4 +26,4 @@ A scalar.
 
 ## Source
 
-[Utils/vec2.ts:195](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L195)
+[Utils/vec2.ts:195](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L195)

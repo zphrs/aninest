@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Interp](../index.md) / getCubicBezier
+[aninest](../../index.md) / [Interp](../index.md) / getCubicBezier
 
 # getCubicBezier()
 
@@ -25,4 +25,4 @@ Returns a cubic bezier interpolation function.
 
 ## Source
 
-[Animate/Interp.ts:61](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Interp.ts#L61)
+[Animate/Interp.ts:61](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Interp.ts#L61)

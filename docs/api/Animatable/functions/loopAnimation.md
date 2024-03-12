@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / loopAnimation
+[aninest](../../index.md) / [Animatable](../index.md) / loopAnimation
 
 # loopAnimation()
 
@@ -43,4 +43,4 @@ anim.getStateTree() // {a: 0, b: 0}
 
 ## Source
 
-[Animate/Animatable.ts:268](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L268)
+[Animate/Animatable.ts:268](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L268)

@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../index.md) / Animatable
+[aninest](../index.md) / Animatable
 
 # Animatable
 

@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / copy
+[aninest](../../index.md) / [Vec2](../index.md) / copy
 
 # copy()
 
@@ -32,4 +32,4 @@ y: number;
 
 ## Source
 
-[Utils/vec2.ts:187](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L187)
+[Utils/vec2.ts:187](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L187)

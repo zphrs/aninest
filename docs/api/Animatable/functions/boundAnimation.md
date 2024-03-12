@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / boundAnimation
+[aninest](../../index.md) / [Animatable](../index.md) / boundAnimation
 
 # boundAnimation()
 
@@ -44,4 +44,4 @@ lower: { b: -1 },
 
 ## Source
 
-[Animate/Animatable.ts:561](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L561)
+[Animate/Animatable.ts:561](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L561)

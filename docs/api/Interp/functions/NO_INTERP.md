@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Interp](../index.md) / NO\_INTERP
+[aninest](../../index.md) / [Interp](../index.md) / NO\_INTERP
 
 # NO\_INTERP()
 
@@ -19,4 +19,4 @@ meaning they will transition between states without needing to call [updateAnima
 
 ## Source
 
-[Animate/Interp.ts:20](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Interp.ts#L20)
+[Animate/Interp.ts:20](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Interp.ts#L20)

@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Interp](../index.md) / Interp
+[aninest](../../index.md) / [Interp](../index.md) / Interp
 
 # Interp
 
@@ -20,4 +20,4 @@ Time in milliseconds. Guaranteed to be positive.
 
 ## Source
 
-[Animate/Interp.ts:14](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Interp.ts#L14)
+[Animate/Interp.ts:14](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Interp.ts#L14)

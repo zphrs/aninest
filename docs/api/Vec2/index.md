@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../index.md) / Vec2
+[aninest](../index.md) / Vec2
 
 # Vec2
 

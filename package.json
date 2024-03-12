@@ -1,14 +1,14 @@
 {
   "name": "aninest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "lib/index.js",
   "type": "module",
   "private": false,
-  "homepage": "https://plexigraph.github.io/aninest",
+  "homepage": "https://aninest.zephiris.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/plexigraph/aninest.git"
+    "url": "https://github.com/zephiris/aninest.git"
   },
   "workspaces": [
     "docs"

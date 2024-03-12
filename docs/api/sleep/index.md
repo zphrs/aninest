@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../index.md) / sleep
+[aninest](../index.md) / sleep
 
 # sleep
 

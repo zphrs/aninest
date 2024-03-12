@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / rotate
+[aninest](../../index.md) / [Vec2](../index.md) / rotate
 
 # rotate()
 
@@ -36,4 +36,4 @@ y: number;
 
 ## Source
 
-[Utils/vec2.ts:161](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L161)
+[Utils/vec2.ts:161](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L161)

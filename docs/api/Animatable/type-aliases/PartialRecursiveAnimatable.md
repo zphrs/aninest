@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / PartialRecursiveAnimatable
+[aninest](../../index.md) / [Animatable](../index.md) / PartialRecursiveAnimatable
 
 # PartialRecursiveAnimatable\<T\>
 
@@ -31,4 +31,4 @@ a: {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:121](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L121)
+[Animate/Animatable.ts:121](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L121)

@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / clamp
+[aninest](../../index.md) / [Vec2](../index.md) / clamp
 
 # clamp()
 
@@ -31,4 +31,4 @@ The maximum clamping value. If undefined, no maximum clamping is done.
 
 ## Source
 
-[Utils/vec2.ts:49](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L49)
+[Utils/vec2.ts:49](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L49)

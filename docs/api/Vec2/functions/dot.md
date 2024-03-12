@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / dot
+[aninest](../../index.md) / [Vec2](../index.md) / dot
 
 # dot()
 
@@ -22,4 +22,4 @@ A scalar.
 
 ## Source
 
-[Utils/vec2.ts:145](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L145)
+[Utils/vec2.ts:145](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L145)

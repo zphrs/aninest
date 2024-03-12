@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / removeRecursiveListener
+[aninest](../../index.md) / [Animatable](../index.md) / removeRecursiveListener
 
 # removeRecursiveListener()
 
@@ -43,4 +43,4 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 
 ## Source
 
-[Animate/Animatable.ts:507](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L507)
+[Animate/Animatable.ts:507](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L507)

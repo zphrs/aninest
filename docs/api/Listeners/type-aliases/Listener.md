@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Listeners](../index.md) / Listener
+[aninest](../../index.md) / [Listeners](../index.md) / Listener
 
 # Listener\<T\>
 
@@ -40,4 +40,4 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 ## Source
 
-[Listeners.ts:15](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Listeners.ts#L15)
+[Listeners.ts:15](https://github.com/plexigraph/aninest/blob/9c9889e/src/Listeners.ts#L15)

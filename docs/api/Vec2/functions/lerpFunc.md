@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / lerpFunc
+[aninest](../../index.md) / [Vec2](../index.md) / lerpFunc
 
 # lerpFunc()
 
@@ -25,4 +25,4 @@ Lerps between a and b by t.
 
 ## Source
 
-[Utils/vec2.ts:15](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L15)
+[Utils/vec2.ts:15](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L15)

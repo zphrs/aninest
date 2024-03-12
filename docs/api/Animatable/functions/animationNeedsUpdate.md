@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / animationNeedsUpdate
+[aninest](../../index.md) / [Animatable](../index.md) / animationNeedsUpdate
 
 # animationNeedsUpdate()
 
@@ -26,4 +26,4 @@ whether the animation needs to be updated
 
 ## Source
 
-[Animate/Animatable.ts:183](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L183)
+[Animate/Animatable.ts:183](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L183)

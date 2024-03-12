@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / vecToIter
+[aninest](../../index.md) / [Vec2](../index.md) / vecToIter
 
 # vecToIter()
 
@@ -21,4 +21,4 @@ An array with the x and y components of the vector in the format [x, y].
 
 ## Source
 
-[Utils/vec2.ts:115](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L115)
+[Utils/vec2.ts:115](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L115)

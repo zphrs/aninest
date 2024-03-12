@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Vec2](../index.md) / zeroVec2
+[aninest](../../index.md) / [Vec2](../index.md) / zeroVec2
 
 # zeroVec2
 
@@ -24,4 +24,4 @@ y: number = 0;
 
 ## Source
 
-[Utils/vec2.ts:40](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Utils/vec2.ts#L40)
+[Utils/vec2.ts:40](https://github.com/plexigraph/aninest/blob/9c9889e/src/Utils/vec2.ts#L40)

@@ -1,4 +1,4 @@
-[@plexigraph/aninest](../../index.md) / [Animatable](../index.md) / getLocalState
+[aninest](../../index.md) / [Animatable](../index.md) / getLocalState
 
 # getLocalState()
 
@@ -45,4 +45,4 @@ const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 
 ## Source
 
-[Animate/Animatable.ts:640](https://github.com/plexigraph/aninest/blob/bb3b3dd/src/Animate/Animatable.ts#L640)
+[Animate/Animatable.ts:640](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L640)
