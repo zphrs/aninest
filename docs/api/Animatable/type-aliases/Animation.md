@@ -11,7 +11,7 @@ The animation object. This is a recursive type, meaning that it can contain othe
 ## Example
 
 ```ts
-const anim: Animation<{a: Vec2}> = createAnimationInfo({a: {x: 0, y: 0}}) 
+const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}}) 
 // the anim object will look like this:
  {
    <private fields>
@@ -37,4 +37,4 @@ readonly children: { [P in keyof Animating]: Animating[P] extends number ? undef
 
 ## Source
 
-[Animate/Animatable.ts:159](https://github.com/plexigraph/aninest/blob/9e50535/src/Animate/Animatable.ts#L159)
+[Animate/Animatable.ts:167](https://github.com/plexigraph/aninest/blob/5437bdd/src/Animate/Animatable.ts#L167)

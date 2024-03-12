@@ -3,7 +3,7 @@
 # removeListener()
 
 ```ts
-removeListener<Animating>(
+removeListener<Animating, Event>(
    anim, 
    type, 
    listener): void
@@ -15,17 +15,19 @@ Removes a listener from the animation
 
 • **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
+• **Event** extends [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+
 ## Parameters
 
 • **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
-• **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+• **type**: `Event`
 
 "start", "end", "bounce", "interrupt" - the type used to add the listener
 
-• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`Animating`\>\>\>
+• **listener**: `Event` extends `AnimatableEventsWithValue` ? [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`Animating`\>\>\> : [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
 
 The listener function to remove
 
@@ -53,4 +55,4 @@ modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
 
 ## Source
 
-[Animate/Animatable.ts:454](https://github.com/plexigraph/aninest/blob/9e50535/src/Animate/Animatable.ts#L454)
+[Animate/Animatable.ts:472](https://github.com/plexigraph/aninest/blob/5437bdd/src/Animate/Animatable.ts#L472)

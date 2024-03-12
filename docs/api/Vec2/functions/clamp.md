@@ -31,4 +31,4 @@ The maximum clamping value. If undefined, no maximum clamping is done.
 
 ## Source
 
-[Utils/vec2.ts:49](https://github.com/plexigraph/aninest/blob/9e50535/src/Utils/vec2.ts#L49)
+[Utils/vec2.ts:49](https://github.com/plexigraph/aninest/blob/5437bdd/src/Utils/vec2.ts#L49)

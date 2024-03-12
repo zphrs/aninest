@@ -20,4 +20,4 @@ The magnitude of the vector.
 
 ## Source
 
-[Utils/vec2.ts:107](https://github.com/plexigraph/aninest/blob/9e50535/src/Utils/vec2.ts#L107)
+[Utils/vec2.ts:107](https://github.com/plexigraph/aninest/blob/5437bdd/src/Utils/vec2.ts#L107)

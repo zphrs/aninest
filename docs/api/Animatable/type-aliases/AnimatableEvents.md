@@ -3,7 +3,7 @@
 # AnimatableEvents
 
 ```ts
-type AnimatableEvents: "start" | "end" | "bounce" | "interrupt";
+type AnimatableEvents: AnimatableEventsWithValue | "update";
 ```
 
 The various event types that are emitted by the animation.
@@ -17,7 +17,9 @@ Returns an [Animatable](LocalAnimatable.md) of the new local state with the fina
 Returns a [PartialAnimatable](LocalAnimatable.md) of the new local state with only the bounced values.
 - **interrupt**: when a new `modifyTo` is called before the animation is finished
 Returns a [PartialAnimatable](LocalAnimatable.md) of the new local state with all of the currently in progress values.
+- **update**: when the animation is updated
+Returns `undefined`
 
 ## Source
 
-[Animate/Animatable.ts:68](https://github.com/plexigraph/aninest/blob/9e50535/src/Animate/Animatable.ts#L68)
+[Animate/Animatable.ts:72](https://github.com/plexigraph/aninest/blob/5437bdd/src/Animate/Animatable.ts#L72)

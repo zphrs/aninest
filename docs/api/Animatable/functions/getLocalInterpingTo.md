@@ -38,4 +38,4 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:795](https://github.com/plexigraph/aninest/blob/9e50535/src/Animate/Animatable.ts#L795)
+[Animate/Animatable.ts:819](https://github.com/plexigraph/aninest/blob/5437bdd/src/Animate/Animatable.ts#L819)
