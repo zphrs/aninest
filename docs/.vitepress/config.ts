@@ -16,7 +16,6 @@ export default withPwa(
     },
     title: "Aninest",
     titleTemplate: " Aninest",
-    base: "/aninest/",
     description:
       "A nested animation library: typed, interruptible, extensible, and performant.",
     themeConfig: {

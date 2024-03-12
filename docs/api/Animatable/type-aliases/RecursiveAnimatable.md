@@ -23,4 +23,4 @@ The generic type of the animation state.
 
 ## Source
 
-[Animate/Animatable.ts:79](https://github.com/plexigraph/aninest/blob/9c9889e/src/Animate/Animatable.ts#L79)
+[Animate/Animatable.ts:79](https://github.com/plexigraph/aninest/blob/9e50535/src/Animate/Animatable.ts#L79)
