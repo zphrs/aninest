@@ -51,6 +51,8 @@ const bounds = {
  */
 export type PartialBounds<T> = Partial<Bounds<T>>
 
+type AnimatableEventsWithValue = "start" | "end" | "bounce" | "interrupt"
+
 /**
  * The various event types that are emitted by the animation.
  * Here are the possible events:
@@ -63,9 +65,11 @@ export type PartialBounds<T> = Partial<Bounds<T>>
  * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with only the bounced values.
  * - **interrupt**: when a new `modifyTo` is called before the animation is finished
  * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with all of the currently in progress values.
+ * - **update**: when the animation is updated
+ * Returns `undefined`
  * @group Events
  */
-export type AnimatableEvents = "start" | "end" | "bounce" | "interrupt"
+export type AnimatableEvents = AnimatableEventsWithValue | "update"
 
 /**
  * The generic type of the animation state.
@@ -138,14 +142,18 @@ type AnimationWithoutChildren<Animating extends RecursiveAnimatable<unknown>> =
     _from: LocalAnimatable<Animating>
     _to: Partial<LocalAnimatable<Animating>> | null
     _bounds: Bounds<LocalAnimatable<Animating>>
-  } & Listeners<AnimatableEvents, Partial<LocalAnimatable<Animating>>> & {
+  } & Listeners<
+    AnimatableEventsWithValue,
+    Partial<LocalAnimatable<Animating>>
+  > &
+    Listeners<"update", undefined> & {
       [key in `recursive${Capitalize<AnimatableEvents>}Listeners`]: ListenerSet<undefined>
     }
 
 /**
  * The animation object. This is a recursive type, meaning that it can contain other animations.
  * @group Construction
- * @example const anim: Animation<{a: Vec2}> = createAnimationInfo({a: {x: 0, y: 0}}) 
+ * @example const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}}) 
  // the anim object will look like this:
   {
     <private fields>
@@ -222,10 +230,12 @@ function createLocalAnimation<Animating extends RecursiveAnimatable<unknown>>(
     endListeners: new Set(),
     bounceListeners: new Set(),
     interruptListeners: new Set(),
+    updateListeners: new Set(),
     recursiveStartListeners: new Set(),
     recursiveEndListeners: new Set(),
     recursiveBounceListeners: new Set(),
     recursiveInterruptListeners: new Set(),
+    recursiveUpdateListeners: new Set(),
   }
 }
 
@@ -364,6 +374,11 @@ export function createAnimation<Init extends RecursiveAnimatable<unknown>>(
       removeRecursiveListener(info, "interrupt", listener)
     })
   })
+  addLocalListener(info, "update", () => {
+    broadcast(info.recursiveUpdateListeners, undefined, listener => {
+      removeRecursiveListener(info, "update", listener)
+    })
+  })
   return info as Animation<Init>
 }
 /**
@@ -424,13 +439,16 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @param listener The listener function - return true from the function to remove the listener
  */
 export function addLocalListener<
-  Animating extends RecursiveAnimatable<unknown>
+  Animating extends RecursiveAnimatable<unknown>,
+  Event extends AnimatableEvents
 >(
   anim: Animation<Animating>,
-  type: AnimatableEvents,
-  listener: Listener<Partial<LocalAnimatable<Animating>>>
+  type: Event,
+  listener: Event extends AnimatableEventsWithValue
+    ? Listener<Partial<LocalAnimatable<Animating>>>
+    : Listener<Partial<undefined>>
 ) {
-  anim[`${type}Listeners`].add(listener)
+  anim[`${type}Listeners`].add(listener as Listener<unknown>)
 }
 
 /**
@@ -451,12 +469,17 @@ removeListener(anim, "start", listener)
  * @param type "start", "end", "bounce", "interrupt" - the type used to add the listener
  * @param listener The listener function to remove
  */
-export function removeListener<Animating extends RecursiveAnimatable<unknown>>(
+export function removeListener<
+  Animating extends RecursiveAnimatable<unknown>,
+  Event extends AnimatableEvents
+>(
   anim: Animation<Animating>,
-  type: AnimatableEvents,
-  listener: Listener<Partial<LocalAnimatable<Animating>>>
+  type: Event,
+  listener: Event extends AnimatableEventsWithValue
+    ? Listener<Partial<LocalAnimatable<Animating>>>
+    : Listener<Partial<undefined>>
 ) {
-  anim[`${type}Listeners`].delete(listener)
+  anim[`${type}Listeners`].delete(listener as Listener<unknown>)
 }
 
 /**
@@ -688,6 +711,7 @@ export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
   if (dt < 0) dt = 0
   anim._time += dt
   let out = animationNeedsUpdate(anim)
+  broadcast(anim.updateListeners, undefined)
   // update children
   for (const childInfo of Object.values<
     Animation<RecursiveAnimatable<unknown>>

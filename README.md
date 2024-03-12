@@ -15,8 +15,8 @@ It is generally quite fast by having one set of functions (`updateAnimationInfo(
 New ES6 destructuring syntax creates a great developer experience when using Aninest. For example, you can destructure the current state of an animation like this:
 
 ```ts
-const animationInfo = createAnimationInfo({ x: 0, y: 0 }, getLinearInterp(1))
-const { x, y } = getCurrentStateWithChildren(animInfo.children.x)
+const anim= createAnimation({ x: 0, y: 0 }, getLinearInterp(1))
+const { x, y } = getStateTree(anim)
 ```
 
 ## Why I made Aninest
