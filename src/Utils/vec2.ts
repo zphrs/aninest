@@ -37,7 +37,7 @@ export type Vec2 = { readonly x: number; readonly y: number }
 /**
  * A 2D vector with x and y set to 0.
  */
-export const zeroVec2 = { x: 0, y: 0 }
+export const ZERO_VEC2 = { x: 0, y: 0 } as { x: 0; y: 0 }
 
 /**
  * Clamps a value between a minimum and maximum value.
@@ -64,7 +64,7 @@ export const clamp = (
 /**
  * Vec2 Constructor
  */
-export const newVec2 = (x: number, y: number) => ({ x, y })
+export const newVec2 = (x: number, y: number): Vec2 => ({ x, y })
 
 /**
  * Adds two vectors together, returning a new vector.

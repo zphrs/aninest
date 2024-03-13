@@ -1,6 +1,6 @@
 {
   "name": "aninest",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "lib/index.js",
   "type": "module",
@@ -46,7 +46,7 @@
     "typedoc": "^0.25.7",
     "typedoc-plugin-markdown": "^4.0.0-next.44",
     "typedoc-vitepress-theme": "^1.0.0-next.8",
-    "typescript": "^5.3.2",
+    "typescript": "^5.4.2",
     "vite": "^5.1.4",
     "vite-plugin-pwa": "^0.19.2",
     "vite-plugin-top-level-await": "^1.4.1",
