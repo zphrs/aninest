@@ -684,6 +684,11 @@ function saveState<Animating extends RecursiveAnimatable<unknown>>(
   anim._time = 0
 }
 
+/**
+ * Initializes a cache for the animation. The animation will automatically update the cache whenever it or any of its children are updated.
+ * @param anim
+ * @returns A function to remove caching
+ */
 export function initializeAnimationCache<
   Animating extends RecursiveAnimatable<unknown>
 >(anim: Animation<Animating>) {
