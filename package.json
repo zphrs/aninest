@@ -1,10 +1,11 @@
 {
   "name": "aninest",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "lib/index.js",
   "type": "module",
   "private": false,
+  "sideEffects": false,
   "homepage": "https://aninest.zephiris.dev",
   "repository": {
     "type": "git",
