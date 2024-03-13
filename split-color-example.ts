@@ -1,6 +1,6 @@
 import {
   Vec2,
-  addRecursiveStartListener,
+  addRecursiveListener,
   changeInterpFunction,
   createAnimation,
   getStateTree,
@@ -8,7 +8,7 @@ import {
   getSlerp,
   modifyTo,
   newVec2,
-  removeRecursiveStartListener,
+  removeRecursiveListener,
   updateAnimation,
   getLocalState,
   getLocalInterpingTo,
@@ -16,7 +16,6 @@ import {
   addLocalListener,
   subVec,
   Animation,
-  sleep,
 } from "./src/index"
 
 type Color = { r: number; g: number; b: number }
@@ -102,10 +101,10 @@ export default function createLine(p1: Vec2, p2: Vec2, color: Color = WHITE) {
     update: animLoop,
     draw: draw,
     addStartListener(listener: () => void) {
-      addRecursiveStartListener(animInfo, listener)
+      addRecursiveListener(animInfo, "start", listener)
     },
     removeStartListener(listener: () => void) {
-      removeRecursiveStartListener(animInfo, listener)
+      removeRecursiveListener(animInfo, "start", listener)
     },
   }
 }

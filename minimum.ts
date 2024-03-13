@@ -33,9 +33,6 @@ export default function createLine(p1: Vec2, p2: Vec2) {
     update(dt: number) {
       return updateAnimation(anim, dt)
     },
-    addResumeListener(listener: Listener<undefined>) {
-      addRecursiveListener(anim, "start", listener)
-    },
     draw(ctx: CanvasRenderingContext2D) {
       const { p1, p2 } = getStateTree(anim)
       ctx.beginPath()
@@ -56,12 +53,8 @@ function draw(time: number) {
   lastTime = time
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
   line.draw(ctx)
-  if (needsUpdate) requestAnimationFrame(draw)
-  else lastTime = undefined
-}
-line.addResumeListener(() => {
   requestAnimationFrame(draw)
-})
+}
 
 // randomize line every 2 seconds
 function randomize() {
