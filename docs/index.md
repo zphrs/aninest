@@ -13,7 +13,7 @@ hero:
     - theme: alt
       text: View Source
       image: github
-      link: "https://github.com/plexigraph/aninest"
+      link: "https://github.com/zphrs/aninest"
 features:
   - title: Strongly Typed
     details: Written in TypeScript with a strong type system.
@@ -30,13 +30,7 @@ features:
   - title: Ergonomic
     details: Aninest is designed to be easy to use and understand with strong support for ES6 destructuring.
     icon: 🛠  ️
-  - title: Lightweight
-    details: Coming in at just 2.19kB minified and gzipped, Aninest is incredibly lightweight.
-    icon: 🪶
   - title: Fully Tree-Shakeable
-    details: Tree-shakeable down to <1kB for the bare essentials. Only pay for what you import.
+    details: Tree-shakeable down to ~1kB for the bare essentials. Only pay for what you import.
     icon: 🌳
-  - title: Zero Dependencies
-    icon: 📦❌
-    details: Aninest has no runtime dependencies.
 ---
