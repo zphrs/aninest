@@ -38,11 +38,11 @@ export default withPwa(
       socialLinks: [
         {
           icon: "github",
-          link: "https://github.com/plexigraph/aninest",
+          link: "https://github.com/zphrs/aninest",
         },
         {
           icon: "npm",
-          link: "https://www.npmjs.com/package/@plexigraph/aninest",
+          link: "https://www.npmjs.com/package/aninest",
         },
       ],
     },

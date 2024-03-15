@@ -139,6 +139,7 @@ type Mask<T> = {
 
 /**
  * The local animation object. This is a recursive type, meaning that it can contain other animations.
+ * @internal
  */
 type AnimationWithoutChildren<Animating extends RecursiveAnimatable<unknown>> =
   {
