@@ -33,4 +33,4 @@ A new vector.
 
 ## Source
 
-[Utils/vec2.ts:174](https://github.com/zphrs/aninest/blob/2327e64/src/Utils/vec2.ts#L174)
+[Utils/vec2.ts:174](https://github.com/zphrs/aninest/blob/df0807b/src/Utils/vec2.ts#L174)

@@ -24,4 +24,4 @@ A function to remove caching
 
 ## Source
 
-[Animate/Animatable.ts:698](https://github.com/zphrs/aninest/blob/2327e64/src/Animate/Animatable.ts#L698)
+[Animate/Animatable.ts:698](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L698)

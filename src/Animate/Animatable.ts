@@ -186,8 +186,14 @@ type WritableAnimation<T extends RecursiveAnimatable<unknown>> = Writeable<
   Animation<T>
 >
 
-function getProgress<Animating extends Animatable>(anim: Animation<Animating>) {
-  return clamp(0, anim._timingFunction(anim._time), 1)
+function getProgress<Animating extends Animatable>(
+  anim: Animation<Animating>
+): number | undefined {
+  const progress = anim._timingFunction(anim._time)
+  if (progress === undefined) {
+    return undefined
+  }
+  return progress
 }
 /**
  * Returns whether the animation needs to be updated.
@@ -198,7 +204,7 @@ function getProgress<Animating extends Animatable>(anim: Animation<Animating>) {
 export function animationNeedsUpdate<Animating extends Animatable>(
   anim: Animation<Animating>
 ) {
-  return anim._to != null && getProgress(anim) < 1 - Number.EPSILON
+  return anim._to != null && getProgress(anim) != undefined
 }
 /**
  * Checks if any property of the animation is still in progress.
@@ -468,8 +474,8 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
  * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
-addListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
-addListener(anim.children.a, "start", state => console.log("started", state)) // will trigger
+addLocalListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
+addLocalListener(anim.children.a, "start", state => console.log("started", state)) // will trigger
 modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @see {@link addRecursiveListener} for a recursive listener which triggers on any child modification
  * @see {@link removeListener} to remove a listener from an animation
@@ -498,17 +504,17 @@ export function addLocalListener<
 // setup
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 const listener = state => console.log("started", state)
-addListener(anim, "start", listener)
+addLocalListener(anim, "start", listener)
  *
 modifyTo(anim, {a: {x: 1}}) // will trigger the listener
  *
-removeListener(anim, "start", listener)
+removeLocalListener(anim, "start", listener)
  * modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
  * @param anim The animation object
  * @param type "start", "end", "bounce", "interrupt", "update"
  * @param listener The listener function to remove
  */
-export function removeListener<
+export function removeLocalListener<
   Animating extends RecursiveAnimatable<unknown>,
   Event extends AnimatableEvents
 >(
@@ -743,7 +749,14 @@ export function getLocalState<Animating extends RecursiveAnimatable<unknown>>(
     }
     return into as LocalAnimatable<Animating>
   }
-  const progress = getProgress(anim)
+  let progress = getProgress(anim)
+  if (progress === undefined) {
+    if (anim._to === undefined) {
+      return anim._from
+    } else {
+      progress = 1
+    }
+  }
   lerpAnimatable(
     anim._from,
     anim._to,
@@ -876,7 +889,6 @@ export function changeInterpFunction<
   mask: Partial<Mask<Animating>> = {} // assumes default of true for all keys
 ) {
   anim._timingFunction = interp
-  anim._time = 0
   const to = getLocalInterpingTo(anim)
   saveState(anim, getLocalState(anim))
   anim._to = to

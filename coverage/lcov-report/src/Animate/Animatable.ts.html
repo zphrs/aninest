@@ -1,68 +1,64 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Code coverage report for src/Animate/Animatable.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
-        }
+    <style type="text/css">
+      .coverage-summary .sorter {
+        background-image: url(../../sort-arrow-sprite.png);
+      }
     </style>
-</head>
-    
-<body>
-<div class='wrapper'>
-    <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/Animate</a> Animatable.ts</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">94.61% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>211/223</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">91.22% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>52/57</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">85.36% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>35/41</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">95.37% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>206/216</span>
-            </div>
-        
-            
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="pad1">
+        <h1>
+          <a href="../../index.html">All files</a> /
+          <a href="index.html">src/Animate</a> Animatable.ts
+        </h1>
+        <div class="clearfix">
+          <div class="fl pad1y space-right2">
+            <span class="strong">94.61% </span>
+            <span class="quiet">Statements</span>
+            <span class="fraction">211/223</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">91.22% </span>
+            <span class="quiet">Branches</span>
+            <span class="fraction">52/57</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">85.36% </span>
+            <span class="quiet">Functions</span>
+            <span class="fraction">35/41</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">95.37% </span>
+            <span class="quiet">Lines</span>
+            <span class="fraction">206/216</span>
+          </div>
         </div>
         <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+          Press <em>n</em> or <em>j</em> to go to the next uncovered block,
+          <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input type="search" id="fileSearch">
-            </div>
+          <div class="quiet">
+            Filter:
+            <input type="search" id="fileSearch" />
+          </div>
         </template>
-    </div>
-    <div class='status-line high'></div>
-    <pre><table class="coverage">
+      </div>
+      <div class="status-line high"></div>
+      <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -2403,8 +2399,8 @@ export function modifyTo&lt;Animating extends RecursiveAnimatable&lt;unknown&gt;
  * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
-addListener(anim, "start", state =&gt; console.log("started", state)) // will never get triggered no matter what
-addListener(anim.children.a, "start", state =&gt; console.log("started", state)) // will trigger
+addLocalListener(anim, "start", state =&gt; console.log("started", state)) // will never get triggered no matter what
+addLocalListener(anim.children.a, "start", state =&gt; console.log("started", state)) // will trigger
 modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @see {@link addRecursiveListener} for a recursive listener which triggers on any child modification
  * @see {@link removeListener} to remove a listener from an animation
@@ -2433,7 +2429,7 @@ export function addLocalListener&lt;
 // setup
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 const listener = state =&gt; console.log("started", state)
-addListener(anim, "start", listener)
+addLocalListener(anim, "start", listener)
  *
 modifyTo(anim, {a: {x: 1}}) // will trigger the listener
  *
@@ -2876,21 +2872,27 @@ export function getInterpingToTree&lt;
 }
 &nbsp;</pre></td></tr></table></pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-13T01:21:11.011Z
-            </div>
-        <script src="../../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
-    </body>
+      <div class="push"></div>
+      <!-- for sticky footer -->
+    </div>
+    <!-- /wrapper -->
+    <div class="footer quiet pad2 space-top1 center small">
+      Code coverage generated by
+      <a
+        href="https://istanbul.js.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >istanbul</a
+      >
+      at 2024-03-13T01:21:11.011Z
+    </div>
+    <script src="../../prettify.js"></script>
+    <script>
+      window.onload = function () {
+        prettyPrint()
+      }
+    </script>
+    <script src="../../sorter.js"></script>
+    <script src="../../block-navigation.js"></script>
+  </body>
 </html>
-    

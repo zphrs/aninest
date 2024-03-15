@@ -7,7 +7,7 @@ import {
   getLinearInterp,
   modifyTo,
   newVec2,
-  removeListener,
+  removeLocalListener,
   updateAnimation,
   loopAnimation,
   ZERO_VEC2,
@@ -102,7 +102,7 @@ describe("interrupted animation events", () => {
   test("interrupts animation events", done => {
     let onInterrupt = (e: { a?: number; b?: number }) => {
       expect(e).toStrictEqual({ a: 3, b: 4 })
-      removeListener(animationInfo, "interrupt", onInterrupt)
+      removeLocalListener(animationInfo, "interrupt", onInterrupt)
       done()
     }
     addLocalListener(animationInfo, "interrupt", onInterrupt)

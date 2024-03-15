@@ -19,4 +19,4 @@ meaning they will transition between states without needing to call [updateAnima
 
 ## Source
 
-[Animate/Interp.ts:20](https://github.com/zphrs/aninest/blob/2327e64/src/Animate/Interp.ts#L20)
+[Animate/Interp.ts:20](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Interp.ts#L20)
