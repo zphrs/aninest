@@ -8,4 +8,5 @@ lib
 Cargo.lock
 bin/
 pkg/
+docs
 wasm-pack.log
