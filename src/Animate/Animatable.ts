@@ -39,6 +39,8 @@ export type Bounds<T> = {
   upper: Partial<T>
 }
 
+export type unsubscribe = () => void
+
 /**
  * The partial bounds of the animation, making the lower and upper bounds optional.
  * @group Bounds
@@ -482,6 +484,7 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @param anim The animation object
  * @param type "start", "end", "bounce", "interrupt", "update"
  * @param listener The listener function - return true from the function to remove the listener
+ * @returns A function to remove the listener
  */
 export function addLocalListener<
   Animating extends RecursiveAnimatable<unknown>,
@@ -492,8 +495,9 @@ export function addLocalListener<
   listener: Event extends AnimatableEventsWithValue
     ? Listener<Partial<LocalAnimatable<Animating>>>
     : Listener<undefined>
-) {
+): unsubscribe {
   anim[`${type}Listeners`].add(listener as Listener<unknown>)
+  return () => removeLocalListener(anim, type, listener)
 }
 
 /**
@@ -545,18 +549,22 @@ export function addRecursiveListener<
   listener:
     | Listener<Animation<RecursiveAnimatable<unknown>>>
     | Listener<undefined>
-) {
-  const capitalizedType = (type.charAt(0).toUpperCase() +
-    type.slice(1)) as Capitalize<AnimatableEvents>
-  anim[`recursive${capitalizedType}Listeners`].add(
-    listener as Listener<unknown>
+): unsubscribe {
+  let unsubscribers: unsubscribe[] = []
+  unsubscribers.push(
+    addLocalListener(anim, type, listener as Listener<unknown>)
   )
   for (const childInfo of Object.values(
     anim.children as unknown as {
       [s: string]: Animation<RecursiveAnimatable<unknown>>
     }
   )) {
-    addRecursiveListener(childInfo, type, listener as Listener<unknown>)
+    unsubscribers.push(
+      addRecursiveListener(childInfo, type, listener as Listener<unknown>)
+    )
+  }
+  return () => {
+    unsubscribers.forEach(unsub => unsub())
   }
 }
 
