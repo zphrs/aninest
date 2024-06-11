@@ -35,6 +35,7 @@ The animation object
 • **listener**: `Event` extends 
   \| `"start"`
   \| `"end"`
+  \| `"beforeEnd"`
   \| `"bounce"`
   \| `"interrupt"`
   \| `"update"` ? [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`Animating`\>\>\> : [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
@@ -63,4 +64,4 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## Source
 
-[Animate/Animatable.ts:489](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L489)
+[Animate/Animatable.ts:492](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L492)

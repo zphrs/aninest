@@ -22,4 +22,4 @@ Checks if any property of the animation is still in progress.
 
 ## Source
 
-[Animate/Animatable.ts:216](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L216)
+[Animate/Animatable.ts:220](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L220)

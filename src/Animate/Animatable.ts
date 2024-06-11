@@ -213,6 +213,7 @@ export function animationNeedsUpdate<Animating extends Animatable>(
 }
 /**
  * Checks if any property of the animation is still in progress.
+ * @group Status
  * @param anim
  * @returns
  */
@@ -709,6 +710,7 @@ function saveState<Animating extends RecursiveAnimatable<unknown>>(
 
 /**
  * Initializes a cache for the animation. The animation will automatically update the cache whenever it or any of its children are updated.
+ * @group Cache
  * @param anim
  * @returns A function to remove caching
  */
@@ -734,10 +736,12 @@ export function initializeAnimationCache<
 }
 
 /**
+ * Adds a grid to snap to.
+ * @group Snap
  * @example
  setSnapGrid(anim, {x: 1, y: 1}) // will snap to integer values before ending
  * @param anim 
- * @param gridSize 
+ * @param gridSize A dictionary of the size of each grid square for each variable. Ex: `{x: 1, y: 1}`
  * @returns a function to remove the snap grid
  */
 export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
@@ -765,6 +769,13 @@ export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
   }
 }
 
+/**
+ * Sets a snap grid only for the top level of the animation.
+ * @group Snap
+ * @param anim
+ * @param gridSize A dictionary of the size of each grid square for each variable. Ex: `{x: 1, y: 1}`
+ * @returns a function to remove the snap grid
+ */
 export function setLocalSnapGrid<
   Animating extends RecursiveAnimatable<unknown>
 >(
@@ -800,6 +811,34 @@ export function setLocalSnapGrid<
   }
 }
 
+/**
+ * Adds a point to snap to, across any number of features.
+ * @group Snap
+ * @example
+// initialize the animation
+const anim = createAnimation({x: 0, y: 0}, getLinearInterp(1))
+setSnapPoint(anim, {x: 1, y: 1}, distanceLessThan(1))
+const s = getStateTree(anim) // {x: 0, y: 0}
+// start an interp to (1.5, 1.5) which will get snapped to (1, 1)
+modifyTo(anim, {x: 1.5, y: 1.5})
+
+// start of interp to (1.5, 1.5)
+const s2 = getStateTree(anim) // {x: 0, y: 0}
+updateAnimation(anim, 0.5) // true
+const s3 = getStateTree(anim) // {x: 0.75, y: 0.75}
+updateAnimation(anim, 0.5) // true
+const s4 = getStateTree(anim) // {x: 1.5, y: 1.5}
+
+// start of snap to (1, 1)
+updateAnimation(anim, 0.5) // true
+const s5 = getStateTree(anim) // {x: 1.25, y: 1.25}
+updateAnimation(anim, 0.5) // false
+const s6 = getStateTree(anim) // {x: 1, y: 1}
+ * @param anim
+ * @param snapPoint A point to snap to. Ex: `{x: 0.5, y: 0.5}`
+ * @param shouldSnap A function which returns whether to snap to the snap point based on the snapPoint and the current state tree. See {@link distanceLessThan} for a helper function to create the shouldSnap function for snapping within a certain distance.
+ * @returns a function to remove the snap point
+ */
 export function setSnapPoint<
   Animating extends RecursiveAnimatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
@@ -818,21 +857,48 @@ export function setSnapPoint<
   return () => removeRecursiveListener(anim, BEFORE_END, beforeEnd)
 }
 
+/**
+ * Returns a function of whether the distance across the features of the point is closer than the given distance to the current state.
+ * Mainly meant as a utility function for {@link setSnapPoint}.
+ * @group Snap
+ * @example
+const dlt2 = distanceLessThan(2)
+dlt2({x: 1, y: 1}, {x: 0, y: 0}) // true
+ * @param distance
+ * @returns
+ */
 export function distanceLessThan<
   Animating extends RecursiveAnimatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
 >(distance: number) {
   const distanceSquared = distance * distance
   return (point: Point, currentState: RecursiveAnimatable<Animating>) => {
-    let sum = 0
-    for (const key in point) {
-      const v = point[key] as number
-      const csv = currentState[key] as number
-      const diff = v - csv
-      sum += diff * diff
-    }
-    return sum <= distanceSquared
+    return distanceSquaredBetween(point, currentState) <= distanceSquared
   }
+}
+/**
+ * Measures the squared euclidean distance between the point and the current state only on the subset of features of the point.
+ * @group Snap
+ * @example
+const anim = createAnimation({x: 0, y: 0, z: 0}, getLinearInterp(1))
+const point = {x: 1, y: 1}
+const distSquared = distanceSquaredBetween(point, getStateTree(anim)) // 2
+ * @param point An arbitrary point ex. if `Animating = {x: number, y: number, z: number}` then point could be `{x: number, y: number}`
+ * @param currentState
+ * @returns
+ */
+export function distanceSquaredBetween<
+  Animating extends RecursiveAnimatable<unknown>,
+  Point extends PartialRecursiveAnimatable<Animating>
+>(point: Point, currentState: RecursiveAnimatable<Animating>) {
+  let sum = 0
+  for (const key in point) {
+    const v = point[key] as number
+    const csv = currentState[key] as number
+    const diff = v - csv
+    sum += diff * diff
+  }
+  return sum
 }
 
 /**

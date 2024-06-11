@@ -20,4 +20,4 @@ Time in seconds. Guaranteed to be positive.
 
 ## Source
 
-[Animate/Interp.ts:14](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Interp.ts#L14)
+[Animate/Interp.ts:14](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Interp.ts#L14)

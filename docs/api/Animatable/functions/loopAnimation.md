@@ -43,4 +43,4 @@ anim.getStateTree() // {a: 0, b: 0}
 
 ## Source
 
-[Animate/Animatable.ts:323](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L323)
+[Animate/Animatable.ts:327](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L327)

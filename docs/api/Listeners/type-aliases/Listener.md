@@ -3,7 +3,7 @@
 # Listener\<T\>
 
 ```ts
-type Listener<T>: (currentLocalState) => boolean | void;
+type Listener<T>: (currentLocalState) => boolean | void | Promise<void>;
 ```
 
 A listener function that is called when an event is broadcast.
@@ -36,8 +36,8 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 ## Returns
 
-`boolean` \| `void`
+`boolean` \| `void` \| `Promise`\<`void`\>
 
 ## Source
 
-[Listeners.ts:15](https://github.com/zphrs/aninest/blob/18d4239/src/Listeners.ts#L15)
+[Listeners.ts:15](https://github.com/zphrs/aninest/blob/a2c9b37/src/Listeners.ts#L15)

@@ -20,4 +20,4 @@ The duplicated vector.
 
 ## Source
 
-[Utils/vec2.ts:187](https://github.com/zphrs/aninest/blob/18d4239/src/Utils/vec2.ts#L187)
+[Utils/vec2.ts:187](https://github.com/zphrs/aninest/blob/a2c9b37/src/Utils/vec2.ts#L187)

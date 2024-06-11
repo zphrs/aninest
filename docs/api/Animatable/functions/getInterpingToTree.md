@@ -34,4 +34,4 @@ getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:952](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L952)
+[Animate/Animatable.ts:1138](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L1138)

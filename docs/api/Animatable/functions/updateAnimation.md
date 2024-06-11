@@ -30,4 +30,4 @@ whether the animation needs to be updated again
 
 ## Source
 
-[Animate/Animatable.ts:818](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L818)
+[Animate/Animatable.ts:989](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L989)

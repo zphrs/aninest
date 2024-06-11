@@ -13,6 +13,8 @@ and the new state is different from the current state.
 Returns a [PartialAnimatable](LocalAnimatable.md) of the new local state with only the changed values.
 - **end**: when the animation fully comes to a stop, provides the resting state
 Returns an [Animatable](LocalAnimatable.md) of the new local state with the final resting state.
+- **beforeEnd**: when the animation is about to end
+Useful for preventing the animation from ending to instead loop/bounce/snap etc.
 - **bounce**: when the animation bounces off a bound
 Returns a [PartialAnimatable](LocalAnimatable.md) of the new local state with only the bounced values.
 - **interrupt**: when a new `modifyTo` is called before the animation is finished
@@ -22,4 +24,4 @@ Returns `undefined`
 
 ## Source
 
-[Animate/Animatable.ts:79](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L79)
+[Animate/Animatable.ts:82](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L82)

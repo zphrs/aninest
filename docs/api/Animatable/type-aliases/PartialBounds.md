@@ -27,4 +27,4 @@ const bounds = {
 
 ## Source
 
-[Animate/Animatable.ts:54](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L54)
+[Animate/Animatable.ts:54](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L54)
