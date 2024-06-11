@@ -23,4 +23,4 @@ The generic type of the animation state.
 
 ## Source
 
-[Animate/Animatable.ts:88](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L88)
+[Animate/Animatable.ts:90](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L90)

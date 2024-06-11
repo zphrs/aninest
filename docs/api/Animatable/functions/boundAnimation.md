@@ -44,4 +44,4 @@ lower: { b: -1 },
 
 ## Source
 
-[Animate/Animatable.ts:630](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L630)
+[Animate/Animatable.ts:644](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L644)

@@ -1,0 +1,3 @@
+ // auto-generated file from ./skeleton.scss DO NOT EDIT
+import { css } from "lit"
+export default css` :host{display:block;position:relative;top:0;left:0;width:100%;height:100%}.skeleton{top:0;left:0;display:block;width:100%;height:100%;border-radius:8px;--b-size: min(800px, 100vw);background-size:var(--b-size);background:var(--pg-bg-accent);animation:2s calc(var(--time-offset)*.1s) ease-in infinite pulse}@keyframes pulse{0%{background:var(--pg-bg-accent)}50%{background:var(--pg-bg-mid);animation-timing-function:linear}100%{background:var(--pg-bg-accent)}}`

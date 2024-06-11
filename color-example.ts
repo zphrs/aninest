@@ -1,6 +1,6 @@
 import {
   Vec2,
-  addRecursiveStartListener,
+  addRecursiveListener,
   changeInterpFunction,
   createAnimation,
   getStateTree,
@@ -8,7 +8,7 @@ import {
   getSlerp,
   modifyTo,
   newVec2,
-  removeRecursiveStartListener,
+  removeRecursiveListener,
   updateAnimation,
 } from "./src/index"
 
@@ -60,7 +60,7 @@ export default function createLine(
     console.log("restarting")
     requestAnimationFrame(animLoop)
   }
-  addRecursiveStartListener(animInfo, onStart)
+  addRecursiveListener(animInfo, "start", onStart)
   return {
     setP1(p1: Vec2) {
       modifyTo(animInfo, { p1 })
@@ -72,7 +72,7 @@ export default function createLine(
       return modifyTo(animInfo, { color })
     },
     destroy() {
-      removeRecursiveStartListener(animInfo, onStart)
+      removeRecursiveListener(animInfo, "start", onStart)
     },
   }
 }

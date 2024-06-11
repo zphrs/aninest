@@ -6,7 +6,7 @@
 addLocalListener<Animating, Event>(
    anim, 
    type, 
-   listener): void
+   listener): unsubscribe
 ```
 
 Adds a local listener to the animation. You can listen to the following events:
@@ -43,22 +43,24 @@ The listener function - return true from the function to remove the listener
 
 ## Returns
 
-`void`
+`unsubscribe`
+
+A function to remove the listener
 
 ## Example
 
 ```ts
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
-addListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
-addListener(anim.children.a, "start", state => console.log("started", state)) // will trigger
+addLocalListener(anim, "start", state => console.log("started", state)) // will never get triggered no matter what
+addLocalListener(anim.children.a, "start", state => console.log("started", state)) // will trigger
 modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 ```
 
 ## See
 
  - [addRecursiveListener](addRecursiveListener.md) for a recursive listener which triggers on any child modification
- - [removeListener](removeListener.md) to remove a listener from an animation
+ - removeListener to remove a listener from an animation
 
 ## Source
 
-[Animate/Animatable.ts:480](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L480)
+[Animate/Animatable.ts:489](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L489)

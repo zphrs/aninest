@@ -54,10 +54,11 @@ const bounds = {
 export type PartialBounds<T> = Partial<Bounds<T>>
 export const START = "start"
 export const END = "end"
+export const BEFORE_END = "beforeEnd"
 export const BOUNCE = "bounce"
 export const INTERRUPT = "interrupt"
 export const UPDATE = "update"
-const animTypes = [START, END, BOUNCE, INTERRUPT, UPDATE] as const
+const animTypes = [START, END, BOUNCE, INTERRUPT, BEFORE_END, UPDATE] as const
 type AnimatableEventsWithValue = (typeof animTypes)[number]
 
 /**
@@ -68,6 +69,8 @@ type AnimatableEventsWithValue = (typeof animTypes)[number]
  * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with only the changed values.
  * - **end**: when the animation fully comes to a stop, provides the resting state
  * Returns an {@link LocalAnimatable Animatable} of the new local state with the final resting state.
+ * - **beforeEnd**: when the animation is about to end
+ * Useful for preventing the animation from ending to instead loop/bounce/snap etc.
  * - **bounce**: when the animation bounces off a bound
  * Returns a {@link LocalAnimatable PartialAnimatable} of the new local state with only the bounced values.
  * - **interrupt**: when a new `modifyTo` is called before the animation is finished
@@ -330,7 +333,7 @@ export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
     if (init === null || towards === null) return
     if (animationTreeNeedsUpdate(anim)) return
     removeRecursiveListener(anim, START, onStart) // must remove to prevent infinite recursion
-    removeRecursiveListener(anim, END, onEnd)
+    removeRecursiveListener(anim, BEFORE_END, onEnd)
     const currInterpFunction = anim._timingFunction
     changeInterpFunction(anim, NO_INTERP)
     modifyTo(anim, init) // will apply immediately because of NO_INTERP
@@ -342,12 +345,12 @@ export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
   const onStart = () => {
     init = getStateTree(anim, init || {})
     towards = getInterpingToTree(anim, towards || {})
-    addRecursiveListener(anim, END, onEnd)
+    addRecursiveListener(anim, BEFORE_END, onEnd)
   }
   addRecursiveListener(anim, START, onStart)
   return () => {
     removeRecursiveListener(anim, START, onStart)
-    removeRecursiveListener(anim, END, onEnd)
+    removeRecursiveListener(anim, BEFORE_END, onEnd)
   }
 }
 
@@ -463,7 +466,6 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
   anim._time = 0
   anim._to = completeTo
   updateAnimation(anim, 0)
-
   broadcast(anim.startListeners, completeTo)
 }
 /**
@@ -596,6 +598,7 @@ export function removeRecursiveListener<
   anim[`recursive${capitalizedType}Listeners`].delete(
     listener as Listener<unknown>
   )
+  anim[`${type}Listeners`].delete(listener as Listener<unknown>)
   for (const childInfo of Object.values(
     anim.children as unknown as {
       [s: string]: Animation<RecursiveAnimatable<unknown>>
@@ -731,6 +734,108 @@ export function initializeAnimationCache<
 }
 
 /**
+ * @example
+ setSnapGrid(anim, {x: 1, y: 1}) // will snap to integer values before ending
+ * @param anim 
+ * @param gridSize 
+ * @returns a function to remove the snap grid
+ */
+export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
+  anim: Animation<Animating>,
+  gridSize: PartialRecursiveAnimatable<Animating>
+): unsubscribe {
+  const [localSnapPoints, children] = separateChildren(gridSize)
+  const unsubscribers: unsubscribe[] = []
+  // call setSnapGrid recursively on children
+  for (const [key, childValue] of Object.entries(children)) {
+    const childInfo = anim.children[key as keyof Animating]
+    if (!childInfo) continue
+    unsubscribers.push(
+      setSnapGrid(childInfo, childValue as PartialRecursiveAnimatable<unknown>)
+    )
+  }
+  // setup the snap grid for the current animation
+  const localUnsub = setLocalSnapGrid(
+    anim,
+    localSnapPoints as Partial<LocalAnimatable<Animating>>
+  )
+  unsubscribers.push(localUnsub)
+  return () => {
+    unsubscribers.forEach(unsub => unsub())
+  }
+}
+
+export function setLocalSnapGrid<
+  Animating extends RecursiveAnimatable<unknown>
+>(
+  anim: Animation<Animating>,
+  gridSize: Partial<LocalAnimatable<Animating>>
+): unsubscribe {
+  const toSnap: Set<string> = new Set()
+  const onStart = (interpingTo: Partial<LocalAnimatable<Animating>>) => {
+    for (const key in interpingTo) {
+      if (gridSize[key] === undefined) continue
+      toSnap.add(key)
+    }
+    modifyTo(anim, toSnap as PartialRecursiveAnimatable<Animating>)
+  }
+  const beforeEnd = () => {
+    const localState = getLocalState(anim) // final resting state
+    const snappedRestingPosition: Partial<LocalAnimatable<unknown>> = {}
+    for (const key of toSnap) {
+      let gridValue = gridSize[key] as number
+      snappedRestingPosition[key] =
+        Math.round(localState[key] / gridValue) * gridValue
+    }
+    modifyTo(
+      anim,
+      snappedRestingPosition as PartialRecursiveAnimatable<Animating>
+    )
+  }
+  const unsub1 = addLocalListener(anim, BEFORE_END, beforeEnd)
+  const unsub2 = addLocalListener(anim, START, onStart)
+  return () => {
+    unsub1()
+    unsub2()
+  }
+}
+
+export function setSnapPoint<
+  Animating extends RecursiveAnimatable<unknown>,
+  Point extends PartialRecursiveAnimatable<Animating>
+>(
+  anim: Animation<Animating>,
+  snapPoint: Point,
+  shouldSnap: (point: Point, currentState: Animating) => boolean // the maximum distance from the snap point to snap
+) {
+  const beforeEnd = () => {
+    const state = getStateTree(anim)
+    if (shouldSnap(snapPoint, state)) {
+      modifyTo(anim, snapPoint)
+    }
+  }
+  addRecursiveListener(anim, BEFORE_END, beforeEnd)
+  return () => removeRecursiveListener(anim, BEFORE_END, beforeEnd)
+}
+
+export function distanceLessThan<
+  Animating extends RecursiveAnimatable<unknown>,
+  Point extends PartialRecursiveAnimatable<Animating>
+>(distance: number) {
+  const distanceSquared = distance * distance
+  return (point: Point, currentState: RecursiveAnimatable<Animating>) => {
+    let sum = 0
+    for (const key in point) {
+      const v = point[key] as number
+      const csv = currentState[key] as number
+      const diff = v - csv
+      sum += diff * diff
+    }
+    return sum <= distanceSquared
+  }
+}
+
+/**
  * Gets the current local state of the animation, meaning only the numbers in the topmost level of the input animation.
  * To access the local state of a child, use `anim.children.childName` as the input.
  * @group State Retrieval
@@ -820,37 +925,52 @@ export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
   dt: number
 ): boolean {
   if (dt < 0) dt = 0
+  let [checkForDoneness, out] = updateAnimationInner(anim, dt)
+  for (const child of checkForDoneness || []) {
+    broadcast(child.beforeEndListeners, child._from)
+    boundLocalAnimation(child)
+    let localOut = animationNeedsUpdate(child)
+    if (!localOut) {
+      broadcast(child.endListeners, child._from)
+    }
+    out = out || localOut
+  }
+  return out
+}
+
+type CheckForDoneness = Animation<RecursiveAnimatable<unknown>>[]
+function updateAnimationInner<Animating extends RecursiveAnimatable<unknown>>(
+  anim: Animation<Animating>,
+  dt: number
+): [CheckForDoneness, boolean] {
   anim._time += dt
   let out = animationNeedsUpdate(anim)
+  let checkForDoneness: CheckForDoneness = []
   broadcast(anim.updateListeners, undefined)
-  // update children
-  for (const childInfo of Object.values<
+  const childrenWhichNeedUpdate = Object.values(anim.children).filter<
     Animation<RecursiveAnimatable<unknown>>
-  >(
-    anim.children as unknown as {
-      [s: string]: Animation<RecursiveAnimatable<unknown>>
-    }
-  )) {
-    if (updateAnimation(childInfo, dt)) {
-      out = true
+    // @ts-ignore
+  >(child => animationTreeNeedsUpdate(child))
+  // update children
+  for (const childInfo of Object.values(childrenWhichNeedUpdate)) {
+    let update = updateAnimationInner(childInfo, dt)
+    out = out || update[1]
+    if (update !== undefined) {
+      checkForDoneness = checkForDoneness.concat(update[0])
     }
   }
   if (!out && anim._to) {
     const newState = mergeDicts(anim._from, anim._to)
     saveState<Animating>(anim, newState)
-    boundLocalAnimation(anim)
     // needs two calls to animationNeedsUpdate
     // because boundAnimation might call modifyTo for info
     // which would make info need an update
-    out = animationNeedsUpdate(anim)
-    if (!out) {
-      broadcast(anim.endListeners, anim._from)
-    }
+    checkForDoneness.push(anim as Animation<RecursiveAnimatable<unknown>>)
   }
   if (anim._cache) {
     anim._cache = getStateTree(anim)
   }
-  return out
+  return [checkForDoneness, out]
 }
 
 /**
@@ -900,7 +1020,7 @@ export function changeInterpFunction<
   const to = getLocalInterpingTo(anim)
   saveState(anim, getLocalState(anim))
   anim._to = to
-  updateAnimation(anim, 0)
+  updateAnimationInner(anim, 0)
   // update children
   const filteredChildren = Object.entries(anim.children).filter(
     ([key, _]) => mask[key as keyof typeof mask] !== false

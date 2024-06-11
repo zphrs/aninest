@@ -26,4 +26,4 @@ whether the animation needs to be updated
 
 ## Source
 
-[Animate/Animatable.ts:198](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L198)
+[Animate/Animatable.ts:206](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L206)

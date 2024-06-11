@@ -8,14 +8,14 @@ It is designed primarily for interactive animations, where often animations are 
 
 ## Speed
 
-It is generally quite fast by having one set of functions (`updateAnimationInfo()`, `getLocalState()`, and `getStateTree()`) responsible for calculating the "in betweens", or the values in between the start and the destination values. This means that the JS engine will prioritize optimizing this single function - which is called many times per frame - rather than optimizing many different functions, which are called only once per frame.
+It is generally quite fast by having one set of functions (`updateAnimation()` and `getStateTree()`) responsible for calculating the "in betweens", or the values in between the start and the destination values. This means that the JS engine will prioritize optimizing this single function.
 
 ## Destructuring
 
 New ES6 destructuring syntax creates a great developer experience when using Aninest. For example, you can destructure the current state of an animation like this:
 
 ```ts
-const anim= createAnimation({ x: 0, y: 0 }, getLinearInterp(1))
+const anim = createAnimation({ x: 0, y: 0 }, getLinearInterp(1))
 const { x, y } = getStateTree(anim)
 ```
 
@@ -23,11 +23,15 @@ const { x, y } = getStateTree(anim)
 
 Here is the project I built up alongside Aninest: [How Viral Spikes Shape Digital Movements](https://zphrs.github.io/humn-55-final/)
 
-### Efficiency
-
 I generally couldn't find a library that had the flexibility and simplicity I wanted for letting me dynamically run the update/draw loop only when necessary and which made it easy to change the position of objects without too much thought.
 
-Often animation libraries take care of the update and draw loop for you, which means that I would have had to either sacrifice only rerendering when necessary or I would have had to manually figure out whether I needed to have the animation running at any given time. I also wanted to be able to animate any level of nested properties just by passing in a nested JS Object with only numbers or another JS Object for ergonomkc reasons. Lastly, I wanted all animations to be smoothly interruptible to make the animations feel natural and responsive.
+### Flexibility
+
+Often animation libraries take care of the update and draw loop for you which is annoying when trying to ensure the animation only rerenders when necessary.
+
+### Simplicity
+
+I wanted to be able to animate any level of nested properties just by passing in a nested JS Object filled with numbers and nested JS Objects (such as `{size: 10, pos: {x: 0, y: 0}}`). Lastly, I wanted all animations to be smoothly interruptible to make the animations feel natural and responsive (no jittering around by default).
 
 ## Line Example
 
@@ -62,16 +66,12 @@ export default function createLine(p1: Vec2, p2: Vec2) {
     setP2(p2: Vec2) {
       // either way is acceptable
       modifyTo(anim, { p2 })
-      // technically this one is slightly slower because
-      // it introduces one extra recursive call
-      // but this path is run about 1/30th of the time
-      // so just use the one that you prefer
     },
     update(dt) {
       return updateAnimation(anim, dt)
     },
     addResumeListener(listener: Listener<undefined>) {
-      addRecursiveStartListener(anim, listener)
+      addRecursiveListener(anim, "start", listener)
     },
     draw(ctx: CanvasRenderingContext2D) {
       const { p1, p2 } = getStateTree(anim)
@@ -116,6 +116,6 @@ randomize()
 
 # Internal Design
 
-Typically creating a non-jerky animation is hard. Aninest solves this issue by only asking for the new target position, not allowing the user to set the start position. It stores the current value of the property when a new animation is triggered by `modifyTo(animationInfo, targetValue)`. Then it only fully computes the current value of the property when `getLocalState()`or`getStateTree()` is called.
+Typically creating a non-jerky animation is hard. Aninest solves this issue by only asking for the new target position, not allowing the user to set the start position. It stores the current value of the property when a new animation is triggered by `modifyTo(animationInfo, targetValue)`. Then it only fully computes the current value of the property when `getLocalState()` or `getStateTree()` is called.
 
-When an animation is interrupted (by calling `modifyTo()` while the animation is running), the animation will bake the current state into the start value. This means that the animation will continue from the current value to the new value. While this might create a sudden change in velocity, all property values will remain continuous.
+When an animation is interrupted (by calling `modifyTo()` while the animation is running), the animation will save the current state as the start state. This means that the animation will continue from the current value to the value set by the `modifyTo()` call. While this might create a sudden change in velocity, all property values will remain continuous.

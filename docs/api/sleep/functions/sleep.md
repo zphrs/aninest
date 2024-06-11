@@ -24,4 +24,4 @@ await sleep(1) // sleep for 1 second
 
 ## Source
 
-[Utils/sleep.ts:9](https://github.com/zphrs/aninest/blob/df0807b/src/Utils/sleep.ts#L9)
+[Utils/sleep.ts:9](https://github.com/zphrs/aninest/blob/18d4239/src/Utils/sleep.ts#L9)

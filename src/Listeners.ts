@@ -12,7 +12,9 @@
 () => {} // keep listener
  * @example ({a, b}) => console.log(a, b)
  */
-export type Listener<T> = (currentLocalState: T) => boolean | void
+export type Listener<T> = (
+  currentLocalState: T
+) => boolean | void | Promise<void>
 
 /**
  * @internal
@@ -35,7 +37,7 @@ export function broadcast<T>(
   onRemove?: (listener: Listener<T>) => void
 ) {
   for (const listener of listeners) {
-    if (listener(value)) {
+    if (listener(value) === true) {
       listeners.delete(listener)
       if (onRemove) {
         onRemove(listener)

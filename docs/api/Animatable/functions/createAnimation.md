@@ -46,4 +46,4 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
 
 ## Source
 
-[Animate/Animatable.ts:359](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L359)
+[Animate/Animatable.ts:367](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L367)

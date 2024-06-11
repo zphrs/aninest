@@ -6,7 +6,7 @@
 addRecursiveListener<Animating>(
    anim, 
    type, 
-   listener): void
+   listener): unsubscribe
 ```
 
 Adds a recursive start listener to the animation. This listener will trigger on any child modification.
@@ -27,7 +27,7 @@ Adds a recursive start listener to the animation. This listener will trigger on 
 
 ## Returns
 
-`void`
+`unsubscribe`
 
 ## Example
 
@@ -38,4 +38,4 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
 
 ## Source
 
-[Animate/Animatable.ts:534](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L534)
+[Animate/Animatable.ts:544](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L544)

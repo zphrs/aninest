@@ -14,6 +14,24 @@
     "typedoc": "^0.25.7",
     "typedoc-plugin-markdown": "^4.0.0-next.44",
     "typedoc-vitepress-theme": "^1.0.0-next.8",
-    "vitepress": "^1.0.0-rc.40"
+    "typescript": "^4.9.5",
+    "vitepress": "1.0.0-rc.40"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.5.0",
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/language": "^6.10.1",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.26.3",
+    "@emmetio/codemirror6-plugin": "^0.3.1",
+    "@lezer/highlight": "^1.2.0",
+    "@plexigraph/plex-ui": "^0.0.7",
+    "@replit/codemirror-lang-svelte": "^6.0.0",
+    "@typescript/vfs": "^1.5.3",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "codemirror": "^6.0.1",
+    "vue": "^3.4.27"
   }
 }

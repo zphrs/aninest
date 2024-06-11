@@ -31,4 +31,4 @@ a: {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:130](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L130)
+[Animate/Animatable.ts:132](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L132)

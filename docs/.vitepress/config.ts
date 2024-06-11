@@ -14,6 +14,20 @@ export default withPwa(
         dark: ClassyDark as unknown as ThemeRegistrationRaw,
       },
     },
+    vite: {
+      optimizeDeps: {
+        exclude: ["@plegigraph/plex-ui", "@codemirror/*"],
+      },
+    },
+    vue: {
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => {
+            return tag.startsWith("pg-")
+          },
+        },
+      },
+    },
     title: "Aninest",
     titleTemplate: " Aninest",
     description:

@@ -1,9 +1,9 @@
-[aninest](../../index.md) / [Animatable](../index.md) / removeListener
+[aninest](../../index.md) / [Animatable](../index.md) / removeLocalListener
 
-# removeListener()
+# removeLocalListener()
 
 ```ts
-removeListener<Animating, Event>(
+removeLocalListener<Animating, Event>(
    anim, 
    type, 
    listener): void
@@ -50,14 +50,14 @@ The listener function to remove
 // setup
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 const listener = state => console.log("started", state)
-addListener(anim, "start", listener)
+addLocalListener(anim, "start", listener)
 
 modifyTo(anim, {a: {x: 1}}) // will trigger the listener
 
-removeListener(anim, "start", listener)
+removeLocalListener(anim, "start", listener)
 modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
 ```
 
 ## Source
 
-[Animate/Animatable.ts:511](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L511)
+[Animate/Animatable.ts:521](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L521)

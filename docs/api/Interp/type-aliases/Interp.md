@@ -3,7 +3,7 @@
 # Interp
 
 ```ts
-type Interp: (t) => number;
+type Interp: (t) => number | void;
 ```
 
 Interpolation function.
@@ -12,12 +12,12 @@ Interpolation function.
 
 • **t**: `number`
 
-Time in milliseconds. Guaranteed to be positive.
+Time in seconds. Guaranteed to be positive.
 
 ## Returns
 
-`number`
+`number` \| `void`
 
 ## Source
 
-[Animate/Interp.ts:14](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Interp.ts#L14)
+[Animate/Interp.ts:14](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Interp.ts#L14)

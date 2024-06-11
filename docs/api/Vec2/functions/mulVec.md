@@ -22,4 +22,4 @@ A new vector.
 
 ## Source
 
-[Utils/vec2.ts:84](https://github.com/zphrs/aninest/blob/df0807b/src/Utils/vec2.ts#L84)
+[Utils/vec2.ts:84](https://github.com/zphrs/aninest/blob/18d4239/src/Utils/vec2.ts#L84)

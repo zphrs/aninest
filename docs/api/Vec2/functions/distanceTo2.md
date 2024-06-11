@@ -22,4 +22,4 @@ A scalar.
 
 ## Source
 
-[Utils/vec2.ts:200](https://github.com/zphrs/aninest/blob/df0807b/src/Utils/vec2.ts#L200)
+[Utils/vec2.ts:200](https://github.com/zphrs/aninest/blob/18d4239/src/Utils/vec2.ts#L200)

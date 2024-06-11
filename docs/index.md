@@ -11,9 +11,8 @@ hero:
       text: Browse API
       link: /api/
     - theme: alt
-      text: View Source
-      image: github
-      link: "https://github.com/zphrs/aninest"
+      text: Tutorial
+      link: "/tutorial/"
 features:
   - title: Strongly Typed
     details: Written in TypeScript with a strong type system.

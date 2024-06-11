@@ -22,4 +22,4 @@ Returns `undefined`
 
 ## Source
 
-[Animate/Animatable.ts:77](https://github.com/zphrs/aninest/blob/df0807b/src/Animate/Animatable.ts#L77)
+[Animate/Animatable.ts:79](https://github.com/zphrs/aninest/blob/18d4239/src/Animate/Animatable.ts#L79)
