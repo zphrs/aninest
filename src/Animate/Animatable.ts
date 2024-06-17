@@ -466,8 +466,8 @@ export function modifyTo<Animating extends RecursiveAnimatable<unknown>>(
   }
   anim._time = 0
   anim._to = completeTo
-  updateAnimation(anim, 0)
   broadcast(anim.startListeners, completeTo)
+  updateAnimation(anim, 0)
 }
 /**
  * Adds a local listener to the animation. You can listen to the following events:
@@ -787,7 +787,9 @@ export function setLocalSnapGrid<
   const onStart = (interpingTo: Partial<LocalAnimatable<Animating>>) => {
     for (const key in interpingTo) {
       if (gridSize[key] === undefined) continue
-      toSnap.add(key)
+      const gridValue = gridSize[key] as number
+      const value = interpingTo[key] as number
+      if (value % gridValue !== 0) toSnap.add(key)
     }
   }
   const beforeEnd = () => {
@@ -799,12 +801,11 @@ export function setLocalSnapGrid<
         Math.round(localState[key] / gridValue) * gridValue
     }
     if (Object.keys(snappedRestingPosition).length === 0) return
-    console.log(snappedRestingPosition)
+    toSnap.clear()
     modifyTo(
       anim,
       snappedRestingPosition as PartialRecursiveAnimatable<Animating>
     )
-    toSnap.clear()
   }
   const unsub1 = addLocalListener(anim, BEFORE_END, beforeEnd)
   const unsub2 = addLocalListener(anim, START, onStart)
