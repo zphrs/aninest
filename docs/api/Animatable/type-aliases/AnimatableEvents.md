@@ -24,4 +24,4 @@ Returns `undefined`
 
 ## Source
 
-[Animate/Animatable.ts:82](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L82)
+[Animate/Animatable.ts:82](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L82)

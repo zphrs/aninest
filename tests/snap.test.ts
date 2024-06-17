@@ -9,6 +9,7 @@ import {
   setSnapPoint,
   distanceLessThan,
   NO_INTERP,
+  changeInterpFunction,
 } from "../src"
 
 describe("snap", () => {
@@ -16,18 +17,32 @@ describe("snap", () => {
     const anim = createAnimation({ a: newVec2(0, 0) }, getLinearInterp(1))
     setLocalSnapGrid(anim.children.a, { x: 0.5, y: 0.5 })
     modifyTo(anim, { a: newVec2(0.9, 0.9) })
-    let needsUpdate = updateAnimation(anim, 1) // should snap now
+    let needsUpdate = updateAnimation(anim, 0.6) // should snap now
     expect(needsUpdate).toBe(true)
-    updateAnimation(anim, 0.5)
-    needsUpdate = updateAnimation(anim, 0.5)
-    expect(needsUpdate).toBe(false)
+    needsUpdate = updateAnimation(anim, 0.6) // should snap now
+    expect(needsUpdate).toBe(true)
+    updateAnimation(anim, 0.6)
+    needsUpdate = updateAnimation(anim, 0.6)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
+    expect(needsUpdate).toBe(false)
   })
   test("snap grid with no_interp", () => {
     const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
     setLocalSnapGrid(anim.children.a, { x: 0.5, y: 0.5 })
     modifyTo(anim, { a: newVec2(0.9, 0.9) })
     let needsUpdate = updateAnimation(anim, 1) // should snap now
+    expect(needsUpdate).toBe(false)
+    expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
+  })
+  test("snap grid with change interp", () => {
+    const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
+    setLocalSnapGrid(anim.children.a, { x: 0.5, y: 0.5 })
+    modifyTo(anim, { a: newVec2(0.9, 0.9) })
+    let needsUpdate = updateAnimation(anim, 0) // should snap now
+    expect(needsUpdate).toBe(false)
+    expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
+    changeInterpFunction(anim.children.a, getLinearInterp(1))
+    needsUpdate = updateAnimation(anim, 1)
     expect(needsUpdate).toBe(false)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
   })

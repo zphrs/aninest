@@ -28,4 +28,4 @@ a function to remove the snap grid
 
 ## Source
 
-[Animate/Animatable.ts:780](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L780)
+[Animate/Animatable.ts:780](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L780)

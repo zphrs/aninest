@@ -20,4 +20,4 @@ Vec2 Constructor
 
 ## Source
 
-[Utils/vec2.ts:67](https://github.com/zphrs/aninest/blob/729a7d6/src/Utils/vec2.ts#L67)
+[Utils/vec2.ts:67](https://github.com/zphrs/aninest/blob/9544357/src/Utils/vec2.ts#L67)

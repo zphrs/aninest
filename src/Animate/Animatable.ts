@@ -787,9 +787,7 @@ export function setLocalSnapGrid<
   const onStart = (interpingTo: Partial<LocalAnimatable<Animating>>) => {
     for (const key in interpingTo) {
       if (gridSize[key] === undefined) continue
-      const gridValue = gridSize[key] as number
-      const value = interpingTo[key] as number
-      if (value % gridValue !== 0) toSnap.add(key)
+      toSnap.add(key)
     }
   }
   const beforeEnd = () => {
@@ -797,6 +795,9 @@ export function setLocalSnapGrid<
     const snappedRestingPosition: Partial<LocalAnimatable<unknown>> = {}
     for (const key of toSnap) {
       let gridValue = gridSize[key] as number
+      let m = localState[key] % gridValue
+      m = Math.floor(m * 10000) / 10000
+      if (m === 0) continue
       snappedRestingPosition[key] =
         Math.round(localState[key] / gridValue) * gridValue
     }

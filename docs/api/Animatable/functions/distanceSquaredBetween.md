@@ -36,4 +36,4 @@ const distSquared = distanceSquaredBetween(point, getStateTree(anim)) // 2
 
 ## Source
 
-[Animate/Animatable.ts:894](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L894)
+[Animate/Animatable.ts:894](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L894)

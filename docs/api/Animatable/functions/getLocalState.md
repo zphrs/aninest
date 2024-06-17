@@ -46,4 +46,4 @@ const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 
 ## Source
 
-[Animate/Animatable.ts:924](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L924)
+[Animate/Animatable.ts:924](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L924)

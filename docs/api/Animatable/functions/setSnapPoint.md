@@ -66,4 +66,4 @@ const s6 = getStateTree(anim) // {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:846](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L846)
+[Animate/Animatable.ts:846](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L846)

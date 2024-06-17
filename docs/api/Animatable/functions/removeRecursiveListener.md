@@ -43,4 +43,4 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 
 ## Source
 
-[Animate/Animatable.ts:591](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L591)
+[Animate/Animatable.ts:591](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L591)
