@@ -43,4 +43,4 @@ dlt2({x: 1, y: 1}, {x: 0, y: 0}) // true
 
 ## Source
 
-[Animate/Animatable.ts:870](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L870)
+[Animate/Animatable.ts:870](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L870)

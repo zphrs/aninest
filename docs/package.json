@@ -27,7 +27,7 @@
     "@codemirror/view": "^6.26.3",
     "@emmetio/codemirror6-plugin": "^0.3.1",
     "@lezer/highlight": "^1.2.0",
-    "@plexigraph/plex-ui": "^0.0.7",
+    "@plexigraph/plex-ui": "^0.0.8",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@typescript/vfs": "^1.5.3",
     "@vitejs/plugin-vue": "^5.0.5",

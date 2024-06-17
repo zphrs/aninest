@@ -24,4 +24,4 @@ y: 0;
 
 ## Source
 
-[Utils/vec2.ts:40](https://github.com/zphrs/aninest/blob/a2c9b37/src/Utils/vec2.ts#L40)
+[Utils/vec2.ts:40](https://github.com/zphrs/aninest/blob/3be3895/src/Utils/vec2.ts#L40)

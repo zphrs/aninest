@@ -543,6 +543,7 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
  * @param anim
  * @param type
  * @param listener () => boolean Returns whether to remove the listener. Void or false to keep the listener.
+ * @returns A function to remove the listener
  */
 export function addRecursiveListener<
   Animating extends RecursiveAnimatable<unknown>
@@ -788,7 +789,6 @@ export function setLocalSnapGrid<
       if (gridSize[key] === undefined) continue
       toSnap.add(key)
     }
-    modifyTo(anim, toSnap as PartialRecursiveAnimatable<Animating>)
   }
   const beforeEnd = () => {
     const localState = getLocalState(anim) // final resting state
@@ -798,10 +798,13 @@ export function setLocalSnapGrid<
       snappedRestingPosition[key] =
         Math.round(localState[key] / gridValue) * gridValue
     }
+    if (Object.keys(snappedRestingPosition).length === 0) return
+    console.log(snappedRestingPosition)
     modifyTo(
       anim,
       snappedRestingPosition as PartialRecursiveAnimatable<Animating>
     )
+    toSnap.clear()
   }
   const unsub1 = addLocalListener(anim, BEFORE_END, beforeEnd)
   const unsub2 = addLocalListener(anim, START, onStart)
@@ -984,7 +987,7 @@ export function getStateTree<Animating extends RecursiveAnimatable<unknown>>(
  * @group State Modification
  * @param anim The animation object
  * @param dt The time to increment the animation by. Must be positive. If negative or zero then no-op.
- * @returns {boolean} whether the animation needs to be updated again
+ * @returns {boolean} true if the animation needs to be updated again
  */
 export function updateAnimation<Animating extends RecursiveAnimatable<unknown>>(
   anim: Animation<Animating>,

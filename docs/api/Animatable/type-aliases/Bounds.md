@@ -38,4 +38,4 @@ upper: Partial<T>;
 
 ## Source
 
-[Animate/Animatable.ts:37](https://github.com/zphrs/aninest/blob/a2c9b37/src/Animate/Animatable.ts#L37)
+[Animate/Animatable.ts:37](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L37)
