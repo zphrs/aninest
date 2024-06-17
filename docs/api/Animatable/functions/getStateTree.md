@@ -33,4 +33,4 @@ const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:959](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L959)
+[Animate/Animatable.ts:963](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L963)

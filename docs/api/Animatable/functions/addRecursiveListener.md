@@ -29,6 +29,8 @@ Adds a recursive start listener to the animation. This listener will trigger on 
 
 `unsubscribe`
 
+A function to remove the listener
+
 ## Example
 
 ```ts
@@ -38,4 +40,4 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
 
 ## Source
 
-[Animate/Animatable.ts:547](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L547)
+[Animate/Animatable.ts:548](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L548)

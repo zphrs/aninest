@@ -26,8 +26,8 @@ The time to increment the animation by. Must be positive. If negative or zero th
 
 `boolean`
 
-whether the animation needs to be updated again
+true if the animation needs to be updated again
 
 ## Source
 
-[Animate/Animatable.ts:989](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L989)
+[Animate/Animatable.ts:993](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L993)

@@ -21,4 +21,4 @@ An array with the x and y components of the vector in the format [x, y].
 
 ## Source
 
-[Utils/vec2.ts:115](https://github.com/zphrs/aninest/blob/3be3895/src/Utils/vec2.ts#L115)
+[Utils/vec2.ts:115](https://github.com/zphrs/aninest/blob/729a7d6/src/Utils/vec2.ts#L115)

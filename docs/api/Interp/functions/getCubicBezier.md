@@ -25,4 +25,4 @@ Returns a cubic bezier interpolation function.
 
 ## Source
 
-[Animate/Interp.ts:64](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Interp.ts#L64)
+[Animate/Interp.ts:64](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Interp.ts#L64)

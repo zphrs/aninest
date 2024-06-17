@@ -18,4 +18,4 @@ Returns a smooth interpolation function based on the sine function.
 
 ## Source
 
-[Animate/Interp.ts:37](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Interp.ts#L37)
+[Animate/Interp.ts:37](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Interp.ts#L37)

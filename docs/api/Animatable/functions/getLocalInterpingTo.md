@@ -40,4 +40,4 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:1118](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L1118)
+[Animate/Animatable.ts:1122](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L1122)

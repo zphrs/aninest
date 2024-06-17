@@ -64,4 +64,4 @@ getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
 
 ## Source
 
-[Animate/Animatable.ts:1078](https://github.com/zphrs/aninest/blob/3be3895/src/Animate/Animatable.ts#L1078)
+[Animate/Animatable.ts:1082](https://github.com/zphrs/aninest/blob/729a7d6/src/Animate/Animatable.ts#L1082)

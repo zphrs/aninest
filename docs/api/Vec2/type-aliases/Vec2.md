@@ -24,4 +24,4 @@ readonly y: number;
 
 ## Source
 
-[Utils/vec2.ts:35](https://github.com/zphrs/aninest/blob/3be3895/src/Utils/vec2.ts#L35)
+[Utils/vec2.ts:35](https://github.com/zphrs/aninest/blob/729a7d6/src/Utils/vec2.ts#L35)

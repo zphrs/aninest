@@ -20,4 +20,4 @@ The magnitude of the vector.
 
 ## Source
 
-[Utils/vec2.ts:107](https://github.com/zphrs/aninest/blob/3be3895/src/Utils/vec2.ts#L107)
+[Utils/vec2.ts:107](https://github.com/zphrs/aninest/blob/729a7d6/src/Utils/vec2.ts#L107)
