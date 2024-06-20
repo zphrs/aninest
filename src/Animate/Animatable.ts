@@ -795,9 +795,9 @@ export function setLocalSnapGrid<
     const snappedRestingPosition: Partial<LocalAnimatable<unknown>> = {}
     for (const key of toSnap) {
       let gridValue = gridSize[key] as number
-      let m = localState[key] % gridValue
-      m = Math.floor(m * 10000) / 10000
-      if (m === 0) continue
+      let multiplier = localState[key] / gridValue
+      if (Math.abs(Math.round(multiplier) - multiplier) < Number.EPSILON)
+        continue
       snappedRestingPosition[key] =
         Math.round(localState[key] / gridValue) * gridValue
     }
@@ -1032,7 +1032,7 @@ function updateAnimationInner<Animating extends RecursiveAnimatable<unknown>>(
   }
   if (!out && anim._to) {
     const newState = mergeDicts(anim._from, anim._to)
-    saveState<Animating>(anim, newState)
+    saveState(anim, newState)
     // needs two calls to animationNeedsUpdate
     // because boundAnimation might call modifyTo for info
     // which would make info need an update

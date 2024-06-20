@@ -46,6 +46,19 @@ describe("snap", () => {
     expect(needsUpdate).toBe(false)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
   })
+  test("snap grid with decimal grid", () => {
+    const anim = createAnimation({ x: 0, y: 0 }, getLinearInterp(1))
+    setLocalSnapGrid(anim, { x: 0.1, y: 0.1 })
+    modifyTo(anim, newVec2(0.92, 0.92))
+    let needsUpdate = updateAnimation(anim, 0.6)
+    expect(needsUpdate).toBe(true)
+    needsUpdate = updateAnimation(anim, 0.6)
+    expect(needsUpdate).toBe(true)
+    updateAnimation(anim, 0.6)
+    needsUpdate = updateAnimation(anim, 0.6)
+    expect(getStateTree(anim)).toStrictEqual({ x: 0.9, y: 0.9 })
+    expect(needsUpdate).toBe(false)
+  })
   test("snap point", () => {
     const starting = {
       pos: newVec2(0, 0),
