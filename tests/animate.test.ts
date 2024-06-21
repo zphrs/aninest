@@ -11,10 +11,10 @@ import {
   updateAnimation,
   loopAnimation,
   ZERO_VEC2,
-  initializeAnimationCache,
   divScalar,
   getInterpingToTree,
 } from "../src"
+import { getCacheLayer } from "../src/Animate"
 describe("non-interrupted animation", () => {
   let animationInfo: Animation<{ a: number; b: number }>
   test("creates animation info", () => {
@@ -236,7 +236,7 @@ test("cache", () => {
     { a: ZERO_VEC2, b: ZERO_VEC2 },
     getLinearInterp(1)
   )
-  initializeAnimationCache(anim)
+  getCacheLayer(anim)
   modifyTo(anim, { a: newVec2(1, 1), b: newVec2(1, 1) })
   updateAnimation(anim, 0.5)
   expect(getStateTree(anim)).toStrictEqual({
