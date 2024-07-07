@@ -145,7 +145,6 @@ export function setLocalSnapGrid<
     unsub2()
   }
 }
-
 /**
  * Adds a point to snap to, across any number of features.
  * @group Snap

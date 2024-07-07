@@ -111,8 +111,8 @@ function createLocalAnimation<Animating extends UnknownRecursiveAnimatable>(
     _bounds: boundsCpy as Bounds<LocalAnimatable<Animating>>,
   } as AnimationWithoutChildren<Animating>
   for (const type of ANIM_TYPES) {
-    anim[`${type}Listeners`] = new Set() as any
-    anim[`recursive${capitalizeFirstLetter(type)}Listeners`] = new Set()
+    anim[`${type}Listeners`] = new Map() as any
+    anim[`recursive${capitalizeFirstLetter(type)}Listeners`] = new Map()
   }
   return anim
 }
@@ -236,6 +236,7 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
  * - bounce: hitting a bound
  * - interrupt: when a new `modifyTo` is called before the animation is finished
  * Animation listeners are scoped to only trigger when the current level of the animation is modified.
+ * Animation listeners are called in the order in which they were added.
  * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
@@ -259,7 +260,7 @@ export function addLocalListener<
     ? Listener<Partial<LocalAnimatable<Animating>>>
     : Listener<undefined>
 ): unsubscribe {
-  anim[`${type}Listeners`].add(listener as Listener<unknown>)
+  anim[`${type}Listeners`].set(listener as Listener<unknown>, undefined)
   return () => removeLocalListener(anim, type, listener)
 }
 
@@ -296,6 +297,7 @@ export function removeLocalListener<
 
 /**
  * Adds a recursive start listener to the animation. This listener will trigger on any child modification.
+ * Animation listeners are called in the order in which they were added.
  * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
@@ -368,17 +370,41 @@ export function removeRecursiveListener<
   }
 }
 
-function mergeDicts<T1 extends object, T2 extends object>(
+/**
+ * Applies the dictionary `toApply` to the base dictionary `base`, modifying the base dictionary in place.
+ * @param base
+ * @param toApply
+ * @returns The base dictionary
+ * @example
+base = {a: 1, b: 2, c: 3}
+toApply = {a: 0}
+applyDictTo(base, toApply) // base == {a: 0, b: 2, c: 3}
+ */
+export function applyDictTo<T1 extends object, T2 extends object>(
+  base: T1,
+  toApply: T2 | undefined
+): T1 & T2 {
+  return mergeDicts(base, toApply, base)
+}
+
+/**
+ *
+ * @param oldBounds The old bounds
+ * @param newBounds The new bounds (overwrites the old bounds)
+ * @param into The object to merge the bounds into
+ * @returns either the passed in into object or a new object with the merged bounds
+ */
+export function mergeDicts<T1 extends object, T2 extends object>(
   oldBounds: T1 | undefined,
   newBounds: T2 | undefined,
   into: object = {}
 ): T1 & T2 {
   type Combined = T1 & T2
   const out = into as Combined
-  if (oldBounds) {
-    for (const key in oldBounds) {
-      out[key] = oldBounds[key] as Combined[Extract<keyof T1, string>]
-    }
+  // there are no keys in `undefined` so the loop just doesn't have any iterations
+  // when oldBounds/newBounds is undefined
+  for (const key in oldBounds) {
+    out[key] = oldBounds[key] as Combined[Extract<keyof T1, string>]
   }
   for (const key in newBounds) {
     out[key] = newBounds[key] as Combined[Extract<keyof T2, string>]
@@ -419,8 +445,8 @@ export function boundAnimation<Animating extends UnknownRecursiveAnimatable>(
   )
 
   const localBounds: Bounds<Animating> = {
-    lower: mergeDicts(anim._bounds?.lower, lowerBoundsAnim),
-    upper: mergeDicts(anim._bounds?.upper, upperBoundsAnim),
+    lower: applyDictTo(anim._bounds?.lower, lowerBoundsAnim),
+    upper: applyDictTo(anim._bounds?.upper, upperBoundsAnim),
   }
   anim._bounds = localBounds as Bounds<LocalAnimatable<Animating>>
   for (const [key, child] of Object.entries(anim.children)) {

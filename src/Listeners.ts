@@ -19,7 +19,7 @@ export type Listener<T> = (
 /**
  * @internal
  */
-export type ListenerSet<T> = Set<Listener<T>>
+export type ListenerSet<T> = Map<Listener<T>, undefined>
 
 /**
  * @internal
@@ -30,13 +30,14 @@ export type Listeners<Events extends string, T> = {
 
 /**
  * @internal
+ * Will call listeners in the order which they were added.
  */
 export function broadcast<T>(
-  listeners: Set<Listener<T>>,
+  listeners: Map<Listener<T>, undefined>,
   value: T,
   onRemove?: (listener: Listener<T>) => void
 ) {
-  for (const listener of listeners) {
+  for (const listener of listeners.keys()) {
     if (listener(value) === true) {
       listeners.delete(listener)
       if (onRemove) {
