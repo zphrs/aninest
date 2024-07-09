@@ -7,6 +7,7 @@ import {
   getInterpingToTree,
   addLocalListener,
   getLocalState,
+  applyDictTo,
 } from "./Animatable"
 import {
   RecursiveAnimatable,
@@ -15,10 +16,12 @@ import {
   LocalAnimatable,
   unsubscribe,
   UnknownRecursiveAnimatable,
+  UnknownAnimation,
 } from "./AnimatableTypes"
 import { START, BEFORE_END } from "./AnimatableEvents"
 import { NO_INTERP } from "./Interp"
 import { separateChildren } from "./RecursiveHelpers"
+import { clamp } from "../Utils"
 
 /**
  * Will loop the animation, meaning that it will loop from the initial state to the target state and jump back to the initial state.
@@ -275,5 +278,150 @@ export function getCacheLayer<Animating extends UnknownRecursiveAnimatable>(
       modifyTo(anim, value)
     },
     deleteCache,
+  }
+}
+
+/**
+ * The bounds of the animation. The animation will be loosely clamped to these bounds.
+ * @group Bounds
+ * @example
+// Assuming the animation is of type {a: Vec2, b: Vec2}:
+const bounds = {
+  lower: { a: {x: 0, y: 0}, b: {x: 0} },
+  upper: { a: {x: 1, y: 1} }
+} // note that b.y is not bounded and that b.x only has a lower bound. This is perfectly valid.
+ */
+export type Bounds<T> = {
+  lower: Partial<T>
+  upper: Partial<T>
+}
+
+/**
+ * The partial bounds of the animation, making the lower and upper bounds optional.
+ * @group Bounds
+ * @see {@link Bounds} for the full bounds type and for further explanation of the bounds.
+ * @example
+// Assuming the animation is of type {a: Vec2, b: Vec2}:
+const bounds = {
+  lower: { a: {x: 0, y: 0}, b: {x: 0} },
+} // Note that there are no upper bounds
+ */
+export type PartialBounds<T> = Partial<Bounds<T>>
+type PartialRecursiveBounds<Animating extends UnknownRecursiveAnimatable> =
+  PartialBounds<PartialRecursiveAnimatable<Animating>>
+
+/**
+ *  
+ * @param anim 
+ * @param bounds 
+ * @returns 
+ * @example
+const anim = createAnimation({a: 0, b: 0}, getLinearInterp(1))
+const bounds = {
+  lower: { a: 0, b: 0 },
+  upper: { a: 1, b: 1 }
+}
+const {unsub, updateBounds} = initializeBounds(anim, bounds)
+updateBounds({lower: {a: 0.5}})
+ */
+export function initializeBounds<Animating extends UnknownRecursiveAnimatable>(
+  anim: Animation<Animating>,
+  bounds: PartialRecursiveBounds<Animating>
+) {
+  const splitBounds = (bounds: PartialRecursiveBounds<Animating>) => {
+    const { upper: upperBounds, lower: lowerBounds } = bounds
+    return [
+      ...separateChildren(
+        upperBounds || ({} as PartialRecursiveAnimatable<Animating>)
+      ),
+      ...separateChildren(
+        lowerBounds || ({} as PartialRecursiveAnimatable<Animating>)
+      ),
+    ]
+  }
+  const [
+    upperBoundsAnim,
+    upperBoundsChildren,
+    lowerBoundsAnim,
+    lowerBoundsChildren,
+  ] = splitBounds(bounds)
+  const localBounds: Bounds<LocalAnimatable<Animating>> = {
+    upper: {},
+    lower: {},
+  }
+  applyDictTo(localBounds.lower, lowerBoundsAnim)
+  applyDictTo(localBounds.upper, upperBoundsAnim)
+  const unsubscribers: unsubscribe[] = []
+  const updateMap: {
+    [key in keyof Animating]?: (
+      bounds: PartialRecursiveBounds<Animating>
+    ) => void
+  } = {}
+  for (const [k, c] of Object.entries(anim.children)) {
+    const key: keyof Animating = k as keyof Animating
+    const childBounds = {
+      upper: upperBoundsChildren[key],
+      lower: lowerBoundsChildren[key],
+    } as PartialBounds<PartialRecursiveAnimatable<unknown>>
+    if (!childBounds.upper && !childBounds.lower) continue
+    const child = c as UnknownAnimation
+    const { unsub, updateBounds } = initializeBounds(child, childBounds)
+    updateMap[key] = updateBounds
+    unsubscribers.push(unsub)
+  }
+  const checkLocalBounds = (localTo: Partial<LocalAnimatable<Animating>>) => {
+    const modified: typeof localTo = {}
+    for (const key in localTo) {
+      const localKey = key as keyof Animating
+      const localVal = localTo[localKey] as number
+      const lowerBound = localBounds.lower[localKey]
+      const upperBound = localBounds.upper[localKey]
+
+      const newVal = clamp(
+        lowerBound,
+        localVal,
+        upperBound
+      ) as LocalAnimatable<Animating>[keyof Animating]
+      if (newVal != localVal) {
+        modified[localKey] = newVal
+      }
+    }
+    modifyTo(anim, modified as PartialRecursiveAnimatable<Animating>)
+  }
+  const unsub = addLocalListener(anim, BEFORE_END, checkLocalBounds)
+  checkLocalBounds(getLocalState(anim))
+  unsubscribers.push(unsub)
+  return {
+    unsub: () => {
+      unsubscribers.forEach(unsub => unsub())
+    },
+    updateBounds: (
+      bounds: PartialBounds<PartialRecursiveAnimatable<Animating>>
+    ) => {
+      const [
+        upperBoundsAnim,
+        upperBoundsChildren,
+        lowerBoundsAnim,
+        lowerBoundsChildren,
+      ] = splitBounds(bounds)
+      applyDictTo(localBounds.lower, lowerBoundsAnim)
+      applyDictTo(localBounds.upper, upperBoundsAnim)
+      checkLocalBounds(getLocalState(anim))
+      for (const [k, c] of Object.entries(anim.children)) {
+        const key = k as keyof Animating
+        const child = c as UnknownAnimation
+        const childBounds = {
+          upper: upperBoundsChildren[key],
+          lower: lowerBoundsChildren[key],
+        } as PartialBounds<PartialRecursiveAnimatable<unknown>>
+        if (!updateMap[key]) {
+          const { unsub, updateBounds } = initializeBounds(child, childBounds)
+          unsubscribers.push(unsub)
+          updateMap[key] = updateBounds
+        }
+        const update = updateMap[key]!
+        update(childBounds)
+      }
+    },
   }
 }

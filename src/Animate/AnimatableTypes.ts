@@ -104,6 +104,13 @@ export type Mask<T> = {
   [P in keyof T]: T[P] | boolean
 }
 
+export type AnimationBehavior<Animating extends UnknownRecursiveAnimatable> = {
+  _timingFunction: Interp
+} & Listeners<AnimatableEventsWithValue, Partial<LocalAnimatable<Animating>>> &
+  Listeners<"update", unknown> & {
+    [key in `recursive${Capitalize<AnimatableEvents>}Listeners`]: ListenerSet<unknown>
+  }
+
 /**
  * The local animation object. This is a recursive type, meaning that it can contain other animations.
  * @internal
@@ -114,8 +121,8 @@ export type AnimationWithoutChildren<
   _time: number
   _timingFunction: Interp
   _from: LocalAnimatable<Animating>
+  _prevTo: Partial<LocalAnimatable<Animating>> | null
   _to: Partial<LocalAnimatable<Animating>> | null
-  _bounds: Bounds<LocalAnimatable<Animating>>
 } & Listeners<AnimatableEventsWithValue, Partial<LocalAnimatable<Animating>>> &
   Listeners<"update", unknown> & {
     [key in `recursive${Capitalize<AnimatableEvents>}Listeners`]: ListenerSet<unknown>

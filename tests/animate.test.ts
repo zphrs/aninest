@@ -14,7 +14,7 @@ import {
   divScalar,
   getInterpingToTree,
 } from "../src"
-import { getCacheLayer } from "../src/Animate"
+import { getCacheLayer, initializeBounds } from "../src/Animate"
 describe("non-interrupted animation", () => {
   let animationInfo: Animation<{ a: number; b: number }>
   test("creates animation info", () => {
@@ -158,14 +158,16 @@ describe("nested animation", () => {
 })
 
 describe("bounds", () => {
-  const anim = createAnimation({ a: newVec2(0, 0) }, getLinearInterp(1), {
+  const bounds = {
     lower: {
       a: newVec2(-1, -1),
     },
     upper: {
       a: newVec2(1, 1),
     },
-  })
+  }
+  const anim = createAnimation({ a: newVec2(0, 0) }, getLinearInterp(1))
+  initializeBounds(anim, bounds)
   test("creates animation info", () => {
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 0, y: 0 },
@@ -179,6 +181,7 @@ describe("bounds", () => {
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 2, y: 2 },
     })
+    console.log(anim._to)
     expect(needUpdate).toBe(true)
   })
   test("bounces", () => {

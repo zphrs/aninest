@@ -6,13 +6,13 @@ import {
   getInterpingToTree,
   getLinearInterp,
   getStateTree,
-  boundAnimation,
   modifyTo,
   newVec2,
   removeRecursiveListener,
   updateAnimation,
   addLocalListener,
   getLocalState,
+  initializeBounds,
 } from "../src"
 
 describe("edge cases of modifyTo", () => {
@@ -73,12 +73,13 @@ describe("remove recursive start listener", () => {
 
 describe("instant bound animation", () => {
   const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
+  const { unsub: _unsubBounds, updateBounds } = initializeBounds(anim, {})
   test("unbounded", () => {
     modifyTo(anim, { a: newVec2(1, 1) })
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
   })
   test("bounded upper", () => {
-    boundAnimation(anim, {
+    updateBounds({
       upper: {
         a: { x: 0.5 },
       },
@@ -87,7 +88,7 @@ describe("instant bound animation", () => {
   })
   test("bounded lower", () => {
     modifyTo(anim, { a: { x: 0.2 } })
-    boundAnimation(anim, {
+    updateBounds({
       lower: {
         a: { x: 0.5 },
       },
@@ -96,19 +97,16 @@ describe("instant bound animation", () => {
     updateAnimation(anim, 0.5)
   })
   test("empty", () => {
-    boundAnimation(anim, {})
-    expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 1 } })
-  })
-  test("undefined", () => {
-    boundAnimation(anim, undefined)
+    updateBounds({})
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 1 } })
   })
 })
 
 describe("continuous bound animation", () => {
   const anim = createAnimation({ a: newVec2(1, 0) }, getLinearInterp(1))
+  const { unsub: _unsubBounds, updateBounds } = initializeBounds(anim, {})
   test("bounded without current interp", () => {
-    boundAnimation(anim, {
+    updateBounds({
       upper: {
         a: { x: 0.5 },
       },
@@ -120,7 +118,7 @@ describe("continuous bound animation", () => {
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 0 } })
   })
   test("bounded with current interp", () => {
-    boundAnimation(anim, {
+    updateBounds({
       upper: {
         a: { x: Infinity }, // no upper bound
       },
@@ -128,7 +126,7 @@ describe("continuous bound animation", () => {
     modifyTo(anim, { a: newVec2(1, 1) })
     updateAnimation(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.75, y: 0.5 } })
-    boundAnimation(anim, {
+    updateBounds({
       upper: {
         a: { x: 0.5 },
       },
@@ -142,7 +140,7 @@ describe("continuous bound animation", () => {
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 0.5, y: 1 } })
   })
   test("bounded and then bounced", () => {
-    boundAnimation(anim, {
+    updateBounds({
       upper: {
         a: { x: 0.5 },
       },
@@ -166,13 +164,14 @@ describe("change interp function", () => {
     { a: newVec2(0, 0), b: newVec2(1, 1) },
     NO_INTERP
   )
+  const { unsub: _unsubBounds, updateBounds } = initializeBounds(anim, {})
   test("change interp function", () => {
     modifyTo(anim, { a: newVec2(1, 0) })
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 1, y: 0 },
       b: { x: 1, y: 1 },
     })
-    boundAnimation(anim, {
+    updateBounds({
       upper: {
         a: { x: 0.5 },
       },

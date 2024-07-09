@@ -3,16 +3,14 @@
  * @module Animatable
  */
 
-import { clamp, lerpFunc } from "../Utils/vec2"
+import { lerpFunc } from "../Utils/vec2"
 import { broadcast, type Listener } from "../Listeners"
 import { type Interp } from "./Interp"
 import type {
   Animation,
   Animatable,
-  Bounds,
   AnimationWithoutChildren,
   LocalAnimatable,
-  PartialBounds,
   PartialRecursiveAnimatable,
   RecursiveAnimatable,
   UnknownRecursiveAnimatable as UnknownRecursiveAnimatable,
@@ -33,6 +31,7 @@ import {
   AnimatableEventsWithValue,
   ANIM_TYPES,
 } from "./AnimatableEvents"
+import type { Vec2 } from "../Utils/vec2"
 
 function getProgress<Animating extends Animatable>(
   anim: Animation<Animating>
@@ -98,17 +97,14 @@ function recursivelyCopyObject<T>(obj: T): T {
 
 function createLocalAnimation<Animating extends UnknownRecursiveAnimatable>(
   init: LocalAnimatable<Animating>,
-  timing: Interp,
-  bounds: PartialBounds<LocalAnimatable<Animating>>
+  timing: Interp
 ): AnimationWithoutChildren<Animating> {
   const initCpy = recursivelyCopyObject(init)
-  const boundsCpy = recursivelyCopyObject(bounds)
   const anim = {
     _time: 0,
     _timingFunction: timing,
     _from: initCpy,
     _to: null,
-    _bounds: boundsCpy as Bounds<LocalAnimatable<Animating>>,
   } as AnimationWithoutChildren<Animating>
   for (const type of ANIM_TYPES) {
     anim[`${type}Listeners`] = new Map() as any
@@ -132,35 +128,16 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
  */
 export function createAnimation<Init extends UnknownRecursiveAnimatable>(
   init: Init,
-  timing: Interp,
-  bounds?: Bounds<Init>
+  timing: Interp
 ): Animation<Init> {
   const [anim, children] = separateChildren(init)
-  const { upper: upperBounds, lower: lowerBounds } = bounds || {
-    upper: undefined,
-    lower: undefined,
-  }
-  const [upperBoundsAnim, upperBoundsChildren] = separateChildren(
-    upperBounds || {}
-  )
-  const [lowerBoundsAnim, lowerBoundsChildren] = separateChildren(
-    lowerBounds || {}
-  )
-  const info = createLocalAnimation(anim, timing, {
-    upper: upperBoundsAnim,
-    lower: lowerBoundsAnim,
-  }) as WritableAnimation<Init>
+  const info = createLocalAnimation(anim, timing) as WritableAnimation<Init>
 
   info.children = {} as WritableAnimation<Init>["children"]
   for (const [key, child] of Object.entries(children)) {
-    const childBounds = {
-      upper: upperBoundsChildren[key as keyof typeof upperBoundsChildren],
-      lower: lowerBoundsChildren[key as keyof typeof lowerBoundsChildren],
-    }
     info.children[key as keyof typeof info.children] = createAnimation(
       child as UnknownRecursiveAnimatable,
-      timing,
-      childBounds
+      timing
     ) as Init[keyof Init] extends number
       ? undefined
       : Animation<RecursiveAnimatable<Init[keyof Init]>>
@@ -200,6 +177,7 @@ export function createAnimation<Init extends UnknownRecursiveAnimatable>(
  * @example modifyTo<{a: number, b: number}>(anim, { a: 1, b: 1 })
  * @example modifyTo<{a: Vec2, b: Vec2}>(anim, {a: {x: 1}})
  * @example modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
+ * @see {@link Vec2}
  * @param anim The animation object
  * @param to The new partial state of the animation. A partial state
  * means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
@@ -412,75 +390,7 @@ export function mergeDicts<T1 extends object, T2 extends object>(
   return out
 }
 
-/**
- * Modifies the bounds of an object, changing what the animation is currently interpolating to.
- * Note: you might have to call {@link updateAnimation} after this to make sure the animation is updated,
- * if the current state is outside the new bounds.
- * @group Bounds
- * @example
-const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
- upper: { a: 1, b: 1 },
-})
-modifyTo(anim, { a: 2 }) // will animate out to `a: 2` and then bounce back to `a: 1`
-...// run updateAnimationInfo in a loop here
-modifyAnimationBounds(anim, {
-lower: { b: -1 },
-})
- * @param anim The animation to modify
- * @param bounds The new bounds to set. They can be partial and will be merged with the old bounds.
- */
-export function boundAnimation<Animating extends UnknownRecursiveAnimatable>(
-  anim: Animation<Animating>,
-  bounds: PartialBounds<PartialRecursiveAnimatable<Animating>> | undefined
-) {
-  const { upper: upperBounds, lower: lowerBounds } = bounds || {
-    upper: undefined,
-    lower: undefined,
-  }
-  const [upperBoundsAnim, upperBoundsChildren] = separateChildren(
-    upperBounds || {}
-  )
-  const [lowerBoundsAnim, lowerBoundsChildren] = separateChildren(
-    lowerBounds || {}
-  )
-
-  const localBounds: Bounds<Animating> = {
-    lower: applyDictTo(anim._bounds?.lower, lowerBoundsAnim),
-    upper: applyDictTo(anim._bounds?.upper, upperBoundsAnim),
-  }
-  anim._bounds = localBounds as Bounds<LocalAnimatable<Animating>>
-  for (const [key, child] of Object.entries(anim.children)) {
-    const childBounds = {
-      upper: upperBoundsChildren[key as keyof typeof upperBoundsChildren],
-      lower: lowerBoundsChildren[key as keyof typeof lowerBoundsChildren],
-    }
-    boundAnimation(child as UnknownAnimation, childBounds)
-  }
-
-  boundLocalAnimation(anim)
-}
-
-function boundLocalAnimation<Animating extends Animatable>(
-  anim: Animation<Animating>
-) {
-  const { upper, lower } = anim._bounds
-  const interpingTo = getLocalInterpingTo(anim)
-  for (const key in interpingTo) {
-    const currVal = interpingTo[key]
-    const lowerBound = lower[key]
-    const upperBound = upper[key]
-    const newVal = clamp(lowerBound, interpingTo[key], upperBound)
-    if (newVal !== currVal) {
-      modifyTo(anim, {
-        [key as keyof Animating]: newVal,
-      } as PartialRecursiveAnimatable<Animating>)
-      // we know info.to is not null because of modifyTo
-      broadcast(anim.bounceListeners, anim._to!)
-    }
-  }
-}
-
-function saveState<Animating extends UnknownRecursiveAnimatable>(
+export function saveState<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
   state: LocalAnimatable<Animating>
 ) {
@@ -576,8 +486,10 @@ export function updateAnimation<Animating extends UnknownRecursiveAnimatable>(
   if (dt < 0) dt = 0
   let [checkForDoneness, out] = updateAnimationInner(anim, dt)
   for (const child of checkForDoneness || []) {
-    broadcast(child.beforeEndListeners, child._from)
-    boundLocalAnimation(child)
+    // needs two calls to animationNeedsUpdate
+    // because listeners might call modifyTo
+    // which would make info need an update
+    broadcast(child.beforeEndListeners, child._prevTo || {})
     let localOut = animationNeedsUpdate(child)
     if (!localOut) {
       broadcast(child.endListeners, child._from)
@@ -605,10 +517,9 @@ function updateAnimationInner<Animating extends UnknownRecursiveAnimatable>(
   }
   if (!out && anim._to) {
     const newState = mergeDicts(anim._from, anim._to)
+    const prevTo = anim._to
     saveState(anim, newState)
-    // needs two calls to animationNeedsUpdate
-    // because boundAnimation might call modifyTo for info
-    // which would make info need an update
+    anim._prevTo = prevTo
     checkForDoneness.push(anim as UnknownAnimation)
   }
   return [checkForDoneness, out]
