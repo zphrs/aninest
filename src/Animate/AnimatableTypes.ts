@@ -1,6 +1,17 @@
+/**
+ * A collection of types to support Animatable.
+ * @module AnimatableTypes
+ */
+
 import { ListenerSet, Listeners } from "../Listeners"
 import { AnimatableEventsWithValue, AnimatableEvents } from "./AnimatableEvents"
 import { Interp } from "./Interp"
+import {
+  Recursive,
+  Local,
+  PartialRecursive,
+  HasChildren,
+} from "./RecursiveHelpers"
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost level of the input animation.
@@ -41,8 +52,19 @@ const bounds = {
  */
 export type PartialBounds<T> = Partial<Bounds<T>>
 
-export type unsubscribe = () => void
+/**
+ * Generic unsubscribe function which will remove event listeners.
+ */
+export type unsubscribe =
+  /**
+   * Generic unsubscribe function which will remove event listeners.
+   */
+  () => void
 
+/**
+ * Convenient way to write `RecursiveAnimatable<unknown>`,
+ * usually used to extend a generic type.
+ */
 export type UnknownRecursiveAnimatable = RecursiveAnimatable<unknown>
 export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
 export type UnknownAnimations = UnknownAnimation[]
@@ -56,11 +78,7 @@ export type UnknownAnimations = UnknownAnimation[]
   b: {x: 0, y: 0} 
 }
  */
-export type RecursiveAnimatable<T> = {
-  [P in keyof T]: T[P] extends UnknownRecursiveAnimatable
-    ? RecursiveAnimatable<T[P]>
-    : number
-}
+export type RecursiveAnimatable<T> = Recursive<number, T>
 
 /**
  * A local slice of the Animatable type.
@@ -94,25 +112,22 @@ export type LocalAnimatable<T> = {
   // example 1
   {}
    */
-export type PartialRecursiveAnimatable<T> = {
-  [P in keyof T]?: T[P] extends number
-    ? number
-    : PartialRecursiveAnimatable<T[P]>
-}
-
+export type PartialRecursiveAnimatable<T> = PartialRecursive<number, T>
+/**
+ * Mask over animation. Set any key to `false` in order to mask out
+ * that key and that key's subtree.
+ * @example
+const init = {a: {x: 0, y: 0}, b: {x: 0, y: 0}}
+// will only include {b: {x: number}} after the mask is applied
+const mask: Mask<typeof init> = {a: false, b: {x: false}}
+ */
 export type Mask<T> = {
   [P in keyof T]: T[P] | boolean
 }
 
-export type AnimationBehavior<Animating extends UnknownRecursiveAnimatable> = {
-  _timingFunction: Interp
-} & Listeners<AnimatableEventsWithValue, Partial<LocalAnimatable<Animating>>> &
-  Listeners<"update", unknown> & {
-    [key in `recursive${Capitalize<AnimatableEvents>}Listeners`]: ListenerSet<unknown>
-  }
-
 /**
- * The local animation object. This is a recursive type, meaning that it can contain other animations.
+ * The local animation object. This is a recursive type, meaning that it can
+ * contain other animations.
  * @internal
  */
 export type AnimationWithoutChildren<
@@ -129,19 +144,21 @@ export type AnimationWithoutChildren<
   }
 
 /**
-   * The animation object. This is a recursive type, meaning that it can contain other animations.
-   * @group Construction
-   * @example const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}}) 
-   // the anim object will look like this:
-    {
-      <private fields>
-      children: {
-      a: {
-        // holds the state of a, which is currently {x: 0, y: 0}
-        <private fields>
-      }
-    }
-   */
+ * The animation object. This is a recursive type, meaning that it can 
+ * contain other animations.
+ * @group Construction
+ * @example 
+ const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}}) 
+// the anim object will look like this:
+{
+  <private fields>
+  children: {
+  a: {
+    // holds the state of a, which is currently {x: 0, y: 0}
+    <private fields>
+  }
+}
+ */
 export type Animation<Animating extends UnknownRecursiveAnimatable> =
   AnimationWithoutChildren<Animating> & {
     readonly children: {

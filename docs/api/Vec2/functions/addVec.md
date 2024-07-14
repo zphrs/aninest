@@ -20,4 +20,4 @@ Adds two vectors together, returning a new vector.
 
 ## Source
 
-[Utils/vec2.ts:72](https://github.com/zphrs/aninest/blob/9544357/src/Utils/vec2.ts#L72)
+[Utils/vec2.ts:72](https://github.com/zphrs/aninest/blob/b0ed172/src/Utils/vec2.ts#L72)

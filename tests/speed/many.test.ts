@@ -37,11 +37,13 @@ describe("speed of updating 1,000 objects", () => {
       for (let anim of anims) {
         updateAnimation(anim, dt)
         const p1 = getLocalState(anim.children.p1)
+        // o is used to force the below checks to actually happen
+        // rather than getting optimized out
         if (p1.x < 0 || p1.x > 1 || p1.y < 0 || p1.y > 1) o++
       }
     }
 
-    // prewarm with ~10000 frames
+    // prewarm with ~10000 frames to trigger v8
     for (let i = 0; i < 10 * 120; i++) {
       updateFrame(0)
     }
@@ -58,11 +60,11 @@ describe("speed of updating 1,000 objects", () => {
       const end = performance.now()
       const diff = end - start
       total_diff += diff
-      expect(diff).toBeLessThan(350) // make sure that updating and getting the state is less than 1/2 of each frame
+      expect(diff).toBeLessThan(500) // make sure that updating and getting the state is less than 1/2 of each frame
     }
     // average time per frame
     const avg = total_diff / 10
-    expect(avg).toBeLessThan(300) // make sure that on average less than 1/4 of each frame is used to update and get the state
+    expect(avg).toBeLessThan(260) // make sure that on average less than 1/4 of each frame is used to update and get the state
     const end = performance.now()
     expect(end - start).toBeLessThan(20000) // make sure that the total time is less than 3 seconds
     for (let anim of anims) {

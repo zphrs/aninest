@@ -11,11 +11,11 @@ If the animation is not headed to any state, it will return the current state.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 • **into**: `object`= `{}`
 
@@ -34,4 +34,4 @@ getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:1142](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L1142)
+[Animate/Animatable.ts:519](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L519)

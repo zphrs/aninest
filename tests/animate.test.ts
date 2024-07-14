@@ -14,7 +14,7 @@ import {
   divScalar,
   getInterpingToTree,
 } from "../src"
-import { getCacheLayer, initializeBounds } from "../src/Animate"
+import { getCacheLayer, setupBoundsLayer } from "../src/Animate"
 describe("non-interrupted animation", () => {
   let animationInfo: Animation<{ a: number; b: number }>
   test("creates animation info", () => {
@@ -167,7 +167,8 @@ describe("bounds", () => {
     },
   }
   const anim = createAnimation({ a: newVec2(0, 0) }, getLinearInterp(1))
-  initializeBounds(anim, bounds)
+  const { mount } = setupBoundsLayer(anim, bounds)
+  mount(anim)
   test("creates animation info", () => {
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 0, y: 0 },
@@ -181,7 +182,6 @@ describe("bounds", () => {
     expect(getStateTree(anim)).toStrictEqual({
       a: { x: 2, y: 2 },
     })
-    console.log(anim._to)
     expect(needUpdate).toBe(true)
   })
   test("bounces", () => {
@@ -239,32 +239,40 @@ test("cache", () => {
     { a: ZERO_VEC2, b: ZERO_VEC2 },
     getLinearInterp(1)
   )
-  getCacheLayer(anim)
+  const cl = getCacheLayer(anim)
+  cl.mount(anim)
+  let count = 0
+  cl.subscribe(() => {
+    count++
+  })
   modifyTo(anim, { a: newVec2(1, 1), b: newVec2(1, 1) })
   updateAnimation(anim, 0.5)
-  expect(getStateTree(anim)).toStrictEqual({
-    a: { x: 0.5, y: 0.5 },
-    b: { x: 0.5, y: 0.5 },
+  expect(cl.cache).toStrictEqual({
+    a: newVec2(0.5, 0.5),
+    b: newVec2(0.5, 0.5),
   })
   updateAnimation(anim, 0.5)
-  expect(getStateTree(anim)).toStrictEqual({
+  expect(cl.cache).toStrictEqual({
     a: { x: 1, y: 1 },
     b: { x: 1, y: 1 },
   })
   updateAnimation(anim, 0.5)
-  expect(getStateTree(anim)).toStrictEqual({
+  expect(cl.cache).toStrictEqual({
     a: { x: 1, y: 1 },
     b: { x: 1, y: 1 },
   })
   modifyTo(anim, { a: newVec2(0, 0), b: newVec2(0, 0) })
   updateAnimation(anim, 0.5)
-  expect(getStateTree(anim)).toStrictEqual({
+  expect(cl.cache).toStrictEqual({
     a: { x: 0.5, y: 0.5 },
     b: { x: 0.5, y: 0.5 },
   })
   updateAnimation(anim, 0.5)
-  expect(getStateTree(anim)).toStrictEqual({
+  expect(cl.cache).toStrictEqual({
     a: { x: 0, y: 0 },
     b: { x: 0, y: 0 },
   })
+  // 4 updates to both the `a` and `b` vectors which actually
+  // updated the state of the animation.
+  expect(count).toBe(8)
 })

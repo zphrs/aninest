@@ -8,10 +8,11 @@ import type { updateAnimation } from "./Animatable"
 
 /**
  * Interpolation function.
+ * At time 0 it should return either 0 or null (for {@link NO_INTERP})
  * @param t Time in seconds. Guaranteed to be positive.
- * @returns A value or void if the animation is finished.
+ * @returns A value or undefined if the animation is finished.
  */
-export type Interp = (t: number) => number | void
+export type Interp = (t: number) => number | undefined
 
 /**
  * A constant interpolation function that makes all animations instantaneous,

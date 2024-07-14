@@ -1,0 +1,46 @@
+[aninest](../../index.md) / [AnimatableEvents](../index.md) / removeRecursiveListener
+
+# removeRecursiveListener()
+
+```ts
+removeRecursiveListener<Animating>(
+   anim, 
+   type, 
+   listener): void
+```
+
+Removes a recursive start listener from the animation
+
+## Type parameters
+
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+
+## Parameters
+
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
+
+• **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+
+• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<[`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<[`Animatable`](../../AnimatableTypes/type-aliases/Animatable.md)\>\>\>
+
+## Returns
+
+`void`
+
+## Example
+
+```ts
+// setup
+const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
+const listener = () => console.log("started")
+addRecursiveListener(anim, "start", listener)
+
+modifyTo(anim.children.a, {x: 1}) // will trigger the listener
+
+removeRecursiveListener(anim, "start", listener)
+modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
+```
+
+## Source
+
+[Animate/AnimatableEvents.ts:146](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableEvents.ts#L146)

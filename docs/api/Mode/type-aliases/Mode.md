@@ -1,0 +1,55 @@
+[aninest](../../index.md) / [Mode](../index.md) / Mode
+
+# Mode
+
+```ts
+type Mode: Object;
+```
+
+Provides on, off, and toggle functions to toggle an [ExtensionStack](../../ExtensionStack/index.md)
+
+## Type declaration
+
+### off
+
+```ts
+off: () => void;
+```
+
+#### Returns
+
+`void`
+
+### on
+
+```ts
+on: () => void;
+```
+
+#### Returns
+
+`void`
+
+### toggle
+
+```ts
+toggle: (to?) => void;
+```
+
+Will toggle the mode on or off depending on the value of `to`.
+If the mode is already set to match `to` then this function is a no-op.
+
+#### Parameters
+
+• **to?**: `boolean`
+
+`true` to turn the mode on, `false` to turn the mode off,
+and undefined to toggle.
+
+#### Returns
+
+`void`
+
+## Source
+
+Animate/Mode.ts:12

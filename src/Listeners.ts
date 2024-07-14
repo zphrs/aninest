@@ -18,6 +18,8 @@ export type Listener<T> = (
 
 /**
  * @internal
+ * Uses a Map instead of a Set because a Map preserves insertion order
+ * when iterating through items.
  */
 export type ListenerSet<T> = Map<Listener<T>, undefined>
 

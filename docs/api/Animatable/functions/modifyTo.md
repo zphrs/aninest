@@ -11,19 +11,19 @@ The animation will start to interpolate to the new state.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
-• **to**: [`PartialRecursiveAnimatable`](../type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
+• **to**: [`PartialRecursiveAnimatable`](../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
 
 The new partial state of the animation. A partial state
 means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
-the new target state will be `{ a: 1, b: 0 }`.
+the new target state will be `{ a 1, b: 0 }`.
 
 ## Returns
 
@@ -47,6 +47,10 @@ modifyTo<{a: Vec2, b: Vec2}>(anim, {a: {x: 1}})
 modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
 ```
 
+## See
+
+[Vec2](../../Vec2/type-aliases/Vec2.md)
+
 ## Source
 
-[Animate/Animatable.ts:447](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L447)
+[Animate/Animatable.ts:216](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L216)

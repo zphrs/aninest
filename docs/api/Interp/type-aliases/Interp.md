@@ -3,10 +3,11 @@
 # Interp
 
 ```ts
-type Interp: (t) => number | void;
+type Interp: (t) => number | undefined;
 ```
 
 Interpolation function.
+At time 0 it should return either 0 or null (for [NO_INTERP](../functions/NO_INTERP.md))
 
 ## Parameters
 
@@ -16,8 +17,8 @@ Time in seconds. Guaranteed to be positive.
 
 ## Returns
 
-`number` \| `void`
+`number` \| `undefined`
 
 ## Source
 
-[Animate/Interp.ts:14](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Interp.ts#L14)
+[Animate/Interp.ts:15](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Interp.ts#L15)

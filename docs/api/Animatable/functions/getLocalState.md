@@ -11,19 +11,19 @@ To access the local state of a child, use `anim.children.childName` as the input
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
-• **into**: [`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`Animating`\>= `undefined`
+• **into**: [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>= `undefined`
 
 ## Returns
 
-[`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`Animating`\>
+[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>
 
 The local state of the animation
 
@@ -46,4 +46,4 @@ const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 
 ## Source
 
-[Animate/Animatable.ts:924](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L924)
+[Animate/Animatable.ts:309](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L309)

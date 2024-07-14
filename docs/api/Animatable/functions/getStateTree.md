@@ -10,11 +10,11 @@ Gets the total state of the animation, including all children.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 • **into**: `object`= `undefined`
 
@@ -33,4 +33,4 @@ const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
 
 ## Source
 
-[Animate/Animatable.ts:963](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L963)
+[Animate/Animatable.ts:348](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L348)

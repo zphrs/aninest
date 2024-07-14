@@ -33,15 +33,15 @@ const {x: {value: x}, y: {value: y}} = getStateTree(anim.children.a)
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 • **interp**: [`Interp`](../../Interp/type-aliases/Interp.md)
 
-• **mask**: `Partial`\<`Mask`\<`Animating`\>\>= `{}`
+• **mask**: `Partial`\<[`Mask`](../../AnimatableTypes/type-aliases/Mask.md)\<`Animating`\>\>= `{}`
 
 Assumes default of true for all keys. It is optional.
 
@@ -64,4 +64,4 @@ getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
 
 ## Source
 
-[Animate/Animatable.ts:1082](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L1082)
+[Animate/Animatable.ts:459](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L459)

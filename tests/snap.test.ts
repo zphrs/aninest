@@ -78,7 +78,7 @@ describe("snap", () => {
     const update8times = () => {
       for (let i = 0; i < 8; i++) {
         updateAnimation(anim, 0.125)
-        console.log(getStateTree(anim))
+        // console.log(getStateTree(anim))
       }
     }
     update8times()

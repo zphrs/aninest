@@ -10,11 +10,11 @@ Moves forward in the animation by a certain amount of time.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -30,4 +30,4 @@ true if the animation needs to be updated again
 
 ## Source
 
-[Animate/Animatable.ts:993](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L993)
+[Animate/Animatable.ts:373](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L373)

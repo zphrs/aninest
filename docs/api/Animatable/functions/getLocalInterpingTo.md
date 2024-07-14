@@ -13,11 +13,11 @@ in the topmost level of the input animation.
 
 ## Type parameters
 
-• **Animating** extends `Partial`\<[`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`unknown`\>\>
+• **Animating** extends `Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`unknown`\>\>
 
 ## Parameters
 
-• **anim**: [`Animation`](../type-aliases/Animation.md)\<`Animating`\>
+• **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 The animation object
 
@@ -25,7 +25,7 @@ The animation object
 
 ## Returns
 
-`Animating` \| [`LocalAnimatable`](../type-aliases/LocalAnimatable.md)\<`Animating`\>
+`Animating` \| [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>
 
 The local target state of the animation
 
@@ -40,4 +40,4 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:1122](https://github.com/zphrs/aninest/blob/9544357/src/Animate/Animatable.ts#L1122)
+[Animate/Animatable.ts:499](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L499)

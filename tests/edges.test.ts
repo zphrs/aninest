@@ -12,8 +12,11 @@ import {
   updateAnimation,
   addLocalListener,
   getLocalState,
-  initializeBounds,
+  setupBoundsLayer,
+  Vec2,
+  Animation,
 } from "../src"
+import { UPDATE } from "../src/Animate/AnimatableEvents"
 
 describe("edge cases of modifyTo", () => {
   const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
@@ -73,7 +76,8 @@ describe("remove recursive start listener", () => {
 
 describe("instant bound animation", () => {
   const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
-  const { unsub: _unsubBounds, updateBounds } = initializeBounds(anim, {})
+  const { mount, update: updateBounds } = setupBoundsLayer(anim, {})
+  mount(anim)
   test("unbounded", () => {
     modifyTo(anim, { a: newVec2(1, 1) })
     expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 } })
@@ -104,7 +108,8 @@ describe("instant bound animation", () => {
 
 describe("continuous bound animation", () => {
   const anim = createAnimation({ a: newVec2(1, 0) }, getLinearInterp(1))
-  const { unsub: _unsubBounds, updateBounds } = initializeBounds(anim, {})
+  const { mount, update: updateBounds } = setupBoundsLayer(anim, {})
+  mount(anim)
   test("bounded without current interp", () => {
     updateBounds({
       upper: {
@@ -159,12 +164,26 @@ describe("continuous bound animation", () => {
   })
 })
 
+describe("updating event counts", () => {
+  const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
+  test("update triggers correct number of times", () => {
+    let count = 0
+    addRecursiveListener(anim, UPDATE, () => {
+      count++
+    })
+    modifyTo(anim, { a: newVec2(1, 0) })
+    updateAnimation(anim, 1) // shouldn't update anything
+    expect(count).toEqual(1)
+  })
+})
+
 describe("change interp function", () => {
   const anim = createAnimation(
     { a: newVec2(0, 0), b: newVec2(1, 1) },
     NO_INTERP
   )
-  const { unsub: _unsubBounds, updateBounds } = initializeBounds(anim, {})
+  const { mount, update: updateBounds } = setupBoundsLayer(anim, {})
+  mount(anim)
   test("change interp function", () => {
     modifyTo(anim, { a: newVec2(1, 0) })
     expect(getStateTree(anim)).toStrictEqual({
@@ -262,7 +281,7 @@ test("verbose mask", () => {
 test("end event of parent", done => {
   let anim = createAnimation({ a: newVec2(2, 2) }, getLinearInterp(1))
   modifyTo(anim, { a: { x: 1 } })
-  addLocalListener(anim.children.a, "end", () => {
+  addLocalListener(anim.children.a as Animation<Vec2>, "end", () => {
     done()
   })
   updateAnimation(anim, 1)
