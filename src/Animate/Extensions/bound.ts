@@ -16,7 +16,7 @@ import {
   unsubscribe,
   RecursiveAnimatable,
 } from "../AnimatableTypes"
-import { separateChildren } from "../RecursiveHelpers"
+import { Mask, separateChildren } from "../RecursiveHelpers"
 
 /**
    * The bounds of the animation. The animation will be loosely clamped to these bounds.
@@ -63,7 +63,8 @@ updateBounds({lower: {a: 0.5}})
  */
 export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
-  bounds: PartialRecursiveBounds<Animating>
+  bounds: PartialRecursiveBounds<Animating>,
+  mask: Partial<Mask<Animating>> = {}
 ): BoundsLayer<Animating> {
   const splitBounds = (bounds: PartialRecursiveBounds<Animating>) => {
     const { upper: upperBounds, lower: lowerBounds } = bounds
@@ -92,16 +93,20 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     [key in keyof Animating]?: BoundsLayer<RecursiveAnimatable<Animating[key]>>
   } = {}
   for (const [k, c] of Object.entries(anim.children)) {
+    if (mask[k as keyof Animating] === false) continue
     const key: keyof Animating = k as keyof Animating
     const childBounds = {
       upper: upperBoundsChildren[key],
       lower: lowerBoundsChildren[key],
     } as PartialBounds<PartialRecursiveAnimatable<unknown>>
     if (!childBounds.upper && !childBounds.lower) continue
-    const child = c as Animation<RecursiveAnimatable<Animating[typeof key]>>
-    childMap[key] = setupBoundsLayer<
-      RecursiveAnimatable<Animating[typeof key]>
-    >(child, childBounds)
+    const child = c as Animation<UnknownRecursiveAnimatable>
+    const maskKey = mask[key] !== true && mask[key] ? mask[key] : {}
+    childMap[key] = setupBoundsLayer<UnknownRecursiveAnimatable>(
+      child,
+      childBounds,
+      maskKey as Partial<Mask<UnknownRecursiveAnimatable>>
+    ) as BoundsLayer<RecursiveAnimatable<Animating[keyof Animating]>>
   }
   const checkLocalBounds = (localTo: Partial<LocalAnimatable<Animating>>) => {
     const modified: typeof localTo = {}
@@ -122,7 +127,6 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     }
     modifyTo(anim, modified as PartialRecursiveAnimatable<Animating>)
   }
-  checkLocalBounds(getLocalState(anim))
   let unsubs = new Set<unsubscribe>()
   return {
     mount: anim => {

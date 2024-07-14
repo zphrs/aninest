@@ -1,4 +1,6 @@
-import { Mask, UnknownRecursiveAnimatable } from "./AnimatableTypes"
+/** @internal */
+
+import { UnknownRecursiveAnimatable } from "./AnimatableTypes"
 type ChildrenOfRecursive<Base, T> = {
   [P in keyof T]: T[P] extends Recursive<Base, unknown> ? T[P] : undefined
 }
@@ -37,30 +39,41 @@ export type PartialRecursive<Base, Shape> = {
 export type Local<Base, Shape extends Recursive<Base, unknown>> = {
   [P in keyof Shape]: Shape[P] extends Base ? Base : undefined
 }
+/**
+ * Mask over animation. Set any key to `false` in order to mask out
+ * that key and that key's subtree.
+ * @example
+const init = {a: {x: 0, y: 0}, b: {x: 0, y: 0}}
+// will only include {b: {x: number}} after the mask is applied
+const mask: Mask<typeof init> = {a: false, b: {x: false}}
+ */
+export type Mask<T> = {
+  [P in keyof T]: T[P] | boolean
+}
 
-export type HasChildren<Base, Shape, Rest> = Rest & {
+export type HasChildren<Base, Shape> = {
   readonly children: {
     [P in keyof Shape]: Shape[P] extends Base
       ? undefined
-      : HasChildren<Base, Shape[P], Rest>
+      : HasChildren<Base, Shape[P]>
   }
 }
 
-export function perMaskedChild<Base, R extends UnknownRecursive, Rest>(
-  anim: HasChildren<Base, R, unknown>,
-  mask: Partial<Mask<R>>,
-  fn: (child: HasChildren<Base, UnknownRecursive, Rest>) => void
+export function perMaskedChild<Base, Shape extends UnknownRecursive>(
+  anim: HasChildren<Base, Shape>,
+  mask: Partial<Mask<Shape>>,
+  fn: (child: HasChildren<Base, UnknownRecursive>) => void
 ) {
   const filteredChildren = Object.keys(anim.children).filter(
     key => mask[key as keyof typeof mask] !== false
   )
   for (const key of filteredChildren) {
-    const child = anim.children[key as keyof R]
+    const child = anim.children[key as keyof Shape]
     if (child) {
-      fn(child as HasChildren<Base, UnknownRecursive, Rest>)
+      fn(child as HasChildren<Base, UnknownRecursive>)
     }
     perMaskedChild(
-      child as HasChildren<Base, UnknownRecursive, unknown>,
+      child as HasChildren<Base, UnknownRecursive>,
       mask[key as keyof typeof mask] as Partial<
         Mask<UnknownRecursiveAnimatable>
       >,

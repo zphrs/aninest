@@ -17,10 +17,10 @@ import type {
   UnknownAnimation,
   UnknownAnimations,
   WritableAnimation,
-  Mask,
 } from "./AnimatableTypes"
 import {
   HasChildren,
+  Mask,
   perMaskedChild,
   separateChildren,
 } from "./RecursiveHelpers"
@@ -474,8 +474,9 @@ export function changeInterpFunction<
   mask: Partial<Mask<Animating>> = {} // assumes default of true for all keys
 ) {
   const locallyChangeInterpFunction = (
-    anim: Animation<UnknownRecursiveAnimatable>
+    a: HasChildren<number, UnknownRecursiveAnimatable>
   ) => {
+    const anim = a as unknown as Animation<UnknownRecursiveAnimatable>
     anim._timingFunction = interp
     const to = getLocalInterpingTo(anim)
     saveState(anim, getLocalState(anim, anim._from))
@@ -484,7 +485,7 @@ export function changeInterpFunction<
   }
   locallyChangeInterpFunction(anim as Animation<UnknownRecursiveAnimatable>)
   perMaskedChild(
-    anim as HasChildren<number, Animating, unknown>,
+    anim as HasChildren<number, Animating>,
     mask,
     locallyChangeInterpFunction
   )

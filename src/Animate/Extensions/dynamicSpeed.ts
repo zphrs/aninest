@@ -12,6 +12,7 @@ import {
   unsubscribe,
 } from "../AnimatableTypes"
 import { Interp, NO_INTERP } from "../Interp"
+import { HasChildren, Mask, perMaskedChild } from "../RecursiveHelpers"
 import { distanceSquaredBetween } from "./snap"
 
 export type InterpWithSpeed = (duration: number, ...params: unknown[]) => Interp
@@ -28,12 +29,13 @@ export type InterpWithSpeed = (duration: number, ...params: unknown[]) => Interp
 export function dynamicSpeedExtension<
   Animating extends UnknownRecursiveAnimatable
 >(
+  mask: Partial<Mask<Animating>> = {},
   interp: InterpWithSpeed,
-  speed: number, // speed in units per second
+  speed: number, // speed in units per second,
   ...params: unknown[]
 ): Extension<Animating> {
   return (anim: Animation<Animating>) =>
-    setRecursiveDynamicSpeed(anim, interp, speed, ...params)
+    setRecursiveDynamicSpeed(anim, mask, interp, speed, ...params)
 }
 
 /**
@@ -50,20 +52,22 @@ export function setRecursiveDynamicSpeed<
   Animating extends UnknownRecursiveAnimatable
 >(
   anim: Animation<Animating>,
+  mask: Partial<Mask<Animating>> = {},
   interp: InterpWithSpeed,
   speed: number, // speed in units per second
   ...params: unknown[]
 ): unmount {
   const unsubscribers: unmount[] = []
-  for (const childInfo of Object.values(
-    anim.children as {
-      [s: string]: Animation<UnknownRecursiveAnimatable>
-    }
-  )) {
+  perMaskedChild(anim as HasChildren<number, Animating>, mask, child => {
     unsubscribers.push(
-      setRecursiveDynamicSpeed(childInfo, interp, speed, ...params)
+      setLocalDynamicSpeed(
+        child as Animation<UnknownRecursiveAnimatable>,
+        interp,
+        speed,
+        ...params
+      )
     )
-  }
+  })
   const localUnsub = setLocalDynamicSpeed(anim, interp, speed, ...params)
   unsubscribers.push(localUnsub)
   return () => {

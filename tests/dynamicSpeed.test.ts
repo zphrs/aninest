@@ -10,7 +10,7 @@ import {
 
 test("dynamic speed", () => {
   const anim = createAnimation(newVec2(2, 2), NO_INTERP)
-  const remove = setRecursiveDynamicSpeed(anim, getLinearInterp, 1)
+  const remove = setRecursiveDynamicSpeed(anim, undefined, getLinearInterp, 1)
   modifyTo(anim, { x: 0, y: 2 })
   let needsUpdate = updateAnimation(anim, 1)
   expect(needsUpdate).toBe(true)

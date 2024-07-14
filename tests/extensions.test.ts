@@ -45,7 +45,10 @@ describe("extension stack", () => {
   test("dynamic speed", () => {
     const stack = createExtensionStack<Vec2>()
     const anim = createAnimation(newVec2(2, 2), NO_INTERP)
-    addExtensionToStack(stack, dynamicSpeedExtension(getLinearInterp, 1))
+    addExtensionToStack(
+      stack,
+      dynamicSpeedExtension(undefined, getLinearInterp, 1)
+    )
     const unmountStack = mountStack(stack, anim)
     modifyTo(anim, newVec2(0, 2))
     let needsUpdate = updateAnimation(anim, 1)

@@ -6,12 +6,7 @@
 import { ListenerSet, Listeners } from "../Listeners"
 import { AnimatableEventsWithValue, AnimatableEvents } from "./AnimatableEvents"
 import { Interp } from "./Interp"
-import {
-  Recursive,
-  Local,
-  PartialRecursive,
-  HasChildren,
-} from "./RecursiveHelpers"
+import { Recursive, PartialRecursive } from "./RecursiveHelpers"
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost level of the input animation.
@@ -113,17 +108,6 @@ export type LocalAnimatable<T> = {
   {}
    */
 export type PartialRecursiveAnimatable<T> = PartialRecursive<number, T>
-/**
- * Mask over animation. Set any key to `false` in order to mask out
- * that key and that key's subtree.
- * @example
-const init = {a: {x: 0, y: 0}, b: {x: 0, y: 0}}
-// will only include {b: {x: number}} after the mask is applied
-const mask: Mask<typeof init> = {a: false, b: {x: false}}
- */
-export type Mask<T> = {
-  [P in keyof T]: T[P] | boolean
-}
 
 /**
  * The local animation object. This is a recursive type, meaning that it can
