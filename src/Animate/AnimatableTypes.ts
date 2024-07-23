@@ -4,7 +4,7 @@
  */
 
 import { ListenerSet, Listeners } from "../Listeners"
-import { AnimatableEventsWithValue, AnimatableEvents } from "./AnimatableEvents"
+import { AnimatableEventsWithValue } from "./AnimatableEvents"
 import { Interp } from "./Interp"
 import { Recursive, PartialRecursive } from "./RecursiveHelpers"
 
