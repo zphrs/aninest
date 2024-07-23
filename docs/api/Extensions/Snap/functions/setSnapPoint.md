@@ -13,9 +13,9 @@ Adds a point to snap to, across any number of features.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
-• **Point** extends [`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
+• **Point** extends [`PartialRecursive`](../../../RecursiveHelpers/type-aliases/PartialRecursive.md)\<`number`, `Animating`\>
 
 ## Parameters
 
@@ -61,4 +61,4 @@ const s6 = getStateTree(anim) // {x: 1, y: 1}
 
 ## Source
 
-Animate/Extensions/snap.ts:169
+[Animate/Extensions/snap.ts:171](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/snap.ts#L171)

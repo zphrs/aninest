@@ -11,17 +11,11 @@ will end within the given bounds.
 
 | Type alias | Description |
 | :------ | :------ |
-| [BoundsLayer](type-aliases/BoundsLayer.md) | A layer used to enforce min and max bounds on an animation. |
+| [Bounds](type-aliases/Bounds.md) | The bounds of the animation, which means that all values within<br />the bounds are optional, including the the `upper` and `lower` objects.<br />The animation will be loosely clamped to these bounds. |
+| [BoundsLayer](type-aliases/BoundsLayer.md) | A layer used to enforce minimum and maximum bounds on an animation. |
 
 ### Functions
 
 | Function | Description |
 | :------ | :------ |
-| [setupBoundsLayer](functions/setupBoundsLayer.md) | - |
-
-### Bounds
-
-| Type alias | Description |
-| :------ | :------ |
-| [Bounds](type-aliases/Bounds.md) | The bounds of the animation. The animation will be loosely clamped to these bounds. |
-| [PartialBounds](type-aliases/PartialBounds.md) | The partial bounds of the animation, making the lower and upper bounds optional. |
+| [setupBoundsLayer](functions/setupBoundsLayer.md) | Sets up a bounds layer for an animation.<br />Allows for the animation's bounds to be dynamically changed. |

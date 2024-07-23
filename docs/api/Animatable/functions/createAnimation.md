@@ -10,7 +10,7 @@ Creates an animation info object, automatically inferring type from the init obj
 
 ## Type parameters
 
-• **Init** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Init** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -18,9 +18,9 @@ Creates an animation info object, automatically inferring type from the init obj
 
 The initial state of the animation
 
-• **timing**: [`Interp`](../../Interp/type-aliases/Interp.md)
+• **timing**: [`Interp`](../../module:Interp/type-aliases/Interp.md)
 
-The timing function. See [Interp.ts](./Interp.ts) for some common timing functions
+The timing function. See [Interp](../../module:Interp/type-aliases/Interp.md) for some common timing functions.
 
 ## Returns
 
@@ -39,4 +39,4 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
 
 ## Source
 
-[Animate/Animatable.ts:123](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L123)
+[Animate/Animatable.ts:127](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L127)

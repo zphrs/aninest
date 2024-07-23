@@ -13,7 +13,7 @@ Removes a recursive start listener from the animation
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -21,7 +21,7 @@ Removes a recursive start listener from the animation
 
 • **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
-• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<[`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<[`Animatable`](../../AnimatableTypes/type-aliases/Animatable.md)\>\>\>
+• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<[`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, [`Animatable`](../../AnimatableTypes/type-aliases/Animatable.md)\>\>\>
 
 ## Returns
 
@@ -43,4 +43,4 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 
 ## Source
 
-[Animate/AnimatableEvents.ts:146](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableEvents.ts#L146)
+[Animate/AnimatableEvents.ts:146](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L146)

@@ -3,9 +3,14 @@
  * @module ExtensionStack
  */
 
-import { Extension, Layer, mountExtension } from "./Extensions"
+import { Extension, Layer, mountExtension, unmount } from "./Extension"
 import { UnknownRecursiveAnimatable, Animation } from "./AnimatableTypes"
 
+/**
+ * A list of extensions which will be mounted to an animation in order.
+ * @see {@link mountStack} to add an extension to the stack.
+ * @group Extensions
+ */
 export type ExtensionStack<Animating extends UnknownRecursiveAnimatable> =
   Extension<Animating>[]
 
@@ -48,15 +53,17 @@ export function addLayerToStack<
 }
 
 /**
- * Mounts the stack of extensions to the animation.
+ * Mounts a stack of extensions to the animation. Returns a function that
+ * unmounts all the extensions in the stack.
  * @param stack
  * @param anim
  * @returns A function that unmounts all the extensions in the stack.
+ * @group Extensions
  */
 export function mountStack<Animating extends UnknownRecursiveAnimatable>(
   stack: ExtensionStack<Animating>,
   anim: Animation<Animating>
-) {
+): unmount {
   const unmounts = stack.map(ext => mountExtension(ext, anim))
   return () => {
     unmounts.forEach(unmount => unmount())

@@ -3,17 +3,17 @@
 # getLocalInterpingTo()
 
 ```ts
-getLocalInterpingTo<Animating>(anim, into): Animating | LocalAnimatable<Animating>
+getLocalInterpingTo<Animating>(anim, into): LocalAnimatable<Animating>
 ```
 
 Gets the local target state that the animation is currently headed to.
 If the animation is not headed to any state, it will return the current state.
 This only returns the local state of the animation, meaning only the numbers
-in the topmost level of the input animation.
+in the topmost level of the animation.
 
 ## Type parameters
 
-• **Animating** extends `Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`unknown`\>\>
+• **Animating** extends `Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<[`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>\>\>
 
 ## Parameters
 
@@ -25,7 +25,7 @@ The animation object
 
 ## Returns
 
-`Animating` \| [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>
+[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>
 
 The local target state of the animation
 
@@ -40,4 +40,4 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
 
 ## Source
 
-[Animate/Animatable.ts:499](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L499)
+[Animate/Animatable.ts:552](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L552)

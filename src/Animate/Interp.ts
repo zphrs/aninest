@@ -1,6 +1,6 @@
 /**
  * Several interpolation function constructors.
- * @module Interp
+ * @module module:Interp
  */
 
 import { bezierFunc, clamp } from "../Utils/vec2"
@@ -11,6 +11,8 @@ import type { updateAnimation } from "./Animatable"
  * At time 0 it should return either 0 or null (for {@link NO_INTERP})
  * @param t Time in seconds. Guaranteed to be positive.
  * @returns A value or undefined if the animation is finished.
+ * @see {@link NO_INTERP}, {@link getLinearInterp}, {@link getSlerp}, and {@link getCubicBezier}
+ * to create interpolation functions.
  */
 export type Interp = (t: number) => number | undefined
 

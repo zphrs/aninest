@@ -1,4 +1,9 @@
-/** @internal */
+/**
+ * Provides general helper functions for working with recursive objects.
+ * Especially useful for allowing extensions to mask out (not affect) certain
+ * children of an object.
+ * @module RecursiveHelpers
+ */
 
 import { UnknownRecursiveAnimatable } from "./AnimatableTypes"
 type ChildrenOfRecursive<Base, T> = {
@@ -24,12 +29,20 @@ export function separateChildren<Base, T extends Recursive<Base, unknown>>(
   return [anim, children]
 }
 
+/**
+ * Generic type which allows for the recursive definition of an object
+ * which either has a value of type `Base` or a subtree of the same type.
+ */
 export type Recursive<Base, Shape> = {
   [P in keyof Shape]: Shape[P] extends Base ? Base : Recursive<Base, Shape[P]>
 }
 
 type UnknownRecursive = Recursive<unknown, unknown>
 
+/**
+ * Contains the same structure as the original object, but with all keys
+ * being optional.
+ */
 export type PartialRecursive<Base, Shape> = {
   [P in keyof Shape]?: Shape[P] extends Base
     ? Base

@@ -14,7 +14,9 @@ import type {
 } from "./AnimatableTypes"
 import { updateAnimation, modifyTo } from "./Animatable"
 import { Listener } from "../Listeners"
+import { capitalizeFirstLetter } from "../Utils"
 
+export const BEFORE_START = "beforeStart"
 export const START = "start"
 export const END = "end"
 export const BEFORE_END = "beforeEnd"
@@ -24,10 +26,17 @@ export const UPDATE = "update"
  * List of event types which provide the values which the animation is interpolating to.
  * @internal
  */
-const ANIM_TYPES_WITH_VALUE = [START, END, INTERRUPT, BEFORE_END] as const
+export const ANIM_TYPES_WITH_VALUE = [
+  BEFORE_START,
+  START,
+  END,
+  INTERRUPT,
+  BEFORE_END,
+] as const
 export const ANIM_TYPES = [...ANIM_TYPES_WITH_VALUE, UPDATE] as const
 /**
  * Animation Events which return the values which the animation is interpolating to.
+ * Only excludes the `update` event.
  */
 export type AnimatableEventsWithValue = (typeof ANIM_TYPES_WITH_VALUE)[number]
 
@@ -94,7 +103,6 @@ export function removeLocalListener<
 /**
  * Adds a recursive start listener to the animation. This listener will trigger on any child modification.
  * Animation listeners are called in the order in which they were added.
- * @group Events
  * @example
 const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInterp(1))
 addRecursiveListener(anim, "start", () => console.log("started")) // will trigger
@@ -147,11 +155,10 @@ export function removeRecursiveListener<
   Animating extends UnknownRecursiveAnimatable
 >(
   anim: Animation<Animating>,
-  type: AnimatableEvents,
+  type: AnimatableEventsWithValue,
   listener: Listener<Animation<RecursiveAnimatable<Animatable>>>
 ) {
-  const capitalizedType = (type.charAt(0).toUpperCase() +
-    type.slice(1)) as Capitalize<AnimatableEvents>
+  const capitalizedType = capitalizeFirstLetter(type)
   anim[`recursive${capitalizedType}Listeners`].delete(
     listener as Listener<unknown>
   )
@@ -168,7 +175,6 @@ export function removeRecursiveListener<
 /**
  * Listens to the animation for a specific event.
  * All events aside from `update` return a dictionary of local values which are currently being animated.
- * @group Events
  */
 export type AnimatableListener<
   Animating extends UnknownRecursiveAnimatable,

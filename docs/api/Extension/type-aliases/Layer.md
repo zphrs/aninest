@@ -6,7 +6,7 @@
 type Layer<Animating>: Object;
 ```
 
-A layer that can be mounted to an animation via a `mount` function.
+A layer that can be mounted to an animation via its `mount` function.
 
 ## Type parameters
 
@@ -20,8 +20,8 @@ A layer that can be mounted to an animation via a `mount` function.
 mount: Mount<Animating>;
 ```
 
-Mounts the layer to a specific Animation.
+Mounts a layer to a specific Animation.
 
 ## Source
 
-Animate/Extension.ts:47
+[Animate/Extension.ts:47](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extension.ts#L47)

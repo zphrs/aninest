@@ -10,12 +10,12 @@ Creates an empty stack of extensions.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Returns
 
-`ExtensionStack`\<`Animating`\>
+[`ExtensionStack`](../type-aliases/ExtensionStack.md)\<`Animating`\>
 
 ## Source
 
-Animate/ExtensionStack.ts:16
+[Animate/ExtensionStack.ts:21](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/ExtensionStack.ts#L21)

@@ -6,7 +6,7 @@
 type Mode: Object;
 ```
 
-Provides on, off, and toggle functions to toggle an [ExtensionStack](../../ExtensionStack/index.md)
+Provides on, off, and toggle functions to toggle an [ExtensionStack](../../ExtensionStack/type-aliases/ExtensionStack.md).`
 
 ## Type declaration
 
@@ -52,4 +52,4 @@ and undefined to toggle.
 
 ## Source
 
-Animate/Mode.ts:12
+[Animate/Mode.ts:12](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Mode.ts#L12)

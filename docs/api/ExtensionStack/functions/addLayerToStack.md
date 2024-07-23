@@ -11,13 +11,13 @@ returns the layer.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
-• **L** extends [`Layer`](../../Extensions/type-aliases/Layer.md)\<`Animating`\>
+• **L** extends [`Layer`](../../Extension/type-aliases/Layer.md)\<`Animating`\>
 
 ## Parameters
 
-• **stack**: `ExtensionStack`\<`Animating`\>
+• **stack**: [`ExtensionStack`](../type-aliases/ExtensionStack.md)\<`Animating`\>
 
 • **layer**: `L`
 
@@ -29,4 +29,4 @@ the inputted layer
 
 ## Source
 
-Animate/ExtensionStack.ts:41
+[Animate/ExtensionStack.ts:46](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/ExtensionStack.ts#L46)

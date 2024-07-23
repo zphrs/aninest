@@ -38,4 +38,4 @@ readonly children: { [P in keyof Animating]: Animating[P] extends number ? undef
 
 ## Source
 
-[Animate/AnimatableTypes.ts:165](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableTypes.ts#L165)
+[Animate/AnimatableTypes.ts:119](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableTypes.ts#L119)

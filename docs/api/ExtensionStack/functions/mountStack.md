@@ -3,32 +3,28 @@
 # mountStack()
 
 ```ts
-mountStack<Animating>(stack, anim): () => void
+mountStack<Animating>(stack, anim): unmount
 ```
 
-Mounts the stack of extensions to the animation.
+Mounts a stack of extensions to the animation. Returns a function that
+unmounts all the extensions in the stack.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
-• **stack**: `ExtensionStack`\<`Animating`\>
+• **stack**: [`ExtensionStack`](../type-aliases/ExtensionStack.md)\<`Animating`\>
 
 • **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
 ## Returns
 
-`Function`
+[`unmount`](../../Extension/type-aliases/unmount.md)
 
 A function that unmounts all the extensions in the stack.
 
-> ### Returns
->
-> `void`
->
-
 ## Source
 
-Animate/ExtensionStack.ts:56
+[Animate/ExtensionStack.ts:63](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/ExtensionStack.ts#L63)

@@ -10,7 +10,7 @@ Sets a snap grid only for the top level of the animation.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -28,4 +28,4 @@ a function to remove the snap grid
 
 ## Source
 
-Animate/Extensions/snap.ts:74
+[Animate/Extensions/snap.ts:74](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/snap.ts#L74)

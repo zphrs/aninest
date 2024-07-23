@@ -13,7 +13,7 @@ Removes a listener from the animation
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 • **Event** extends [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
@@ -59,4 +59,4 @@ Instead use the return value of `{@link addLocalListener}`.
 
 ## Source
 
-[Animate/AnimatableEvents.ts:81](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableEvents.ts#L81)
+[Animate/AnimatableEvents.ts:82](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L82)

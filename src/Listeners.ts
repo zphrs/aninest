@@ -43,6 +43,7 @@ export function broadcast<T>(
     if (listener(value) === true) {
       listeners.delete(listener)
       if (onRemove) {
+        listeners.delete(listener)
         onRemove(listener)
       }
     }

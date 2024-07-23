@@ -10,9 +10,9 @@ Measures the squared euclidean distance between the point and the currentState a
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
-• **Point** extends [`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
+• **Point** extends [`PartialRecursive`](../../../RecursiveHelpers/type-aliases/PartialRecursive.md)\<`number`, `Animating`\>
 
 ## Parameters
 
@@ -20,7 +20,7 @@ Measures the squared euclidean distance between the point and the currentState a
 
 An arbitrary point ex. if `Animating = {x: number, y: number, z: number}` then point could be `{x: number, y: number}`
 
-• **currentState**: [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`Animating`\>
+• **currentState**: [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `Animating`\>
 
 ## Returns
 
@@ -38,4 +38,4 @@ const distSquared = distanceSquaredBetween(point, getStateTree(anim)) // 2
 
 ## Source
 
-Animate/Extensions/snap.ts:226
+[Animate/Extensions/snap.ts:228](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/snap.ts#L228)

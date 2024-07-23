@@ -239,7 +239,7 @@ test("cache", () => {
     { a: ZERO_VEC2, b: ZERO_VEC2 },
     getLinearInterp(1)
   )
-  const cl = getCacheLayer(anim)
+  const cl = getCacheLayer()
   cl.mount(anim)
   let count = 0
   cl.subscribe(() => {

@@ -3,7 +3,7 @@
  * @module Extensions/Loop
  */
 
-import { Extension } from "."
+import { Extension } from "../Extension"
 import {
   changeInterpFunction,
   modifyTo,

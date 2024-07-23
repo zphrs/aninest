@@ -6,7 +6,8 @@
 type Animatable: Object;
 ```
 
-The local state of the animation, meaning only the numbers in the topmost level of the input animation.
+The local state of the animation, meaning only the numbers in the topmost 
+level of the animation.
 
 ## Example
 
@@ -24,4 +25,4 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 
 ## Source
 
-[Animate/AnimatableTypes.ts:20](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableTypes.ts#L20)
+[Animate/AnimatableTypes.ts:22](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableTypes.ts#L22)

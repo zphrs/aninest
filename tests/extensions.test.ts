@@ -13,7 +13,7 @@ import {
   Vec2,
   newVec2,
   ZERO_VEC2,
-  dynamicSpeedExtension,
+  dynamicDurationExtension,
   NO_INTERP,
 } from "../src"
 
@@ -47,7 +47,7 @@ describe("extension stack", () => {
     const anim = createAnimation(newVec2(2, 2), NO_INTERP)
     addExtensionToStack(
       stack,
-      dynamicSpeedExtension(undefined, getLinearInterp, 1)
+      dynamicDurationExtension(undefined, getLinearInterp, 1)
     )
     const unmountStack = mountStack(stack, anim)
     modifyTo(anim, newVec2(0, 2))

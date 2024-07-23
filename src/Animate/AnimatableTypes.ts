@@ -9,7 +9,8 @@ import { Interp } from "./Interp"
 import { Recursive, PartialRecursive } from "./RecursiveHelpers"
 
 /**
- * The local state of the animation, meaning only the numbers in the topmost level of the input animation.
+ * The local state of the animation, meaning only the numbers in the topmost 
+ * level of the animation.
  * @group State Types
  * @example
 const startingState = {a: {x: 0, y: 0}, b: 0}
@@ -21,48 +22,20 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 export type Animatable = { [key: string]: number }
 
 /**
- * The bounds of the animation. The animation will be loosely clamped to these bounds.
- * @group Bounds
- * @example
-// Assuming the animation is of type {a: Vec2, b: Vec2}:
-const bounds = {
-  lower: { a: {x: 0, y: 0}, b: {x: 0} },
-  upper: { a: {x: 1, y: 1} }
-} // note that b.y is not bounded and that b.x only has a lower bound. This is perfectly valid.
- */
-export type Bounds<T> = {
-  lower: Partial<T>
-  upper: Partial<T>
-}
-
-/**
- * The partial bounds of the animation, making the lower and upper bounds optional.
- * @group Bounds
- * @see {@link Bounds} for the full bounds type and for further explanation of the bounds.
- * @example
-// Assuming the animation is of type {a: Vec2, b: Vec2}:
-const bounds = {
-  lower: { a: {x: 0, y: 0}, b: {x: 0} },
-} // Note that there are no upper bounds
- */
-export type PartialBounds<T> = Partial<Bounds<T>>
-
-/**
  * Generic unsubscribe function which will remove event listeners.
  */
-export type unsubscribe =
-  /**
-   * Generic unsubscribe function which will remove event listeners.
-   */
-  () => void
+export type unsubscribe = () => void
 
 /**
  * Convenient way to write `RecursiveAnimatable<unknown>`,
  * usually used to extend a generic type.
  */
 export type UnknownRecursiveAnimatable = RecursiveAnimatable<unknown>
+/**
+ * Convenient way to write `Animation<UnknownRecursiveAnimatable>`.
+ * Usually used to cast an animation to this more generic type.
+ */
 export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
-export type UnknownAnimations = UnknownAnimation[]
 
 /**
  * The generic type of the animation state.
@@ -91,22 +64,22 @@ export type LocalAnimatable<T> = {
 } & Animatable
 
 /**
-   * A subtree of the Animatable type.
-   * @group State Types
-   * @example
-  const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y: 0}}
-  // the following are all valid partial states of the type of the startingState:
-  // example 3
-  {
-   a: {x: 1, y: 1}
-  }
-  // example 2
-  {
-    a: {x: 1}
-  }
-  // example 1
-  {}
-   */
+ * A subtree of the Animatable type.
+ * @group State Types
+ * @example
+const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y: 0}}
+// the following are all valid partial states of the type of the startingState:
+// example 3
+{
+  a: {x: 1, y: 1}
+}
+// example 2
+{
+  a: {x: 1}
+}
+// example 1
+{}
+  */
 export type PartialRecursiveAnimatable<T> = PartialRecursive<number, T>
 
 /**
@@ -124,7 +97,7 @@ export type AnimationWithoutChildren<
   _to: Partial<LocalAnimatable<Animating>> | null
 } & Listeners<AnimatableEventsWithValue, Partial<LocalAnimatable<Animating>>> &
   Listeners<"update", unknown> & {
-    [key in `recursive${Capitalize<AnimatableEvents>}Listeners`]: ListenerSet<unknown>
+    [key in `recursive${Capitalize<AnimatableEventsWithValue>}Listeners`]: ListenerSet<unknown>
   }
 
 /**

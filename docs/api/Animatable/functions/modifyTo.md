@@ -7,11 +7,12 @@ modifyTo<Animating>(anim, to): void
 ```
 
 Sets the final stopping point of the animation.
-The animation will start to interpolate to the new state.
+The animation will start to interpolate to the new state the next
+time [updateAnimation](updateAnimation.md) is called.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -19,7 +20,7 @@ The animation will start to interpolate to the new state.
 
 The animation object
 
-• **to**: [`PartialRecursiveAnimatable`](../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
+• **to**: [`PartialRecursive`](../../RecursiveHelpers/type-aliases/PartialRecursive.md)\<`number`, `Animating`\>
 
 The new partial state of the animation. A partial state
 means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
@@ -53,4 +54,4 @@ modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
 
 ## Source
 
-[Animate/Animatable.ts:216](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L216)
+[Animate/Animatable.ts:241](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L241)

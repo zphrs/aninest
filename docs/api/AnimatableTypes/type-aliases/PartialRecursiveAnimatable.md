@@ -3,7 +3,7 @@
 # PartialRecursiveAnimatable\<T\>
 
 ```ts
-type PartialRecursiveAnimatable<T>: { [P in keyof T]?: T[P] extends number ? number : PartialRecursiveAnimatable<T[P]> };
+type PartialRecursiveAnimatable<T>: PartialRecursive<number, T>;
 ```
 
 A subtree of the Animatable type.
@@ -15,7 +15,7 @@ const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y:
 // the following are all valid partial states of the type of the startingState:
 // example 3
 {
-a: {x: 1, y: 1}
+ a: {x: 1, y: 1}
 }
 // example 2
 {
@@ -31,4 +31,4 @@ a: {x: 1, y: 1}
 
 ## Source
 
-[Animate/AnimatableTypes.ts:113](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableTypes.ts#L113)
+[Animate/AnimatableTypes.ts:83](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableTypes.ts#L83)

@@ -11,9 +11,9 @@ Mainly meant as a utility function for [setSnapPoint](setSnapPoint.md).
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
-• **Point** extends [`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
+• **Point** extends [`PartialRecursive`](../../../RecursiveHelpers/type-aliases/PartialRecursive.md)\<`number`, `Animating`\>
 
 ## Parameters
 
@@ -37,4 +37,4 @@ dlt2({x: 1, y: 1}, {x: 0, y: 0}) // true
 
 ## Source
 
-Animate/Extensions/snap.ts:202
+[Animate/Extensions/snap.ts:204](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/snap.ts#L204)

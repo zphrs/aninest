@@ -25,4 +25,4 @@ Lerps between a and b by t.
 
 ## Source
 
-[Utils/vec2.ts:15](https://github.com/zphrs/aninest/blob/b0ed172/src/Utils/vec2.ts#L15)
+[Utils/vec2.ts:15](https://github.com/zphrs/aninest/blob/60918f7/src/Utils/vec2.ts#L15)

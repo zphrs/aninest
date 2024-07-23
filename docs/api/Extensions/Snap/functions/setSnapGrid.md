@@ -10,13 +10,13 @@ Adds a grid to snap to.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
 • **anim**: [`Animation`](../../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
-• **gridSize**: [`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>
+• **gridSize**: [`PartialRecursive`](../../../RecursiveHelpers/type-aliases/PartialRecursive.md)\<`number`, `Animating`\>
 
 A dictionary of the size of each grid square for each variable. Ex: `{x: 1, y: 1}`
 
@@ -34,4 +34,4 @@ setSnapGrid(anim, {x: 1, y: 1}) // will snap to integer values before ending
 
 ## Source
 
-Animate/Extensions/snap.ts:42
+[Animate/Extensions/snap.ts:42](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/snap.ts#L42)

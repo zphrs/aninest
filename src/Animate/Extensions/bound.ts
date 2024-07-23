@@ -4,7 +4,7 @@
  * @module Extensions/Bound
  */
 
-import { Layer } from "."
+import { Layer } from "../Extension"
 import { clamp } from "../../Utils"
 import { applyDictTo, modifyTo, getLocalState } from "../Animatable"
 import { addLocalListener, BEFORE_END } from "../AnimatableEvents"
@@ -15,43 +15,56 @@ import {
   Animation,
   unsubscribe,
   RecursiveAnimatable,
+  UnknownAnimation,
 } from "../AnimatableTypes"
 import { Mask, separateChildren } from "../RecursiveHelpers"
 
 /**
    * The bounds of the animation. The animation will be loosely clamped to these bounds.
-   * @group Bounds
+   * @internal
    * @example
   // Assuming the animation is of type {a: Vec2, b: Vec2}:
-  const bounds = {
+  const bounds: Bounds<PartialRecursiveAnimatable<unknown>> = {
     lower: { a: {x: 0, y: 0}, b: {x: 0} },
     upper: { a: {x: 1, y: 1} }
   } // note that b.y is not bounded and that b.x only has a lower bound. This is perfectly valid.
    */
-export type Bounds<T> = {
+export type FullBounds<T> = {
   lower: Partial<T>
   upper: Partial<T>
 }
 
 /**
-     * The partial bounds of the animation, making the lower and upper bounds optional.
-     * @group Bounds
-     * @see {@link Bounds} for the full bounds type and for further explanation of the bounds.
-     * @example
-    // Assuming the animation is of type {a: Vec2, b: Vec2}:
-    const bounds = {
-      lower: { a: {x: 0, y: 0}, b: {x: 0} },
-    } // Note that there are no upper bounds
-     */
-export type PartialBounds<T> = Partial<Bounds<T>>
-type PartialRecursiveBounds<Animating extends UnknownRecursiveAnimatable> =
-  PartialBounds<PartialRecursiveAnimatable<Animating>>
+ * The partial bounds of the animation, making the upper and lower bound dictionaries optional.
+ * Note that for {@link FullBounds} both the upper and lower objects are required to be within the 
+ * Bounds object, although both can simply be an empty object.
+ * @see {@link FullBounds} for the full bounds type and for further explanation of the bounds.
+ * @internal
+ * @example
+// Assuming the animation is of type {a: Vec2, b: Vec2}:
+const bounds = {
+  lower: { a: {x: 0, y: 0}, b: {x: 0} },
+} // Note that there is no upper bounds object
+ */
+export type PartialFullBounds<T> = Partial<FullBounds<T>>
+/**
+ * The bounds of the animation, which means that all values within
+ * the bounds are optional, including the the `upper` and `lower` objects.
+ * The animation will be loosely clamped to these bounds.
+ * @see {@link setupBoundsLayer} for how to apply bounds to an animation.
+ * @example
+// Assuming the animation is of type {a: Vec2, b: Vec2}:
+const bounds: PartialRecursiveBounds<{a: Vec2, b: Vec2}> = {
+  lower: { a: {x: 0, y: 0}, b: {x: 0} },
+  upper: { a: {x: 1, y: 1} }
+} // note that b.y is not bounded and that b.x only has a lower bound. This is perfectly valid.
+ */
+export type Bounds<Animating extends UnknownRecursiveAnimatable> =
+  PartialFullBounds<PartialRecursiveAnimatable<Animating>>
 
 /**
- *  
- * @param anim 
- * @param bounds 
- * @returns 
+ * Sets up a bounds layer for an animation.
+ * Allows for the animation's bounds to be dynamically changed.
  * @example
 const anim = createAnimation({a: 0, b: 0}, getLinearInterp(1))
 const bounds = {
@@ -60,13 +73,16 @@ const bounds = {
 }
 const {unsub, updateBounds} = initializeBounds(anim, bounds)
 updateBounds({lower: {a: 0.5}})
+ * @param anim 
+ * @param bounds 
+ * @returns 
  */
 export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
-  bounds: PartialRecursiveBounds<Animating>,
+  bounds: Bounds<Animating>,
   mask: Partial<Mask<Animating>> = {}
 ): BoundsLayer<Animating> {
-  const splitBounds = (bounds: PartialRecursiveBounds<Animating>) => {
+  const splitBounds = (bounds: Bounds<Animating>) => {
     const { upper: upperBounds, lower: lowerBounds } = bounds
     return [
       ...separateChildren(
@@ -83,7 +99,7 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     lowerBoundsAnim,
     lowerBoundsChildren,
   ] = splitBounds(bounds)
-  const localBounds: Bounds<LocalAnimatable<Animating>> = {
+  const localBounds: FullBounds<LocalAnimatable<Animating>> = {
     upper: {},
     lower: {},
   }
@@ -98,9 +114,9 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     const childBounds = {
       upper: upperBoundsChildren[key],
       lower: lowerBoundsChildren[key],
-    } as PartialBounds<PartialRecursiveAnimatable<unknown>>
+    } as PartialFullBounds<PartialRecursiveAnimatable<unknown>>
     if (!childBounds.upper && !childBounds.lower) continue
-    const child = c as Animation<UnknownRecursiveAnimatable>
+    const child = c as UnknownAnimation
     const maskKey = mask[key] !== true && mask[key] ? mask[key] : {}
     childMap[key] = setupBoundsLayer<UnknownRecursiveAnimatable>(
       child,
@@ -150,7 +166,9 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
         unsubs.clear()
       }
     },
-    update: (bounds: PartialBounds<PartialRecursiveAnimatable<Animating>>) => {
+    update: (
+      bounds: PartialFullBounds<PartialRecursiveAnimatable<Animating>>
+    ) => {
       const [
         upperBoundsAnim,
         upperBoundsChildren,
@@ -166,7 +184,7 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
         const childBounds = {
           upper: upperBoundsChildren[key],
           lower: lowerBoundsChildren[key],
-        } as PartialBounds<PartialRecursiveAnimatable<unknown>>
+        } as PartialFullBounds<PartialRecursiveAnimatable<unknown>>
         if (!childMap[key]) {
           const { mount } = (childMap[key] = setupBoundsLayer<
             RecursiveAnimatable<Animating[typeof key]>
@@ -182,12 +200,18 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
 }
 
 /**
- * A layer used to enforce min and max bounds on an animation.
+ * A layer used to enforce minimum and maximum bounds on an animation.
  * @see {@link setupBoundsLayer} for how to create a BoundsLayer.
  */
 export type BoundsLayer<Animating extends UnknownRecursiveAnimatable> = {
-  // The function to remove the bounds layer, undefined if the layer is not mounted
+  /**
+   * Updates and overrides the previously set bounds, similar to how {@link modifyTo} works.
+   * A bound updated with this function will apply immediately rather than waiting for
+   * the animation to end before snapping the state to be within the bound.
+   * @param bounds
+   * @returns
+   */
   update: (
-    bounds: PartialBounds<PartialRecursiveAnimatable<Animating>>
+    bounds: PartialFullBounds<PartialRecursiveAnimatable<Animating>>
   ) => void | undefined
 } & Layer<Animating>

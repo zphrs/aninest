@@ -10,7 +10,7 @@ Will loop the animation, meaning that it will loop from the initial state to the
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -38,4 +38,4 @@ anim.getStateTree() // {a: 0, b: 0}
 
 ## Source
 
-Animate/Extensions/loop.ts:51
+[Animate/Extensions/loop.ts:51](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/loop.ts#L51)

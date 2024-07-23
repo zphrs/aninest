@@ -7,7 +7,7 @@ import type { UnknownRecursiveAnimatable, Animation } from "./AnimatableTypes"
 import { ExtensionStack, mountStack, unmount } from "."
 
 /**
- * Provides on, off, and toggle functions to toggle an {@link ExtensionStack}
+ * Provides on, off, and toggle functions to toggle an {@link ExtensionStack}.`
  */
 export type Mode = {
   on: () => void
@@ -22,10 +22,11 @@ export type Mode = {
 }
 
 /**
- * Creates a mode which can be toggled on and off
+ * Creates a mode. A mode is simply an {@link ExtensionStack}
+ * which can be easily toggled on and off.
  * @param anim
  * @param stack
- * @returns {@link Mode} to toggle the {@link ExtensionStack}
+ * @returns used to toggle the {@link ExtensionStack}.
  */
 export function createMode<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,

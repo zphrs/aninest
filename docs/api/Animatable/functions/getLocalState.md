@@ -3,15 +3,18 @@
 # getLocalState()
 
 ```ts
-getLocalState<Animating>(anim, into): LocalAnimatable<Animating>
+getLocalState<Animating>(
+   anim, 
+   into, 
+skipFrom): LocalAnimatable<Animating>
 ```
 
-Gets the current local state of the animation, meaning only the numbers in the topmost level of the input animation.
+Gets the current local state of the animation, meaning only the numbers in the topmost level of the animation.
 To access the local state of a child, use `anim.children.childName` as the input.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -20,6 +23,8 @@ To access the local state of a child, use `anim.children.childName` as the input
 The animation object
 
 • **into**: [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>= `undefined`
+
+• **skipFrom**: `boolean`= `false`
 
 ## Returns
 
@@ -46,4 +51,4 @@ const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 
 ## Source
 
-[Animate/Animatable.ts:309](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L309)
+[Animate/Animatable.ts:337](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L337)

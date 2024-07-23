@@ -26,4 +26,4 @@ A scalar.
 
 ## Source
 
-[Utils/vec2.ts:195](https://github.com/zphrs/aninest/blob/b0ed172/src/Utils/vec2.ts#L195)
+[Utils/vec2.ts:195](https://github.com/zphrs/aninest/blob/60918f7/src/Utils/vec2.ts#L195)

@@ -6,7 +6,7 @@
 type BoundsLayer<Animating>: Object & Layer<Animating>;
 ```
 
-A layer used to enforce min and max bounds on an animation.
+A layer used to enforce minimum and maximum bounds on an animation.
 
 ## See
 
@@ -20,9 +20,13 @@ A layer used to enforce min and max bounds on an animation.
 update: (bounds) => void | undefined;
 ```
 
+Updates and overrides the previously set bounds, similar to how [modifyTo](../../../Animatable/functions/modifyTo.md) works.
+A bound updated with this function will apply immediately rather than waiting for
+the animation to end before snapping the state to be within the bound.
+
 #### Parameters
 
-• **bounds**: [`PartialBounds`](PartialBounds.md)\<[`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>\>
+• **bounds**: `PartialFullBounds`\<[`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>\>
 
 #### Returns
 
@@ -34,4 +38,4 @@ update: (bounds) => void | undefined;
 
 ## Source
 
-Animate/Extensions/bound.ts:184
+[Animate/Extensions/bound.ts:206](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/bound.ts#L206)

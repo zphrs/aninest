@@ -64,7 +64,8 @@ describe("speed of updating 1,000 objects", () => {
     }
     // average time per frame
     const avg = total_diff / 10
-    expect(avg).toBeLessThan(260) // make sure that on average less than 1/4 of each frame is used to update and get the state
+    console.log(avg)
+    expect(avg).toBeLessThan(250) // make sure that on average less than 1/4 of each frame is used to update and get the state
     const end = performance.now()
     expect(end - start).toBeLessThan(20000) // make sure that the total time is less than 3 seconds
     for (let anim of anims) {

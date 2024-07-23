@@ -24,4 +24,4 @@ type ShouldSnap<Animating, Point>: (point, currentState) => boolean;
 
 ## Source
 
-Animate/Extensions/snap.ts:120
+[Animate/Extensions/snap.ts:122](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/snap.ts#L122)

@@ -3,7 +3,7 @@
  * @module Extensions/Snap
  */
 
-import { Extension, Mount } from "."
+import { Extension, Mount } from "../Extension"
 import { getLocalState, modifyTo, getStateTree } from "../Animatable"
 import {
   addLocalListener,

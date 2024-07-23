@@ -1,9 +1,12 @@
 /**
  * Extension to add a cache to an animation.
+ * @internal
+ * @deprecated
  * @module Extensions/Cache
  */
 
-import { Extension, Layer } from "."
+import { Layer } from "../Extension"
+import { getStateTreeProxy } from "./proxy"
 import { broadcast, Listener, ListenerSet } from "../../Listeners"
 import { getStateTree } from "../Animatable"
 import { addRecursiveListener } from "../AnimatableEvents"
@@ -15,6 +18,7 @@ import {
 
 /**
  * Layer used to create a cache of the current state of the animation.
+ * @internal
  */
 export type CacheLayer<Animating extends UnknownRecursiveAnimatable> = {
   /**
@@ -35,12 +39,21 @@ export type CacheLayer<Animating extends UnknownRecursiveAnimatable> = {
   removeSubscribers: () => void
 } & Layer<Animating>
 
-export function getCacheLayer<Animating extends UnknownRecursiveAnimatable>(
-  anim: Animation<Animating>
-): CacheLayer<Animating> {
+/**
+ * Makes a cache layer which allows listening to cache events and getting
+ * the current cached values of the properties within the animation.
+ * @deprecated use {@link getStateTreeProxy} instead for better caching performance
+ * with less redundancy.
+ * @internal
+ * @returns A cache layer which allows the reading and listening of changes to the
+ * current animation state.
+ */
+export function getCacheLayer<
+  Animating extends UnknownRecursiveAnimatable
+>(): CacheLayer<Animating> {
   const cache: Animating = {} as Animating
   const listeners: ListenerSet<Animating> = new Map()
-  const onUpdateForCache = () => {
+  const onUpdateForCache = (anim: Animation<Animating>) => {
     if (!cache) throw new Error("Cache is not initialized")
     getStateTree(anim, cache)
     broadcast(listeners, cache)
@@ -55,18 +68,16 @@ export function getCacheLayer<Animating extends UnknownRecursiveAnimatable>(
       listeners.clear()
     },
     mount(anim) {
-      onUpdateForCache()
-      const unmount = addRecursiveListener(anim, "update", onUpdateForCache)
+      onUpdateForCache(anim)
+      const unmount = addRecursiveListener(
+        anim,
+        "update",
+        onUpdateForCache.bind(this, anim)
+      )
 
       return () => {
         unmount()
       }
     },
   }
-}
-
-export function getCacheExtension<Animating extends UnknownRecursiveAnimatable>(
-  cacheLayer: CacheLayer<Animating>
-): Extension<Animating> {
-  return cacheLayer.mount
 }

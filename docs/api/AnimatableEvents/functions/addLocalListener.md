@@ -15,7 +15,7 @@ Animation listeners are called in the order in which they were added.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 • **Event** extends [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
@@ -54,4 +54,4 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## Source
 
-[Animate/AnimatableEvents.ts:49](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableEvents.ts#L49)
+[Animate/AnimatableEvents.ts:50](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L50)

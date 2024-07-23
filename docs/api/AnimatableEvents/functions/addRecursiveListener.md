@@ -14,7 +14,7 @@ Animation listeners are called in the order in which they were added.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -22,7 +22,7 @@ Animation listeners are called in the order in which they were added.
 
 • **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
-• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\> \| [`Listener`](../../Listeners/type-aliases/Listener.md)\<`UnknownAnimation`\>
+• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\> \| [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`UnknownAnimation`](../../AnimatableTypes/type-aliases/UnknownAnimation.md)\>
 
 () => boolean Returns whether to remove the listener. Void or false to keep the listener.
 
@@ -41,4 +41,4 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
 
 ## Source
 
-[Animate/AnimatableEvents.ts:106](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/AnimatableEvents.ts#L106)
+[Animate/AnimatableEvents.ts:106](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L106)

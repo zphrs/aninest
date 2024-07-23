@@ -6,11 +6,11 @@
 updateAnimation<Animating>(anim, dt): boolean
 ```
 
-Moves forward in the animation by a certain amount of time.
+Moves the animation forward by a certain amount of time.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
@@ -20,7 +20,8 @@ The animation object
 
 • **dt**: `number`
 
-The time to increment the animation by. Must be positive. If negative or zero then no-op.
+The timestep to increment the animation by. Must be positive.
+If negative or zero and the interpolation function is not NO_INTERP then no-op.
 
 ## Returns
 
@@ -30,4 +31,4 @@ true if the animation needs to be updated again
 
 ## Source
 
-[Animate/Animatable.ts:373](https://github.com/zphrs/aninest/blob/b0ed172/src/Animate/Animatable.ts#L373)
+[Animate/Animatable.ts:425](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L425)

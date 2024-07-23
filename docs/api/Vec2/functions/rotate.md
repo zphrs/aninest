@@ -24,4 +24,4 @@ A new vector.
 
 ## Source
 
-[Utils/vec2.ts:161](https://github.com/zphrs/aninest/blob/b0ed172/src/Utils/vec2.ts#L161)
+[Utils/vec2.ts:161](https://github.com/zphrs/aninest/blob/60918f7/src/Utils/vec2.ts#L161)

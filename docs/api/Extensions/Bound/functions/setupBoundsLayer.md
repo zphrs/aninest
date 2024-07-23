@@ -3,18 +3,26 @@
 # setupBoundsLayer()
 
 ```ts
-setupBoundsLayer<Animating>(anim, bounds): BoundsLayer<Animating>
+setupBoundsLayer<Animating>(
+   anim, 
+   bounds, 
+mask): BoundsLayer<Animating>
 ```
+
+Sets up a bounds layer for an animation.
+Allows for the animation's bounds to be dynamically changed.
 
 ## Type parameters
 
-• **Animating** extends [`RecursiveAnimatable`](../../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
+• **Animating** extends [`Recursive`](../../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
 
 ## Parameters
 
 • **anim**: [`Animation`](../../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
-• **bounds**: `Partial`\<[`Bounds`](../type-aliases/Bounds.md)\<[`PartialRecursiveAnimatable`](../../../AnimatableTypes/type-aliases/PartialRecursiveAnimatable.md)\<`Animating`\>\>\>
+• **bounds**: `Partial`\<`FullBounds`\<[`PartialRecursive`](../../../RecursiveHelpers/type-aliases/PartialRecursive.md)\<`number`, `Animating`\>\>\>
+
+• **mask**: `Partial`\<[`Mask`](../../../RecursiveHelpers/type-aliases/Mask.md)\<`Animating`\>\>= `{}`
 
 ## Returns
 
@@ -34,4 +42,4 @@ updateBounds({lower: {a: 0.5}})
 
 ## Source
 
-Animate/Extensions/bound.ts:64
+[Animate/Extensions/bound.ts:80](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/bound.ts#L80)
