@@ -23,4 +23,4 @@ Returns `undefined`
 
 ## Source
 
-[Animate/AnimatableEvents.ts:195](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L195)
+[Animate/AnimatableEvents.ts:202](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L202)

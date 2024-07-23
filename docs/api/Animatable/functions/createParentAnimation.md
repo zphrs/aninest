@@ -38,4 +38,4 @@ const anim = createParentAnimation({a, b, c: 1})
 
 ## Source
 
-[Animate/Animatable.ts:193](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L193)
+[Animate/Animatable.ts:186](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L186)

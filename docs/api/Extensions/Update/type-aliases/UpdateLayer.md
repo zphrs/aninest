@@ -24,7 +24,7 @@ subscribe: (type, sub) => unsubscribe;
 
 • **type**: `"start"` \| `"end"` \| `"update"`
 
-• **sub**: [`Listener`](../../../Listeners/type-aliases/Listener.md)\<`undefined`\>
+• **sub**: [`Listener`](../../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>\>
 
 #### Returns
 
@@ -36,4 +36,4 @@ subscribe: (type, sub) => unsubscribe;
 
 ## Source
 
-Animate/Extensions/update.ts:30
+[Animate/Extensions/update.ts:30](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/update.ts#L30)

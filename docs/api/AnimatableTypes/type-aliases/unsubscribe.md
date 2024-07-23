@@ -14,4 +14,4 @@ Generic unsubscribe function which will remove event listeners.
 
 ## Source
 
-[Animate/AnimatableTypes.ts:27](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableTypes.ts#L27)
+[Animate/AnimatableTypes.ts:27](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L27)

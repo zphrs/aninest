@@ -6,6 +6,12 @@ This module deals with creating and modifying Animations.
 
 ## Index
 
+### Functions
+
+| Function | Description |
+| :------ | :------ |
+| [getLocalInterpingToValue](functions/getLocalInterpingToValue.md) | Gets a value |
+
 ### Construction
 
 | Function | Description |

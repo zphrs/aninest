@@ -11,4 +11,4 @@ usually used to extend a generic type.
 
 ## Source
 
-[Animate/AnimatableTypes.ts:33](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableTypes.ts#L33)
+[Animate/AnimatableTypes.ts:33](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L33)

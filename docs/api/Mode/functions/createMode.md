@@ -27,4 +27,4 @@ used to toggle the [ExtensionStack](../../ExtensionStack/type-aliases/ExtensionS
 
 ## Source
 
-[Animate/Mode.ts:31](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Mode.ts#L31)
+[Animate/Mode.ts:31](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Mode.ts#L31)

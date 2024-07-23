@@ -31,4 +31,4 @@ const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y:
 
 ## Source
 
-[Animate/AnimatableTypes.ts:83](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableTypes.ts#L83)
+[Animate/AnimatableTypes.ts:83](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L83)

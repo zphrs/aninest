@@ -7,6 +7,7 @@
 | [Animatable](Animatable/index.md) | This module deals with creating and modifying Animations. |
 | [AnimatableEvents](AnimatableEvents/index.md) | Various ways to attach and detach event listeners to an Animation. |
 | [AnimatableTypes](AnimatableTypes/index.md) | A collection of types to support Animatable. |
+| [Animate/Extensions/reactor](Animate/Extensions/reactor/index.md) | - |
 | [Extension](Extension/index.md) | Defines the types and functions related to the most bare-bones<br />extension. |
 | [ExtensionStack](ExtensionStack/index.md) | A stack of extensions that can be mounted to an animation. |
 | [Extensions/Bound](Extensions/Bound/index.md) | Adds bounds to an animation to ensure an animation<br />will end within the given bounds. |

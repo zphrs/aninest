@@ -27,7 +27,12 @@ The animation object
 
 See [AnimatableEvents](../type-aliases/AnimatableEvents.md)
 
-• **listener**: `Event` extends `"start"` \| `"end"` \| `"interrupt"` \| `"beforeEnd"` ? [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>\>\> : [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
+• **listener**: `Event` extends 
+  \| `"beforeStart"`
+  \| `"start"`
+  \| `"end"`
+  \| `"interrupt"`
+  \| `"beforeEnd"` ? [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>\>\> : [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
 
 The listener function to remove
 
@@ -59,4 +64,4 @@ Instead use the return value of `{@link addLocalListener}`.
 
 ## Source
 
-[Animate/AnimatableEvents.ts:82](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L82)
+[Animate/AnimatableEvents.ts:90](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L90)

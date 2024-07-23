@@ -19,7 +19,12 @@ Removes a recursive start listener from the animation
 
 • **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
-• **type**: [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+• **type**: 
+  \| `"beforeStart"`
+  \| `"start"`
+  \| `"end"`
+  \| `"interrupt"`
+  \| `"beforeEnd"`
 
 • **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<[`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, [`Animatable`](../../AnimatableTypes/type-aliases/Animatable.md)\>\>\>
 
@@ -43,4 +48,4 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 
 ## Source
 
-[Animate/AnimatableEvents.ts:146](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L146)
+[Animate/AnimatableEvents.ts:154](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L154)

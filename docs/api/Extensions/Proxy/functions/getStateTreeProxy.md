@@ -74,4 +74,4 @@ be set directly, but the children can be set.
 
 ## Source
 
-Animate/Extensions/proxy.ts:56
+[Animate/Extensions/proxy.ts:125](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/proxy.ts#L125)

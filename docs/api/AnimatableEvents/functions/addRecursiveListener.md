@@ -41,4 +41,4 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
 
 ## Source
 
-[Animate/AnimatableEvents.ts:106](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L106)
+[Animate/AnimatableEvents.ts:114](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L114)

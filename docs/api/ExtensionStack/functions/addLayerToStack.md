@@ -29,4 +29,4 @@ the inputted layer
 
 ## Source
 
-[Animate/ExtensionStack.ts:46](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/ExtensionStack.ts#L46)
+[Animate/ExtensionStack.ts:46](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/ExtensionStack.ts#L46)

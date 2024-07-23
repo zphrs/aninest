@@ -29,7 +29,12 @@ The animation object
 
 See [AnimatableEvents](../type-aliases/AnimatableEvents.md)
 
-• **listener**: `Event` extends `"start"` \| `"end"` \| `"interrupt"` \| `"beforeEnd"` ? [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>\>\> : [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
+• **listener**: `Event` extends 
+  \| `"beforeStart"`
+  \| `"start"`
+  \| `"end"`
+  \| `"interrupt"`
+  \| `"beforeEnd"` ? [`Listener`](../../Listeners/type-aliases/Listener.md)\<`Partial`\<[`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>\>\> : [`Listener`](../../Listeners/type-aliases/Listener.md)\<`undefined`\>
 
 The listener function - return true from the function to remove the listener
 
@@ -54,4 +59,4 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## Source
 
-[Animate/AnimatableEvents.ts:50](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/AnimatableEvents.ts#L50)
+[Animate/AnimatableEvents.ts:58](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L58)

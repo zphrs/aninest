@@ -10,4 +10,4 @@ A function that unmounts an extension from the animation.
 
 ## Source
 
-[Animate/Extension.ts:16](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extension.ts#L16)
+[Animate/Extension.ts:16](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extension.ts#L16)

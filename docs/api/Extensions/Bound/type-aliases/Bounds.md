@@ -30,4 +30,4 @@ const bounds: PartialRecursiveBounds<{a: Vec2, b: Vec2}> = {
 
 ## Source
 
-[Animate/Extensions/bound.ts:62](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Extensions/bound.ts#L62)
+[Animate/Extensions/bound.ts:62](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/bound.ts#L62)

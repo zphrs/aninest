@@ -54,4 +54,4 @@ modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
 
 ## Source
 
-[Animate/Animatable.ts:241](https://github.com/zphrs/aninest/blob/60918f7/src/Animate/Animatable.ts#L241)
+[Animate/Animatable.ts:215](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L215)
