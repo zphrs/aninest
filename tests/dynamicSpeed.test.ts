@@ -8,7 +8,7 @@ import {
   updateAnimation,
 } from "../src"
 
-test("dynamic speed", () => {
+test("dynamic duration", () => {
   const anim = createAnimation(newVec2(2, 2), NO_INTERP)
   const remove = setRecursiveDynamicDuration(
     anim,

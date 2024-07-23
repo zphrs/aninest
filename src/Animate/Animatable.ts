@@ -240,8 +240,8 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   if (Object.keys(localTo).length === 0) return
   anim._time = 0
   anim._to = completeTo
-  updateAnimation(anim, 0)
   broadcast(anim.startListeners, completeTo) // )
+  updateAnimation(anim, 0)
 }
 
 /**
@@ -393,6 +393,8 @@ export function getStateTree<Animating extends UnknownRecursiveAnimatable>(
   return out
 }
 
+type Seconds = number
+
 /**
  * Moves the animation forward by a certain amount of time.
  * @group State Modification
@@ -403,7 +405,7 @@ export function getStateTree<Animating extends UnknownRecursiveAnimatable>(
  */
 export function updateAnimation<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
-  dt: number
+  dt: Seconds
 ): boolean {
   if (dt < 0) dt = 0
   let [checkForDoneness, out] = updateAnimationInner(anim, dt)
@@ -536,6 +538,24 @@ export function getLocalInterpingTo<
   }
   return mergeDicts(anim._from, anim._to, into)
 }
+
+/**
+ * Gets a value
+ * @param anim
+ * @param key
+ * @returns
+ */
+export function getLocalInterpingToValue<
+  Animating extends LocalAnimatable<UnknownRecursiveAnimatable>
+>(anim: Animation<Animating>, key: keyof Animating): number | undefined {
+  if (anim._to === null) {
+    return anim._from[key]
+  }
+  const to = anim._to[key]
+  if (to !== undefined) return to
+  return anim._from[key]
+}
+
 /**
  * Gets the full state tree that the animation is currently interpolating to.
  * If the animation is not headed to any state, it will return the current state.

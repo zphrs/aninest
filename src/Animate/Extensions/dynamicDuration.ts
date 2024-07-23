@@ -85,7 +85,6 @@ export function setRecursiveDynamicDuration<
   }
 }
 
-
 function setLocalDynamicDuration<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
   interp: InterpWithDuration,

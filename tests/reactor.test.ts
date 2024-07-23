@@ -12,7 +12,6 @@ import {
 
 describe("reactor", () => {
   test("size dep", () => {
-    console.log("ASFD")
     type Dot = {
       pos: Vec2
       size: number
@@ -26,15 +25,15 @@ describe("reactor", () => {
       },
       getLinearInterp(1)
     )
+    let reactorCt = 0
     addReactor(
       anim,
-      proxy => {
-        const pos = proxy.pos
+      ({ pos }) => {
+        reactorCt++
         const size = distanceTo(pos as Vec2, ZERO_VEC2)
-        console.log("HERE", size, proxy, pos)
         return { size }
       },
-      { color: false }
+      { color: false, size: false } // only reacting to pos
     )
 
     modifyTo(anim, { pos: { x: 1 } })
@@ -44,5 +43,7 @@ describe("reactor", () => {
       size: 1,
       color: { r: 255, g: 0, b: 0 },
     })
+    modifyTo(anim, { size: 2 }) // shouldn't trigger the reactor
+    expect(reactorCt).toBe(1) // only first modifyTo should trigger the reactor
   })
 })

@@ -6,24 +6,89 @@
  */
 
 import {
+  getInterpingToTree,
+  getLocalInterpingTo,
+  getLocalInterpingToValue,
   getLocalState,
   getLocalValue,
   getStateTree,
   modifyTo,
 } from "../Animatable"
-import {
-  addLocalListener,
-  START,
-  UPDATE,
-} from "../AnimatableEvents"
+import { addLocalListener, START, UPDATE } from "../AnimatableEvents"
 import {
   Animation,
   UnknownRecursiveAnimatable,
   LocalAnimatable,
   PartialRecursiveAnimatable,
   unsubscribe,
-  UnknownAnimation,
 } from "../AnimatableTypes"
+
+export function getInterpingToProxy<
+  Animating extends UnknownRecursiveAnimatable
+>(anim: Animation<Animating>): Animating {
+  const localProxy = getLocalInterpingToProxy(anim)
+  const initialTo = getInterpingToTree(anim)
+  const childrenProxies = {} as Record<string, Animating[keyof Animating]>
+  for (const child in anim.children) {
+    const proxy = getInterpingToProxy(anim.children[child]!)
+    childrenProxies[child] = proxy as Animating[keyof Animating]
+  }
+  const proxy = new Proxy(initialTo, {
+    get(_obj, prop, _receiver) {
+      const key = prop.toString()
+      const local = localProxy[key]
+      if (local !== undefined) return local
+      return childrenProxies[key]
+    },
+    set(_target, p, newValue, _receiver) {
+      if (typeof newValue === "number" || typeof newValue === "object") {
+        modifyTo(anim, {
+          [p.toString()]: newValue,
+        } as PartialRecursiveAnimatable<Animating>)
+        return true
+      }
+      return false
+    },
+  })
+
+  return proxy
+}
+
+/**
+ * Returns a proxy object that allows you to interact with the local state of the animation.
+const anim = createAnimation({a: 0, b: 0}, getLinearInterp(1))
+const proxy = getLocalInterpingToProxy(anim)
+proxy.a // 0
+proxy.b // 0
+proxy.a = 1
+proxy.a // 1
+proxy.b // 0
+ * @param anim 
+ * @returns 
+ * @internal
+ * @example
+ */
+function getLocalInterpingToProxy<Animating extends UnknownRecursiveAnimatable>(
+  anim: Animation<Animating>
+): LocalAnimatable<Animating> {
+  const initialTo = getLocalInterpingTo(anim)
+  const proxy = new Proxy(initialTo, {
+    get(_obj, prop, _receiver) {
+      return getLocalInterpingToValue(anim, prop.toString() as keyof Animating)
+    },
+    set(_target, prop, newValue, _receiver) {
+      if (typeof newValue !== "number") {
+        return false
+      }
+      modifyTo(anim, {
+        [prop.toString()]: newValue,
+      } as PartialRecursiveAnimatable<Animating>)
+      return true
+    },
+  })
+
+  return proxy
+}
 
 /**
  * Returns a proxy object that allows you to interact with the animation state
@@ -66,8 +131,8 @@ export function getStateTreeProxy<Animating extends UnknownRecursiveAnimatable>(
   unsubscribers.push(localUnsub)
   const childrenProxies = {} as Record<string, Animating[keyof Animating]>
   for (const child in anim.children) {
-    const { proxy, unsubscribe } = getStateTreeProxy(
-      anim.children[child] as UnknownAnimation
+    const { proxy: proxy, unsubscribe } = getStateTreeProxy(
+      anim.children[child]!
     )
     childrenProxies[child] = proxy as Animating[keyof Animating]
     unsubscribers.push(unsubscribe)
@@ -115,10 +180,13 @@ export function getLocalStateProxy<
   Animating extends UnknownRecursiveAnimatable
 >(
   anim: Animation<Animating>
-): { proxy: LocalAnimatable<Animating>; unsubscribe: unsubscribe } {
+): {
+  proxy: LocalAnimatable<Animating>
+  unsubscribe: unsubscribe
+} {
   const currentState = getLocalState(anim)
   type StampedValue = { value: number; counter: number }
-  const map = new Map<string | Symbol, StampedValue>()
+  const currentMap = new Map<string | Symbol, StampedValue>()
 
   let counter = 0
   const unsubscribers: unsubscribe[] = []
@@ -128,9 +196,9 @@ export function getLocalStateProxy<
     for (const key of localKeys) {
       const keyStr = key.toString() as keyof Animating
       if (to[keyStr] !== undefined) {
-        map.set(key, { value: getLocalValue(anim, keyStr), counter })
+        currentMap.set(key, { value: getLocalValue(anim, keyStr), counter })
       } else {
-        map.delete(key)
+        currentMap.delete(key)
       }
     }
   })
@@ -144,12 +212,12 @@ export function getLocalStateProxy<
 
   const proxy = new Proxy(currentState, {
     get(_obj, prop, _receiver) {
-      const stamp = map.get(prop)
+      const stamp = currentMap.get(prop)
       if (stamp && stamp.counter === counter) {
         return stamp.value
       }
       const value = getLocalValue(anim, prop.toString() as keyof Animating)
-      map.set(prop, { value, counter })
+      currentMap.set(prop, { value, counter })
       return value
     },
     set(_target, p, newValue, _receiver) {

@@ -1,4 +1,4 @@
-import { getInterpingToTree, modifyTo } from "../Animatable"
+import { modifyTo } from "../Animatable"
 import { addLocalListener, BEFORE_START } from "../AnimatableEvents"
 import {
   PartialRecursiveAnimatable,
@@ -9,49 +9,88 @@ import {
 import { unmount } from "../Extension"
 import { HasChildren, Mask, perMaskedChild } from "../RecursiveHelpers"
 import { getDeduplicatedStartLayer } from "./deduplicatedStart"
-// import { getStateTreeProxy } from "./proxy"
 import { isEmpty } from "../../Utils"
+import { getInterpingToProxy } from "./proxy"
 
 /**
  */
-type Transform<
-  Animating extends UnknownRecursiveAnimatable,
-  Base extends PartialRecursiveAnimatable<Animating>
-> = (base: Base) => PartialRecursiveAnimatable<Animating>
+type Transform<Animating extends UnknownRecursiveAnimatable> = (
+  interpingTo: Animating
+) => PartialRecursiveAnimatable<Animating>
 
-export function addReactor<
-  Animating extends UnknownRecursiveAnimatable,
-  Base extends PartialRecursiveAnimatable<Animating>
->(
+/**
+ * Creates a dependency link between sets of properties.
+ * For example you could change the color of an object based on its position:
+@example
+const anim = createAnimation({pos: ZERO_VEC2, color: {r: 0, g: 0, b: 0}}, getLinearInterp(1))
+addReactor(anim, ({pos}) => {
+    r = (pos.x - 127) % 255
+    g = (pos.y - 127) % 255
+    return {color: {r, g}}
+  }, 
+  {color: false} // makes sure the reactor doesn't trigger when color is modified.
+  // otherwise would create an endless loop of reactor calls.
+)
+ * @param anim
+ * @param reactor
+ * @param mask Prevents running the reactor unnecessarily. Lets you specify which
+ * properties you don't want to react to.
+ * @returns
+ */
+export function addReactor<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
-  reactor: Transform<Animating, Base>,
-  mask: Mask<Base>
+  reactor: Transform<Animating>,
+  mask: Mask<PartialRecursiveAnimatable<Animating>>
 ): unmount {
   const unsubs: unsubscribe[] = []
   // const { proxy, unsubscribe } = getStateTreeProxy(anim)
   // unsubs.push(unsubscribe)
   let needUpdate = false
+  // using deduped start layer to run the reactor at most once
+  // per `modifyTo()` call
   const dedupedStartLayer = getDeduplicatedStartLayer()
   const unmount = dedupedStartLayer.mount(
     anim as Animation<UnknownRecursiveAnimatable>
   )
+  const interpingToProxy = getInterpingToProxy(anim)
   unsubs.push(unmount)
-  const unsub = dedupedStartLayer.subscribe(() => {
-    console.log("AAAAA")
+  let unsub = dedupedStartLayer.subscribe(() => {
     if (needUpdate) {
       needUpdate = false
-      modifyTo(anim, reactor(getInterpingToTree(anim) as unknown as Base))
+      // modifyTo must be second because the above line prevents an infinite loop
+      // as the `modifyTo()` call below emits a `start` event on `anim`
+      modifyTo(anim, reactor(interpingToProxy))
     }
   })
   unsubs.push(unsub)
+
+  unsub = addLocalListener(anim, BEFORE_START, local => {
+    // no need to do further checks as reactor is already getting called
+    if (needUpdate) return
+
+    // makes sure that at least one value getting modified isn't masked out
+    let shouldUpdate = false
+    for (const key in local) {
+      if (!(key in mask)) {
+        shouldUpdate = true
+        break
+      }
+    }
+
+    if (shouldUpdate) needUpdate = true
+  })
+  unsubs.push(unsub)
+
   perMaskedChild(
     anim as HasChildren<number, Animating>,
     mask as Mask<Animating>,
     c => {
       const child = c as Animation<UnknownRecursiveAnimatable>
+      // uses beforeStart because otherwise the dedupedStartLayer
+      // might run before the below checks are ran
       const unsub = addLocalListener(child, BEFORE_START, local => {
-        console.log(local)
-        if (!isEmpty(local) && !needUpdate) needUpdate = true
+        if (needUpdate) return // no need to do further checks
+        if (!isEmpty(local)) needUpdate = true
       })
       unsubs.push(unsub)
     }
