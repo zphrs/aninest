@@ -5,6 +5,7 @@ import {
   UnknownRecursiveAnimatable,
   Animation,
   unsubscribe,
+  UnknownAnimation,
 } from "../AnimatableTypes"
 import { unmount } from "../Extension"
 import { HasChildren, Mask, perMaskedChild } from "../RecursiveHelpers"
@@ -48,10 +49,8 @@ export function addReactor<Animating extends UnknownRecursiveAnimatable>(
   let needUpdate = false
   // using deduped start layer to run the reactor at most once
   // per `modifyTo()` call
-  const dedupedStartLayer = getDeduplicatedStartLayer()
-  const unmount = dedupedStartLayer.mount(
-    anim as Animation<UnknownRecursiveAnimatable>
-  )
+  const dedupedStartLayer = getDeduplicatedStartLayer<Animating>()
+  const unmount = dedupedStartLayer.mount(anim)
   const interpingToProxy = getInterpingToProxy(anim)
   unsubs.push(unmount)
   let unsub = dedupedStartLayer.subscribe(() => {
@@ -85,7 +84,7 @@ export function addReactor<Animating extends UnknownRecursiveAnimatable>(
     anim as HasChildren<number, Animating>,
     mask as Mask<Animating>,
     c => {
-      const child = c as Animation<UnknownRecursiveAnimatable>
+      const child = c as UnknownAnimation
       // uses beforeStart because otherwise the dedupedStartLayer
       // might run before the below checks are ran
       const unsub = addLocalListener(child, BEFORE_START, local => {

@@ -4,7 +4,12 @@
  */
 
 import { Extension, unmount } from "../Extension"
-import { changeInterpFunction } from "../Animatable"
+import {
+  changeInterpFunction,
+  getInterpFunction,
+  getLocalInterpingTo,
+  getLocalState,
+} from "../Animatable"
 import { addLocalListener } from "../AnimatableEvents"
 import {
   UnknownRecursiveAnimatable,
@@ -91,7 +96,7 @@ function setLocalDynamicDuration<Animating extends UnknownRecursiveAnimatable>(
   speed: number, // speed in units per second
   ...params: unknown[]
 ): unsubscribe {
-  const initialInterp = anim._timingFunction
+  const initialInterp = getInterpFunction(anim)
   const revertInterp = () => {
     changeInterpFunction(anim, initialInterp)
   }
@@ -101,8 +106,8 @@ function setLocalDynamicDuration<Animating extends UnknownRecursiveAnimatable>(
       revertInterp()
     }
   }
-  const unsub = addLocalListener(anim, "start", to => {
-    const dist = Math.sqrt(distanceSquaredBetween(to, anim._from))
+  const unsub = addLocalListener(anim, "beforeStart", to => {
+    const dist = Math.sqrt(distanceSquaredBetween(to, getLocalState(anim)))
     const dur = dist / speed
     changeInterpFunction(anim, interp(dur, ...params))
   })

@@ -43,4 +43,4 @@ function (after `duration`).
 
 ## Source
 
-[Animate/Extensions/dynamicDuration.ts:61](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/dynamicDuration.ts#L61)
+[Animate/Extensions/dynamicDuration.ts:61](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extensions/dynamicDuration.ts#L61)

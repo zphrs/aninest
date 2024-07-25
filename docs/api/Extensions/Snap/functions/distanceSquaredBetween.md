@@ -38,4 +38,4 @@ const distSquared = distanceSquaredBetween(point, getStateTree(anim)) // 2
 
 ## Source
 
-[Animate/Extensions/snap.ts:228](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/snap.ts#L228)
+[Animate/Extensions/snap.ts:228](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extensions/snap.ts#L228)

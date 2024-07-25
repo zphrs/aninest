@@ -110,7 +110,7 @@ function createLocalAnimation<Animating extends UnknownRecursiveAnimatable>(
   return anim
 }
 
-function addRecursiveListeners(info: Animation<UnknownRecursiveAnimatable>) {
+function addRecursiveListeners(info: UnknownAnimation) {
   // add the recursive listeners
   for (const eventType of ANIM_TYPES_WITH_VALUE) {
     const capitalized = capitalizeFirstLetter(eventType)
@@ -156,7 +156,7 @@ export function createAnimation<Init extends UnknownRecursiveAnimatable>(
       ? undefined
       : Animation<RecursiveAnimatable<Init[keyof Init]>>
   }
-  addRecursiveListeners(info as Animation<UnknownRecursiveAnimatable>)
+  addRecursiveListeners(info as UnknownAnimation)
   return info as Animation<Init>
 }
 
@@ -194,7 +194,7 @@ export function createParentAnimation<
   info.children = anims as unknown as WritableAnimation<Animating>["children"]
 
   // add the recursive listeners
-  addRecursiveListeners(info as Animation<UnknownRecursiveAnimatable>)
+  addRecursiveListeners(info as UnknownAnimation)
   return info as Animation<Animating>
 }
 /**
@@ -515,6 +515,12 @@ export function changeInterpFunction<
     mask,
     locallyChangeInterpFunction
   )
+}
+
+export function getInterpFunction<Animating extends UnknownRecursiveAnimatable>(
+  anim: Animation<Animating>
+) {
+  return anim._timingFunction
 }
 /**
  * Gets the local target state that the animation is currently headed to.

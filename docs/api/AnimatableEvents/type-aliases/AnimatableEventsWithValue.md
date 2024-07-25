@@ -11,4 +11,4 @@ Only excludes the `update` event.
 
 ## Source
 
-[Animate/AnimatableEvents.ts:41](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L41)
+[Animate/AnimatableEvents.ts:41](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/AnimatableEvents.ts#L41)

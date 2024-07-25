@@ -11,4 +11,4 @@ Usually used to cast an animation to this more generic type.
 
 ## Source
 
-[Animate/AnimatableTypes.ts:38](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L38)
+[Animate/AnimatableTypes.ts:38](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/AnimatableTypes.ts#L38)

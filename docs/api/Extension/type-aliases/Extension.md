@@ -14,4 +14,4 @@ An extension that can be mounted to an animation.
 
 ## Source
 
-[Animate/Extension.ts:28](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extension.ts#L28)
+[Animate/Extension.ts:28](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extension.ts#L28)

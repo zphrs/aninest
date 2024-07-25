@@ -6,7 +6,7 @@
 import { ListenerSet, Listeners } from "../Listeners"
 import { AnimatableEventsWithValue } from "./AnimatableEvents"
 import { Interp } from "./Interp"
-import { Recursive, PartialRecursive } from "./RecursiveHelpers"
+import { PartialRecursive } from "./RecursiveHelpers"
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost 
@@ -32,7 +32,7 @@ export type unsubscribe = () => void
  */
 export type UnknownRecursiveAnimatable = RecursiveAnimatable<unknown>
 /**
- * Convenient way to write `Animation<UnknownRecursiveAnimatable>`.
+ * Convenient way to write `UnknownAnimation`.
  * Usually used to cast an animation to this more generic type.
  */
 export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
@@ -46,7 +46,9 @@ export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
   b: {x: 0, y: 0} 
 }
  */
-export type RecursiveAnimatable<T> = Recursive<number, T>
+export type RecursiveAnimatable<T> = {
+  [P in keyof T]: T[P] extends number ? number : RecursiveAnimatable<T[P]>
+}
 
 /**
  * A local slice of the Animatable type.

@@ -38,4 +38,4 @@ the animation to end before snapping the state to be within the bound.
 
 ## Source
 
-[Animate/Extensions/bound.ts:206](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/bound.ts#L206)
+[Animate/Extensions/bound.ts:206](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extensions/bound.ts#L206)

@@ -18,4 +18,4 @@ Creates an empty stack of extensions.
 
 ## Source
 
-[Animate/ExtensionStack.ts:21](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/ExtensionStack.ts#L21)
+[Animate/ExtensionStack.ts:21](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/ExtensionStack.ts#L21)

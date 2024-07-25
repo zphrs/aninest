@@ -24,4 +24,4 @@ Gets a value
 
 ## Source
 
-[Animate/Animatable.ts:548](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L548)
+[Animate/Animatable.ts:548](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Animatable.ts#L548)

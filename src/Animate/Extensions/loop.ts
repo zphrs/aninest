@@ -9,6 +9,7 @@ import {
   modifyTo,
   getStateTree,
   getInterpingToTree,
+  getInterpFunction,
 } from "../Animatable"
 import {
   addRecursiveListener,
@@ -21,6 +22,7 @@ import {
   unsubscribe,
   Animation,
   PartialRecursiveAnimatable,
+  UnknownAnimation,
 } from "../AnimatableTypes"
 import { NO_INTERP } from "../Interp"
 
@@ -58,7 +60,7 @@ export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
     if (init === null || towards === null) return
     removeRecursiveListener(anim, START, onStart) // must remove to prevent infinite recursion
     removeRecursiveListener(anim, BEFORE_END, onEnd)
-    const currInterpFunction = anim._timingFunction
+    const currInterpFunction = getInterpFunction(anim)
     changeInterpFunction(anim, NO_INTERP)
     modifyTo(anim, init) // will apply immediately because of NO_INTERP
     changeInterpFunction(anim, currInterpFunction)

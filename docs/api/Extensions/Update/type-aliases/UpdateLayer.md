@@ -36,4 +36,4 @@ subscribe: (type, sub) => unsubscribe;
 
 ## Source
 
-[Animate/Extensions/update.ts:30](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/update.ts#L30)
+[Animate/Extensions/update.ts:30](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extensions/update.ts#L30)

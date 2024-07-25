@@ -38,4 +38,4 @@ anim.getStateTree() // {a: 0, b: 0}
 
 ## Source
 
-[Animate/Extensions/loop.ts:51](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/loop.ts#L51)
+[Animate/Extensions/loop.ts:51](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extensions/loop.ts#L51)

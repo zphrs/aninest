@@ -104,7 +104,7 @@ export function setLocalSnapGrid<
       snappedRestingPosition as PartialRecursiveAnimatable<Animating>
     )
   }
-  for (const key in anim._from) {
+  for (const key in getLocalState(anim)) {
     toSnap.add(key)
   }
   beforeEnd()

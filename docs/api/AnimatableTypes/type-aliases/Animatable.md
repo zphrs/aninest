@@ -25,4 +25,4 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 
 ## Source
 
-[Animate/AnimatableTypes.ts:22](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L22)
+[Animate/AnimatableTypes.ts:22](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/AnimatableTypes.ts#L22)

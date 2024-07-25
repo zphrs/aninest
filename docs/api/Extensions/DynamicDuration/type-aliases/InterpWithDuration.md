@@ -22,4 +22,4 @@ function of the interpolation.
 
 ## Source
 
-[Animate/Extensions/dynamicDuration.ts:24](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extensions/dynamicDuration.ts#L24)
+[Animate/Extensions/dynamicDuration.ts:24](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Extensions/dynamicDuration.ts#L24)

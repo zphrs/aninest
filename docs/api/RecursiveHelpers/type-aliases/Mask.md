@@ -23,4 +23,4 @@ const mask: Mask<typeof init> = {a: false, b: {x: false}}
 
 ## Source
 
-[Animate/RecursiveHelpers.ts:63](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/RecursiveHelpers.ts#L63)
+[Animate/RecursiveHelpers.ts:63](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/RecursiveHelpers.ts#L63)
