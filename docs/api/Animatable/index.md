@@ -6,12 +6,6 @@ This module deals with creating and modifying Animations.
 
 ## Index
 
-### Functions
-
-| Function | Description |
-| ------ | ------ |
-| [getLocalInterpingToValue](functions/getLocalInterpingToValue.md) | Gets a value |
-
 ### Construction
 
 | Function | Description |
@@ -38,5 +32,6 @@ This module deals with creating and modifying Animations.
 | ------ | ------ |
 | [getInterpingToTree](functions/getInterpingToTree.md) | Gets the full state tree that the animation is currently interpolating to. If the animation is not headed to any state, it will return the current state. |
 | [getLocalInterpingTo](functions/getLocalInterpingTo.md) | Gets the local target state that the animation is currently headed to. If the animation is not headed to any state, it will return the current state. This only returns the local state of the animation, meaning only the numbers in the topmost level of the animation. |
+| [getLocalInterpingToValue](functions/getLocalInterpingToValue.md) | Gets a value |
 | [getLocalState](functions/getLocalState.md) | Gets the current local state of the animation, meaning only the numbers in the topmost level of the animation. To access the local state of a child, use `anim.children.childName` as the input. |
 | [getStateTree](functions/getStateTree.md) | Gets the full state of the animation, including all children. |

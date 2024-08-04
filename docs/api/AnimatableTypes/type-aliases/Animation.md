@@ -38,4 +38,4 @@ const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}})
 
 ## Defined in
 
-[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/blob/d10ff1271505e062a71fdb453fe27ee5103a9c80/core/src/Animate/AnimatableTypes.ts#L121)
+[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/blob/765f2ede3df887f1f3a3e1391afab09a932de29a/core/src/Animate/AnimatableTypes.ts#L121)

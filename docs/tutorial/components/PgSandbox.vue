@@ -19,7 +19,11 @@ const { html, sandbox } = defineProps({
       <div class="placeholder">
         <PgSkeleton :offset="1"></PgSkeleton>
       </div>
-      <pg-sandbox-inner :html="html" :sandbox="sandbox" />
+      <pg-sandbox-inner
+        :html="html"
+        csp="default-src 'unsafe-inline';"
+        :sandbox="sandbox"
+      />
     </ClientOnly>
   </div>
 </template>

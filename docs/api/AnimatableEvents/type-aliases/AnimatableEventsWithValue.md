@@ -11,4 +11,4 @@ Only excludes the `update` event.
 
 ## Defined in
 
-[Animate/AnimatableEvents.ts:41](https://github.com/zphrs/aninest/blob/d10ff1271505e062a71fdb453fe27ee5103a9c80/core/src/Animate/AnimatableEvents.ts#L41)
+[Animate/AnimatableEvents.ts:41](https://github.com/zphrs/aninest/blob/765f2ede3df887f1f3a3e1391afab09a932de29a/core/src/Animate/AnimatableEvents.ts#L41)
