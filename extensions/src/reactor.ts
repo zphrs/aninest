@@ -1,3 +1,8 @@
+/** Allows creating dependencies between properties of an animation
+ * so that when one property changes, another property will be updated as well,
+ * based on that one property's value.
+ * @module Reactor
+ */
 import {
   UnknownRecursiveAnimatable,
   PartialRecursiveAnimatable,
@@ -50,8 +55,7 @@ export function addReactor<Animating extends UnknownRecursiveAnimatable>(
   // const { proxy, unsubscribe } = getStateTreeProxy(anim)
   // unsubs.push(unsubscribe)
   let needUpdate = false
-  // using deduped start layer to run the reactor at most once
-  // per `modifyTo()` call
+  // using deduped start layer to run the reactor as little as possible
   const dedupedStartLayer = getDeduplicatedStartLayer<Animating>()
   const unmount = dedupedStartLayer.mount(anim)
   const interpingToProxy = getInterpingToProxy(anim)

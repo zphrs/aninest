@@ -18,4 +18,4 @@ Squares the magnitude of a vector.
 
 ## Defined in
 
-[Utils/vec2.ts:122](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Utils/vec2.ts#L122)
+[Utils/vec2.ts:122](https://github.com/zphrs/aninest/blob/d10ff1271505e062a71fdb453fe27ee5103a9c80/core/src/Utils/vec2.ts#L122)

@@ -1,6 +1,6 @@
 /**
  * Extension to loop an animation in a saw-like wave: `/|/|`
- * @module Extensions/Loop
+ * @module Loop
  */
 
 import {

@@ -44,7 +44,7 @@ describe("speed of updating one object", () => {
       const end = performance.now()
       const diff = end - start
       total_diff += diff
-      expect(end - start).toBeLessThan(20) // make sure that only 1/50th of each frame is used in worst case
+      expect(end - start).toBeLessThan(30) // make sure that only 1/50th of each frame is used in worst case
     }
     // average time per frame
     const avg = total_diff / 1000

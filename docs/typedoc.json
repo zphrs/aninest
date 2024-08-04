@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["../core/src/**/*.ts"],
+  "entryPoints": ["../core/src/**/*.ts", "../extensions/src/**/*.ts"],
   "out": "./api",
   "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "githubPages": false,

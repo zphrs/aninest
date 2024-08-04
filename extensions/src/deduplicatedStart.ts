@@ -1,3 +1,8 @@
+/**
+ * Minimizes the number of start events triggered.
+ * @module DeduplicatedStart
+ */
+
 import {
   UnknownRecursiveAnimatable,
   Layer,
@@ -7,12 +12,19 @@ import {
   addRecursiveListener,
 } from "aninest"
 
+/**
+ * Enables mounting to an animation and subscribing to the deduplicated start
+ * events.
+ */
 export type DeduplicatedStartLayer<
   Animating extends UnknownRecursiveAnimatable
 > = Layer<Animating> & {
   subscribe: (sub: Listener<undefined>) => unsubscribe
 }
 
+/**
+ * Creates a DeduplicatedStartLayer which broadcasts deduplicated start events.
+ */
 export function getDeduplicatedStartLayer<
   Animating extends UnknownRecursiveAnimatable
 >(): DeduplicatedStartLayer<Animating> {

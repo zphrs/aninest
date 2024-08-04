@@ -2,7 +2,7 @@
  * Extension to add a cache to an animation.
  * @internal
  * @deprecated
- * @module Extensions/Cache
+ * @module Cache
  */
 
 import {

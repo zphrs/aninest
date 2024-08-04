@@ -8,6 +8,11 @@
     "docs:preview": "pnpm --filter ./docs run docs:preview",
     "predocs:dev": "pnpm --filter ./docs run predocs:dev"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "."
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/zphrs/aninest.git"

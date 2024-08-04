@@ -1,6 +1,6 @@
 /**
  * Snaps the animation to predetermined points before ending.
- * @module Extensions/Snap
+ * @module Snap
  */
 
 import {

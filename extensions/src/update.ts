@@ -1,12 +1,12 @@
 /**
- * Updates the animation every frame, providing a subscribe function which allows
+ * Updates the animation every screen refresh, providing a subscribe function which allows
  * listening to:
  * - **start** - when the animation starts to be updated,
  * - **stop** - when the animation finishes animating everything
  * - **update** - each update frame
- * Will only update the animation when necessary, i.e. when the animation has
+ * It will only update the animation when necessary, i.e. when the animation has
  * been started and there are still things to animate.
- * @module Extensions/Update
+ * @module Update
  */
 
 import {

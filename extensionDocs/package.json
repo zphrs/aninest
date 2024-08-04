@@ -1,0 +1,19 @@
+{
+  "name": "extension-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "typedoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zphrs/aninest.git"
+  },
+  "devDependencies": {
+    "@vite-pwa/vitepress": "^0.4.0",
+    "typedoc": "^0.26.0",
+    "typedoc-plugin-markdown": "^4.0.0-next.44",
+    "typedoc-vitepress-theme": "^1.0.0-next.8",
+    "typescript": "^4.9.5"
+  }
+}

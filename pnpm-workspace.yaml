@@ -2,3 +2,4 @@ packages:
   - docs
   - core
   - extensions
+  - extensionDocs

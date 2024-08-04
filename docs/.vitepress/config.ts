@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress"
-import typedocSidebar from "../api/typedoc-sidebar.json"
+import coreSidebar from "../api/typedoc-sidebar.json"
+import extensionSidebar from "../extensions/typedoc-sidebar.json"
 import ClassyLight from "./Classy-light-color-theme.json"
 import ClassyDark from "./Classy-dark-color-theme.json"
 import { type ThemeRegistrationRaw, type LanguageInput } from "shiki"
@@ -45,8 +46,12 @@ export default withPwa(
       ],
       sidebar: [
         {
-          text: "API",
-          items: typedocSidebar,
+          text: "Core API",
+          items: coreSidebar,
+        },
+        {
+          text: "Extension API",
+          items: extensionSidebar,
         },
       ],
       socialLinks: [

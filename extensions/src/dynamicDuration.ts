@@ -1,6 +1,6 @@
 /**
  * Makes the animation speed dynamic based on the distance between the start and end points.
- * @module Extensions/DynamicDuration
+ * @module DynamicDuration
  */
 
 import {

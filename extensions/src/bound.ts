@@ -1,7 +1,7 @@
 /**
  * Adds bounds to an animation to ensure an animation
  * will end within the given bounds.
- * @module Extensions/Bound
+ * @module Bound
  */
 
 import {

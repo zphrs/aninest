@@ -550,6 +550,7 @@ export function getLocalInterpingTo<
  * @param anim
  * @param key
  * @returns
+ * @group State Retrieval
  */
 export function getLocalInterpingToValue<
   Animating extends LocalAnimatable<UnknownRecursiveAnimatable>

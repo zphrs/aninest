@@ -2,7 +2,7 @@
  * Makes it easier to interact with the animation state by providing a proxy object
  * which mirrors the state of the animation.
  * Also allows you to set the state of the animation by setting the properties of the proxy object.
- * @module Extensions/Proxy
+ * @module Proxy
  */
 
 import {
