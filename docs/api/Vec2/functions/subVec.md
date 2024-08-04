@@ -22,4 +22,8 @@ a new vector.
 
 ## Defined in
 
+<<<<<<< HEAD
 [Utils/vec2.ts:78](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L78)
+=======
+[Utils/vec2.ts:78](https://github.com/zphrs/aninest/blob/37209a6/src/Utils/vec2.ts#L78)
+>>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854

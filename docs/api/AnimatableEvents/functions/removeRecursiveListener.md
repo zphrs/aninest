@@ -48,4 +48,8 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 
 ## Defined in
 
+<<<<<<< HEAD
 [Animate/AnimatableEvents.ts:154](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L154)
+=======
+[Animate/AnimatableEvents.ts:154](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/AnimatableEvents.ts#L154)
+>>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
