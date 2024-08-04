@@ -1,5 +1,5 @@
 /**@internal */
-export type { Animation } from "./AnimatableTypes"
+export * from "./AnimatableTypes"
 export * from "./Animatable"
 export * from "./AnimatableEvents"
 export * from "./Extension"
