@@ -8,9 +8,7 @@
   "useCodeBlocks": true,
   "disableSources": false,
   "gitRemote": "origin",
-  "sourceLinkTemplate": "https://github.com/zphrs/aninest/tree/{gitRevision}/core/src/{path}#L{line}",
   "excludeInternal": true,
-  "disableGit": true,
   "excludeNotDocumented": true,
   "textContentMappings": {
     "title.indexPage": "API Reference",

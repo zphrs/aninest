@@ -40,8 +40,4 @@ getLocalInterpingTo(anim) // {b: 1, c: 0}
 
 ## Defined in
 
-<<<<<<< HEAD
-[Animate/Animatable.ts:539](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L539)
-=======
-[Animate/Animatable.ts:533](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Animatable.ts#L533)
->>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
+[Animate/Animatable.ts:539](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Animate/Animatable.ts#L539)

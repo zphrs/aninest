@@ -38,20 +38,4 @@ const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}})
 
 ## Defined in
 
-<<<<<<< HEAD
-[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L121)
-=======
-### children
-
-```ts
-readonly children: { [P in keyof Animating]: Animating[P] extends number ? undefined : Animation<RecursiveAnimatable<Animating[P]>> };
-```
-
-## Type parameters
-
-• **Animating** extends [`UnknownRecursiveAnimatable`](UnknownRecursiveAnimatable.md)
-
-## Source
-
-[Animate/AnimatableTypes.ts:119](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/AnimatableTypes.ts#L119)
->>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
+[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Animate/AnimatableTypes.ts#L121)

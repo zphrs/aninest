@@ -31,8 +31,4 @@ true if the animation needs to be updated again
 
 ## Defined in
 
-<<<<<<< HEAD
-[Animate/Animatable.ts:406](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L406)
-=======
-[Animate/Animatable.ts:406](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/Animatable.ts#L406)
->>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
+[Animate/Animatable.ts:406](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Animate/Animatable.ts#L406)

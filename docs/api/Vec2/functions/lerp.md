@@ -33,8 +33,4 @@ A new vector.
 
 ## Defined in
 
-<<<<<<< HEAD
-[Utils/vec2.ts:220](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L220)
-=======
-[Utils/vec2.ts:220](https://github.com/zphrs/aninest/blob/37209a6/src/Utils/vec2.ts#L220)
->>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
+[Utils/vec2.ts:220](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Utils/vec2.ts#L220)

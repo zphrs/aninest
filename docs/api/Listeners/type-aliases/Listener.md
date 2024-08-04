@@ -22,7 +22,6 @@ A listener function that is called when an event is broadcast.
 
 ## Description
 
-<<<<<<< HEAD
 The listener can return `true` to remove itself from the listener set, `false` to keep itself in the listener set, or `void` to keep itself in the listener set.
 
 ## Examples
@@ -39,7 +38,4 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 ## Defined in
 
-[Listeners.ts:15](https://github.com/zphrs/aninest/tree//core/src/Listeners.ts#L15)
-=======
-[Listeners.ts:15](https://github.com/zphrs/aninest/blob/37209a6/src/Listeners.ts#L15)
->>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
+[Listeners.ts:15](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Listeners.ts#L15)

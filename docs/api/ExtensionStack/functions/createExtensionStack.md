@@ -18,8 +18,4 @@ Creates an empty stack of extensions.
 
 ## Defined in
 
-<<<<<<< HEAD
-[Animate/ExtensionStack.ts:21](https://github.com/zphrs/aninest/tree//core/src/Animate/ExtensionStack.ts#L21)
-=======
-[Animate/ExtensionStack.ts:21](https://github.com/zphrs/aninest/blob/37209a6/src/Animate/ExtensionStack.ts#L21)
->>>>>>> 7fb4e8c2b5ac941788b8ec79ba38b46487084854
+[Animate/ExtensionStack.ts:21](https://github.com/zphrs/aninest/blob/3019702e634994a4353fce5adc21aa1a16369bbd/core/src/Animate/ExtensionStack.ts#L21)
