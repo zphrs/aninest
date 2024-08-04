@@ -3,7 +3,7 @@
 # getLinearInterp()
 
 ```ts
-getLinearInterp(duration): Interp
+function getLinearInterp(duration): Interp
 ```
 
 Returns a linear interpolation function.
@@ -16,6 +16,6 @@ Returns a linear interpolation function.
 
 [`Interp`](../type-aliases/Interp.md)
 
-## Source
+## Defined in
 
-[Animate/Interp.ts:32](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Interp.ts#L32)
+[Animate/Interp.ts:32](https://github.com/zphrs/aninest/tree//core/src/Animate/Interp.ts#L32)

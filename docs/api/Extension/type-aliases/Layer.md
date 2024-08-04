@@ -3,14 +3,14 @@
 # Layer\<Animating\>
 
 ```ts
-type Layer<Animating>: Object;
+type Layer<Animating>: object;
 ```
 
 A layer that can be mounted to an animation via its `mount` function.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
+• **Animating** *extends* [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
 
 ## Type declaration
 
@@ -22,6 +22,6 @@ mount: Mount<Animating>;
 
 Mounts a layer to a specific Animation.
 
-## Source
+## Defined in
 
-[Animate/Extension.ts:47](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extension.ts#L47)
+[Animate/Extension.ts:47](https://github.com/zphrs/aninest/tree//core/src/Animate/Extension.ts#L47)

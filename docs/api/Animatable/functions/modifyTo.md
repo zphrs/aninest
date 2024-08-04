@@ -3,16 +3,16 @@
 # modifyTo()
 
 ```ts
-modifyTo<Animating>(anim, to): void
+function modifyTo<Animating>(anim, to): void
 ```
 
 Sets the final stopping point of the animation.
 The animation will start to interpolate to the new state the next
 time [updateAnimation](updateAnimation.md) is called.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -30,19 +30,15 @@ the new target state will be `{ a 1, b: 0 }`.
 
 `void`
 
-## Example
+## Examples
 
 ```ts
 modifyTo<{a: number, b: number}>(anim, { a: 1, b: 1 })
 ```
 
-## Example
-
 ```ts
 modifyTo<{a: Vec2, b: Vec2}>(anim, {a: {x: 1}})
 ```
-
-## Example
 
 ```ts
 modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
@@ -52,6 +48,6 @@ modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
 
 [Vec2](../../Vec2/type-aliases/Vec2.md)
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:215](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L215)
+[Animate/Animatable.ts:215](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L215)

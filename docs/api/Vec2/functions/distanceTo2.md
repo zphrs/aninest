@@ -3,7 +3,7 @@
 # distanceTo2()
 
 ```ts
-distanceTo2(v1, v2): number
+function distanceTo2(v1, v2): number
 ```
 
 Calculates the squared distance between two vectors.
@@ -20,6 +20,6 @@ Calculates the squared distance between two vectors.
 
 A scalar.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:200](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L200)
+[Utils/vec2.ts:200](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L200)

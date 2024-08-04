@@ -3,7 +3,7 @@
 # getSlerp()
 
 ```ts
-getSlerp(duration): Interp
+function getSlerp(duration): Interp
 ```
 
 Returns a smooth interpolation function based on the sine function.
@@ -16,6 +16,6 @@ Returns a smooth interpolation function based on the sine function.
 
 [`Interp`](../type-aliases/Interp.md)
 
-## Source
+## Defined in
 
-[Animate/Interp.ts:40](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Interp.ts#L40)
+[Animate/Interp.ts:40](https://github.com/zphrs/aninest/tree//core/src/Animate/Interp.ts#L40)

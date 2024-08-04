@@ -1,18 +1,10 @@
 [aninest](../../index.md) / [module:Interp](../index.md) / Interp
 
-# Interp
+# Interp()
 
 ```ts
 type Interp: (t) => number | undefined;
 ```
-
-Interpolation function.
-At time 0 it should return either 0 or null (for [NO_INTERP](../functions/NO_INTERP.md))
-
-## See
-
-[NO_INTERP](../functions/NO_INTERP.md), [getLinearInterp](../functions/getLinearInterp.md), [getSlerp](../functions/getSlerp.md), and [getCubicBezier](../functions/getCubicBezier.md)
-to create interpolation functions.
 
 ## Parameters
 
@@ -24,6 +16,8 @@ Time in seconds. Guaranteed to be positive.
 
 `number` \| `undefined`
 
-## Source
+A value or undefined if the animation is finished.
 
-[Animate/Interp.ts:17](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Interp.ts#L17)
+## Defined in
+
+[Animate/Interp.ts:17](https://github.com/zphrs/aninest/tree//core/src/Animate/Interp.ts#L17)

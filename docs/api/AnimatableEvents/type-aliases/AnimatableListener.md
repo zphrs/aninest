@@ -9,12 +9,12 @@ type AnimatableListener<Animating, Event>: Event extends AnimatableEventsWithVal
 Listens to the animation for a specific event.
 All events aside from `update` return a dictionary of local values which are currently being animated.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
+• **Animating** *extends* [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
 
-• **Event** extends [`AnimatableEvents`](AnimatableEvents.md)
+• **Event** *extends* [`AnimatableEvents`](AnimatableEvents.md)
 
-## Source
+## Defined in
 
-[Animate/AnimatableEvents.ts:179](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L179)
+[Animate/AnimatableEvents.ts:179](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L179)

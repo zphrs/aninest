@@ -1,6 +1,6 @@
 [aninest](../../index.md) / [Extension](../index.md) / Mount
 
-# Mount\<Animating\>
+# Mount()\<Animating\>
 
 ```ts
 type Mount<Animating>: (anim) => unmount;
@@ -8,9 +8,9 @@ type Mount<Animating>: (anim) => unmount;
 
 A function that mounts an extension to the animation.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
+• **Animating** *extends* [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
 
 ## Parameters
 
@@ -20,6 +20,6 @@ A function that mounts an extension to the animation.
 
 [`unmount`](unmount.md)
 
-## Source
+## Defined in
 
-[Animate/Extension.ts:21](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extension.ts#L21)
+[Animate/Extension.ts:21](https://github.com/zphrs/aninest/tree//core/src/Animate/Extension.ts#L21)

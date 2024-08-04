@@ -3,7 +3,7 @@
 # addLocalListener()
 
 ```ts
-addLocalListener<Animating, Event>(
+function addLocalListener<Animating, Event>(
    anim, 
    type, 
    listener): unsubscribe
@@ -13,11 +13,11 @@ Adds a local listener to the animation. You can listen to the  events listed in 
 Animation listeners are scoped to only trigger when the current level of the animation is modified.
 Animation listeners are called in the order in which they were added.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
-• **Event** extends [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+• **Event** *extends* [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
 ## Parameters
 
@@ -29,7 +29,7 @@ The animation object
 
 See [AnimatableEvents](../type-aliases/AnimatableEvents.md)
 
-• **listener**: `Event` extends 
+• **listener**: `Event` *extends* 
   \| `"beforeStart"`
   \| `"start"`
   \| `"end"`
@@ -57,6 +57,6 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 [addRecursiveListener](addRecursiveListener.md) for a recursive listener which triggers on any child modification
 
-## Source
+## Defined in
 
-[Animate/AnimatableEvents.ts:58](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L58)
+[Animate/AnimatableEvents.ts:58](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L58)

@@ -3,17 +3,17 @@
 # addLayerToStack()
 
 ```ts
-addLayerToStack<Animating, L>(stack, layer): L
+function addLayerToStack<Animating, L>(stack, layer): L
 ```
 
 A passthrough function that adds a layer to the stack and
 returns the layer.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
-• **L** extends [`Layer`](../../Extension/type-aliases/Layer.md)\<`Animating`\>
+• **L** *extends* [`Layer`](../../Extension/type-aliases/Layer.md)\<`Animating`\>
 
 ## Parameters
 
@@ -27,6 +27,6 @@ returns the layer.
 
 the inputted layer
 
-## Source
+## Defined in
 
-[Animate/ExtensionStack.ts:46](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/ExtensionStack.ts#L46)
+[Animate/ExtensionStack.ts:46](https://github.com/zphrs/aninest/tree//core/src/Animate/ExtensionStack.ts#L46)

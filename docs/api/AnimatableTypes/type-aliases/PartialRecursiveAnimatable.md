@@ -8,6 +8,10 @@ type PartialRecursiveAnimatable<T>: PartialRecursive<number, T>;
 
 A subtree of the Animatable type.
 
+## Type Parameters
+
+• **T**
+
 ## Example
 
 ```ts
@@ -25,10 +29,6 @@ const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y:
 {}
 ```
 
-## Type parameters
+## Defined in
 
-• **T**
-
-## Source
-
-[Animate/AnimatableTypes.ts:83](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L83)
+[Animate/AnimatableTypes.ts:85](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L85)

@@ -3,7 +3,7 @@
 # getCubicBezier()
 
 ```ts
-getCubicBezier(
+function getCubicBezier(
    duration, 
    c1, 
    c2): Interp
@@ -23,6 +23,6 @@ Returns a cubic bezier interpolation function.
 
 [`Interp`](../type-aliases/Interp.md)
 
-## Source
+## Defined in
 
-[Animate/Interp.ts:67](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Interp.ts#L67)
+[Animate/Interp.ts:67](https://github.com/zphrs/aninest/tree//core/src/Animate/Interp.ts#L67)

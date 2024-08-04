@@ -3,7 +3,7 @@
 # distanceTo()
 
 ```ts
-distanceTo(v1, v2): number
+function distanceTo(v1, v2): number
 ```
 
 Calculates the distance between two vectors.
@@ -24,6 +24,6 @@ The second vector.
 
 A scalar.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:195](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L195)
+[Utils/vec2.ts:195](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L195)

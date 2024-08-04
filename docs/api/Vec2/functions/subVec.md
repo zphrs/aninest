@@ -3,7 +3,7 @@
 # subVec()
 
 ```ts
-subVec(v1, v2): Vec2
+function subVec(v1, v2): Vec2
 ```
 
 Subtracts v2 from v1 immutably.
@@ -20,6 +20,6 @@ Subtracts v2 from v1 immutably.
 
 a new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:78](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L78)
+[Utils/vec2.ts:78](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L78)

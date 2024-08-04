@@ -3,14 +3,14 @@
 # addExtensionToStack()
 
 ```ts
-addExtensionToStack<Animating>(stack, extension): void
+function addExtensionToStack<Animating>(stack, extension): void
 ```
 
 Adds an extension to the stack.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -22,6 +22,6 @@ Adds an extension to the stack.
 
 `void`
 
-## Source
+## Defined in
 
-[Animate/ExtensionStack.ts:33](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/ExtensionStack.ts#L33)
+[Animate/ExtensionStack.ts:33](https://github.com/zphrs/aninest/tree//core/src/Animate/ExtensionStack.ts#L33)

@@ -8,10 +8,14 @@
     "docs:build": "typedoc && vitepress build",
     "docs:preview": "vitepress preview"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zphrs/aninest.git"
+  },
   "devDependencies": {
     "@vite-pwa/vitepress": "^0.4.0",
     "shiki": "^1.1.7",
-    "typedoc": "^0.25.7",
+    "typedoc": "^0.26.0",
     "typedoc-plugin-markdown": "^4.0.0-next.44",
     "typedoc-vitepress-theme": "^1.0.0-next.8",
     "typescript": "^4.9.5",

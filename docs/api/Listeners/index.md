@@ -9,5 +9,5 @@ Generic utility functions and types for listeners to non-cascading events.
 ### Type Aliases
 
 | Type alias | Description |
-| :------ | :------ |
-| [Listener](type-aliases/Listener.md) | - |
+| ------ | ------ |
+| [Listener](type-aliases/Listener.md) | A listener function that is called when an event is broadcast. |

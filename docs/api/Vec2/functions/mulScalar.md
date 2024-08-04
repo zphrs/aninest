@@ -3,7 +3,7 @@
 # mulScalar()
 
 ```ts
-mulScalar(v, s): Vec2
+function mulScalar(v, s): Vec2
 ```
 
 Multiplies a vector `v` by a scalar `s` immutably.
@@ -20,6 +20,6 @@ Multiplies a vector `v` by a scalar `s` immutably.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:92](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L92)
+[Utils/vec2.ts:92](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L92)

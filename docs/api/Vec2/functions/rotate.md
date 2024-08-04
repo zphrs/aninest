@@ -3,7 +3,7 @@
 # rotate()
 
 ```ts
-rotate(v, angle): Vec2
+function rotate(v, angle): Vec2
 ```
 
 Rotates a vector by an angle in radians.
@@ -22,6 +22,6 @@ The angle to rotate the vector by in radians.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:161](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L161)
+[Utils/vec2.ts:161](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L161)

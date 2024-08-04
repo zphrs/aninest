@@ -3,14 +3,14 @@
 # getLocalInterpingToValue()
 
 ```ts
-getLocalInterpingToValue<Animating>(anim, key): number | undefined
+function getLocalInterpingToValue<Animating>(anim, key): number | undefined
 ```
 
 Gets a value
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<[`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>\>
+• **Animating** *extends* [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<[`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>\>
 
 ## Parameters
 
@@ -22,6 +22,6 @@ Gets a value
 
 `number` \| `undefined`
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:548](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L548)
+[Animate/Animatable.ts:554](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L554)

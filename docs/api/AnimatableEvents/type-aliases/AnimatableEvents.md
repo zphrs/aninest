@@ -21,6 +21,6 @@ Returns a [LocalAnimatable](../../AnimatableTypes/type-aliases/LocalAnimatable.m
 [updateAnimation](../../Animatable/functions/updateAnimation.md).
 Returns `undefined`
 
-## Source
+## Defined in
 
-[Animate/AnimatableEvents.ts:202](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L202)
+[Animate/AnimatableEvents.ts:202](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L202)

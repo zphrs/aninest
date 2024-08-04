@@ -8,10 +8,10 @@ type Extension<Animating>: Mount<Animating>;
 
 An extension that can be mounted to an animation.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
+• **Animating** *extends* [`UnknownRecursiveAnimatable`](../../AnimatableTypes/type-aliases/UnknownRecursiveAnimatable.md)
 
-## Source
+## Defined in
 
-[Animate/Extension.ts:28](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Extension.ts#L28)
+[Animate/Extension.ts:28](https://github.com/zphrs/aninest/tree//core/src/Animate/Extension.ts#L28)

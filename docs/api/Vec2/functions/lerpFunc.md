@@ -3,7 +3,7 @@
 # lerpFunc()
 
 ```ts
-lerpFunc(
+function lerpFunc(
    a, 
    b, 
    t): number
@@ -23,6 +23,6 @@ Lerps between a and b by t.
 
 `number`
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:15](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L15)
+[Utils/vec2.ts:15](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L15)

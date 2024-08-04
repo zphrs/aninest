@@ -9,6 +9,10 @@ type Mask<T>: { [P in keyof T]: T[P] | boolean };
 Mask over animation. Set any key to `false` in order to mask out
 that key and that key's subtree.
 
+## Type Parameters
+
+• **T**
+
 ## Example
 
 ```ts
@@ -17,10 +21,6 @@ const init = {a: {x: 0, y: 0}, b: {x: 0, y: 0}}
 const mask: Mask<typeof init> = {a: false, b: {x: false}}
 ```
 
-## Type parameters
+## Defined in
 
-• **T**
-
-## Source
-
-[Animate/RecursiveHelpers.ts:63](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/RecursiveHelpers.ts#L63)
+[Animate/RecursiveHelpers.ts:63](https://github.com/zphrs/aninest/tree//core/src/Animate/RecursiveHelpers.ts#L63)

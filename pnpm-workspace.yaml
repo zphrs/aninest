@@ -1,2 +1,4 @@
 packages:
-  - 'docs'
+  - docs
+  - core
+  - extensions

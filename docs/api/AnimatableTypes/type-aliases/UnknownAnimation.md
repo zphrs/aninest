@@ -6,9 +6,9 @@
 type UnknownAnimation: Animation<UnknownRecursiveAnimatable>;
 ```
 
-Convenient way to write `Animation<UnknownRecursiveAnimatable>`.
+Convenient way to write `UnknownAnimation`.
 Usually used to cast an animation to this more generic type.
 
-## Source
+## Defined in
 
-[Animate/AnimatableTypes.ts:38](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L38)
+[Animate/AnimatableTypes.ts:38](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L38)

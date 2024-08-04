@@ -3,14 +3,14 @@
 # updateAnimation()
 
 ```ts
-updateAnimation<Animating>(anim, dt): boolean
+function updateAnimation<Animating>(anim, dt): boolean
 ```
 
 Moves the animation forward by a certain amount of time.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -29,6 +29,6 @@ If negative or zero and the interpolation function is not NO_INTERP then no-op.
 
 true if the animation needs to be updated again
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:406](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L406)
+[Animate/Animatable.ts:406](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L406)

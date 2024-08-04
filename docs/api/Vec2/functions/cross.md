@@ -3,7 +3,7 @@
 # cross()
 
 ```ts
-cross(v1, v2): number
+function cross(v1, v2): number
 ```
 
 Calculates the cross product of two vectors.
@@ -20,6 +20,6 @@ Calculates the cross product of two vectors.
 
 A scalar.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:153](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L153)
+[Utils/vec2.ts:153](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L153)

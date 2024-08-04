@@ -3,15 +3,15 @@
 # createMode()
 
 ```ts
-createMode<Animating>(anim, stack): Mode
+function createMode<Animating>(anim, stack): Mode
 ```
 
 Creates a mode. A mode is simply an [ExtensionStack](../../ExtensionStack/type-aliases/ExtensionStack.md)
 which can be easily toggled on and off.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -25,6 +25,6 @@ which can be easily toggled on and off.
 
 used to toggle the [ExtensionStack](../../ExtensionStack/type-aliases/ExtensionStack.md).
 
-## Source
+## Defined in
 
-[Animate/Mode.ts:31](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Mode.ts#L31)
+[Animate/Mode.ts:31](https://github.com/zphrs/aninest/tree//core/src/Animate/Mode.ts#L31)

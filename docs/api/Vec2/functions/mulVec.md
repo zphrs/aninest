@@ -3,7 +3,7 @@
 # mulVec()
 
 ```ts
-mulVec(v1, v2): Vec2
+function mulVec(v1, v2): Vec2
 ```
 
 Does component-wise multiplication of two vectors immutably.
@@ -20,6 +20,6 @@ Does component-wise multiplication of two vectors immutably.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:84](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L84)
+[Utils/vec2.ts:84](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L84)

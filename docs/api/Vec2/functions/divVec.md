@@ -3,7 +3,7 @@
 # divVec()
 
 ```ts
-divVec(v1, v2): Vec2
+function divVec(v1, v2): Vec2
 ```
 
 Performs component-wise division of `v1` / `v2` immutably.
@@ -20,6 +20,6 @@ Performs component-wise division of `v1` / `v2` immutably.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:100](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L100)
+[Utils/vec2.ts:100](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L100)

@@ -9,12 +9,12 @@ type Recursive<Base, Shape>: { [P in keyof Shape]: Shape[P] extends Base ? Base 
 Generic type which allows for the recursive definition of an object
 which either has a value of type `Base` or a subtree of the same type.
 
-## Type parameters
+## Type Parameters
 
 • **Base**
 
 • **Shape**
 
-## Source
+## Defined in
 
-[Animate/RecursiveHelpers.ts:36](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/RecursiveHelpers.ts#L36)
+[Animate/RecursiveHelpers.ts:36](https://github.com/zphrs/aninest/tree//core/src/Animate/RecursiveHelpers.ts#L36)

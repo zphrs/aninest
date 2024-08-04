@@ -3,7 +3,7 @@
 # ZERO\_VEC2
 
 ```ts
-const ZERO_VEC2: Object;
+const ZERO_VEC2: object;
 ```
 
 A 2D vector with x and y set to 0.
@@ -22,6 +22,6 @@ x: 0;
 y: 0;
 ```
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:40](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L40)
+[Utils/vec2.ts:40](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L40)

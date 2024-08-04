@@ -3,7 +3,7 @@
 # addRecursiveListener()
 
 ```ts
-addRecursiveListener<Animating>(
+function addRecursiveListener<Animating>(
    anim, 
    type, 
    listener): unsubscribe
@@ -12,9 +12,9 @@ addRecursiveListener<Animating>(
 Adds a recursive start listener to the animation. This listener will trigger on any child modification.
 Animation listeners are called in the order in which they were added.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -39,6 +39,6 @@ const anim = createAnimation({ a: newVec2(0, 0), b: newVec(0, 0) }, getLinearInt
 addRecursiveListener(anim, "start", () => console.log("started")) // will trigger
 ```
 
-## Source
+## Defined in
 
-[Animate/AnimatableEvents.ts:114](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L114)
+[Animate/AnimatableEvents.ts:114](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L114)

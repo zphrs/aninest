@@ -14,39 +14,39 @@ following a functional programming style.
 ### Type Aliases
 
 | Type alias | Description |
-| :------ | :------ |
+| ------ | ------ |
 | [Vec2](type-aliases/Vec2.md) | A 2D vector. |
 
 ### Variables
 
 | Variable | Description |
-| :------ | :------ |
+| ------ | ------ |
 | [ZERO\_VEC2](variables/ZERO_VEC2.md) | A 2D vector with x and y set to 0. |
 
 ### Functions
 
 | Function | Description |
-| :------ | :------ |
-| [addVec](functions/addVec.md) | Adds two vectors together, returning a new vector. |
-| [bezier](functions/bezier.md) | Performs a bezier interpolation between two vectors by a time value. |
-| [clamp](functions/clamp.md) | Clamps a value between a minimum and maximum value. |
-| [copy](functions/copy.md) | Duplicates the vector. |
-| [cross](functions/cross.md) | Calculates the cross product of two vectors. |
-| [distanceTo](functions/distanceTo.md) | Calculates the distance between two vectors. |
-| [distanceTo2](functions/distanceTo2.md) | Calculates the squared distance between two vectors. |
-| [divScalar](functions/divScalar.md) | Divides a vector `v` by a scalar `s` immutably. |
-| [divVec](functions/divVec.md) | Performs component-wise division of `v1` / `v2` immutably. |
-| [dot](functions/dot.md) | Calculates the dot product of two vectors. |
-| [lerp](functions/lerp.md) | Performs a linear interpolation between two vectors by a time value. |
-| [lerpFunc](functions/lerpFunc.md) | Lerps between a and b by t. |
-| [mag](functions/mag.md) | Calculates the magnitude of a vector. |
-| [magSquared](functions/magSquared.md) | Squares the magnitude of a vector. |
-| [mapVec](functions/mapVec.md) | Calls a function func on each component of a vector,<br />creating a new vector from the result of each function call. |
-| [mulScalar](functions/mulScalar.md) | Multiplies a vector `v` by a scalar `s` immutably. |
-| [mulVec](functions/mulVec.md) | Does component-wise multiplication of two vectors immutably. |
-| [newVec2](functions/newVec2.md) | Vec2 Constructor |
-| [normalize](functions/normalize.md) | Returnes a normalized version of the vector. |
-| [rotate](functions/rotate.md) | Rotates a vector by an angle in radians. |
-| [rotateAround](functions/rotateAround.md) | Rotates a vector around a pivot point by an angle in radians. |
-| [subVec](functions/subVec.md) | Subtracts v2 from v1 immutably. |
-| [vecToIter](functions/vecToIter.md) | Converts a vector to an array.<br />Useful for spreading into function arguments. |
+| ------ | ------ |
+| [addVec](functions/addVec.md) | - |
+| [bezier](functions/bezier.md) | - |
+| [clamp](functions/clamp.md) | - |
+| [copy](functions/copy.md) | - |
+| [cross](functions/cross.md) | - |
+| [distanceTo](functions/distanceTo.md) | - |
+| [distanceTo2](functions/distanceTo2.md) | - |
+| [divScalar](functions/divScalar.md) | - |
+| [divVec](functions/divVec.md) | - |
+| [dot](functions/dot.md) | - |
+| [lerp](functions/lerp.md) | - |
+| [lerpFunc](functions/lerpFunc.md) | - |
+| [mag](functions/mag.md) | - |
+| [magSquared](functions/magSquared.md) | - |
+| [mapVec](functions/mapVec.md) | - |
+| [mulScalar](functions/mulScalar.md) | - |
+| [mulVec](functions/mulVec.md) | - |
+| [newVec2](functions/newVec2.md) | - |
+| [normalize](functions/normalize.md) | - |
+| [rotate](functions/rotate.md) | - |
+| [rotateAround](functions/rotateAround.md) | - |
+| [subVec](functions/subVec.md) | - |
+| [vecToIter](functions/vecToIter.md) | - |

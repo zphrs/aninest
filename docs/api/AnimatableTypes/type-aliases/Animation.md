@@ -3,11 +3,23 @@
 # Animation\<Animating\>
 
 ```ts
-type Animation<Animating>: AnimationWithoutChildren<Animating> & Object;
+type Animation<Animating>: AnimationWithoutChildren<Animating> & object;
 ```
 
 The animation object. This is a recursive type, meaning that it can 
 contain other animations.
+
+## Type declaration
+
+### children
+
+```ts
+readonly children: { [P in keyof Animating]: Animating[P] extends number ? undefined : Animation<RecursiveAnimatable<Animating[P]>> };
+```
+
+## Type Parameters
+
+• **Animating** *extends* [`UnknownRecursiveAnimatable`](UnknownRecursiveAnimatable.md)
 
 ## Example
 
@@ -24,18 +36,6 @@ const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}})
 }
 ```
 
-## Type declaration
+## Defined in
 
-### children
-
-```ts
-readonly children: { [P in keyof Animating]: Animating[P] extends number ? undefined : Animation<RecursiveAnimatable<Animating[P]>> };
-```
-
-## Type parameters
-
-• **Animating** extends [`UnknownRecursiveAnimatable`](UnknownRecursiveAnimatable.md)
-
-## Source
-
-[Animate/AnimatableTypes.ts:119](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L119)
+[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L121)

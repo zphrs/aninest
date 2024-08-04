@@ -9,5 +9,5 @@ Sleep for a given number of seconds, supporting await syntax.
 ### Functions
 
 | Function | Description |
-| :------ | :------ |
-| [sleep](functions/sleep.md) | Sleep for a given number of seconds, supporting await syntax. |
+| ------ | ------ |
+| [sleep](functions/sleep.md) | - |

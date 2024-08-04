@@ -3,7 +3,7 @@
 # getStateTree()
 
 ```ts
-getStateTree<Animating>(
+function getStateTree<Animating>(
    anim, 
    into, 
    skipFrom): Animating
@@ -11,17 +11,17 @@ getStateTree<Animating>(
 
 Gets the full state of the animation, including all children.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
 • **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
-• **into**: `object`= `undefined`
+• **into**: `object` = `...`
 
-• **skipFrom**: `boolean`= `false`
+• **skipFrom**: `boolean` = `false`
 
 ## Returns
 
@@ -36,6 +36,6 @@ const stateA = getStateTree(anim.children.a) // {x: 0, y: 0}
 const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
 ```
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:377](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L377)
+[Animate/Animatable.ts:377](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L377)

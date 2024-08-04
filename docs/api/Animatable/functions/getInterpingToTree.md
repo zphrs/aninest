@@ -3,21 +3,21 @@
 # getInterpingToTree()
 
 ```ts
-getInterpingToTree<Animating>(anim, into): Animating
+function getInterpingToTree<Animating>(anim, into): Animating
 ```
 
 Gets the full state tree that the animation is currently interpolating to.
 If the animation is not headed to any state, it will return the current state.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
 • **anim**: [`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<`Animating`\>
 
-• **into**: `object`= `{}`
+• **into**: `object` = `{}`
 
 ## Returns
 
@@ -34,6 +34,6 @@ updateAnimation(anim, 0.5)
 getInterpingToTree(anim) // {a: {x: 1, y: 1}, b: 1, c: 0} - same as before update
 ```
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:573](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L573)
+[Animate/Animatable.ts:579](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L579)

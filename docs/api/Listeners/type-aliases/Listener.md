@@ -1,6 +1,6 @@
 [aninest](../../index.md) / [Listeners](../index.md) / Listener
 
-# Listener\<T\>
+# Listener()\<T\>
 
 ```ts
 type Listener<T>: (currentLocalState) => boolean | void | Promise<void>;
@@ -8,25 +8,7 @@ type Listener<T>: (currentLocalState) => boolean | void | Promise<void>;
 
 A listener function that is called when an event is broadcast.
 
-## Description
-
-The listener can return `true` to remove itself from the listener set, `false` to keep itself in the listener set, or `void` to keep itself in the listener set.
-
-## Example
-
-```ts
-() => true // remove listener
-() => false // keep listener
-() => {} // keep listener
-```
-
-## Example
-
-```ts
-({a, b}) => console.log(a, b)
-```
-
-## Type parameters
+## Type Parameters
 
 • **T**
 
@@ -38,6 +20,22 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 `boolean` \| `void` \| `Promise`\<`void`\>
 
-## Source
+## Description
 
-[Listeners.ts:15](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Listeners.ts#L15)
+The listener can return `true` to remove itself from the listener set, `false` to keep itself in the listener set, or `void` to keep itself in the listener set.
+
+## Examples
+
+```ts
+() => true // remove listener
+() => false // keep listener
+() => {} // keep listener
+```
+
+```ts
+({a, b}) => console.log(a, b)
+```
+
+## Defined in
+
+[Listeners.ts:15](https://github.com/zphrs/aninest/tree//core/src/Listeners.ts#L15)

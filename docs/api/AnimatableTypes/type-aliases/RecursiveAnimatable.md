@@ -3,10 +3,14 @@
 # RecursiveAnimatable\<T\>
 
 ```ts
-type RecursiveAnimatable<T>: Recursive<number, T>;
+type RecursiveAnimatable<T>: { [P in keyof T]: T[P] extends number ? number : RecursiveAnimatable<T[P]> };
 ```
 
 The generic type of the animation state.
+
+## Type Parameters
+
+• **T**
 
 ## Example
 
@@ -17,10 +21,6 @@ The generic type of the animation state.
 }
 ```
 
-## Type parameters
+## Defined in
 
-• **T**
-
-## Source
-
-[Animate/AnimatableTypes.ts:49](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L49)
+[Animate/AnimatableTypes.ts:49](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L49)

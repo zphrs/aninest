@@ -3,7 +3,7 @@
 # lerp()
 
 ```ts
-lerp(
+function lerp(
    v1, 
    v2, 
    time): Vec2
@@ -31,6 +31,6 @@ The time value to interpolate by (should be between 0 and 1).
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:220](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L220)
+[Utils/vec2.ts:220](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L220)

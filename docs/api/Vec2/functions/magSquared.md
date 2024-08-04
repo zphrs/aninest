@@ -3,7 +3,7 @@
 # magSquared()
 
 ```ts
-magSquared(v): number
+function magSquared(v): number
 ```
 
 Squares the magnitude of a vector.
@@ -16,6 +16,6 @@ Squares the magnitude of a vector.
 
 `number`
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:122](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L122)
+[Utils/vec2.ts:122](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L122)

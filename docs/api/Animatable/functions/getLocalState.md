@@ -3,7 +3,7 @@
 # getLocalState()
 
 ```ts
-getLocalState<Animating>(
+function getLocalState<Animating>(
    anim, 
    into, 
 skipFrom): LocalAnimatable<Animating>
@@ -12,9 +12,9 @@ skipFrom): LocalAnimatable<Animating>
 Gets the current local state of the animation, meaning only the numbers in the topmost level of the animation.
 To access the local state of a child, use `anim.children.childName` as the input.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -22,9 +22,9 @@ To access the local state of a child, use `anim.children.childName` as the input
 
 The animation object
 
-• **into**: [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\>= `undefined`
+• **into**: [`LocalAnimatable`](../../AnimatableTypes/type-aliases/LocalAnimatable.md)\<`Animating`\> = `...`
 
-• **skipFrom**: `boolean`= `false`
+• **skipFrom**: `boolean` = `false`
 
 ## Returns
 
@@ -32,7 +32,7 @@ The animation object
 
 The local state of the animation
 
-## Example
+## Examples
 
 ```ts
 const anim = createAnimation({a: newVec2(0, 0), b: newVec2(1, 1)}, getLinearInterp(1))
@@ -41,14 +41,12 @@ const localStateA = getLocalState(anim.children.a) // {x: 0, y: 0}
 const localStateB = getLocalState(anim.children.b) // {x: 1, y: 1}
 ```
 
-## Example
-
 ```ts
 const anim = createAnimation({ a: newVec2(0, 0), b: 1 }, NO_INTERP)
 const localState = getLocalState(anim) // { b: 1 }
 const localStateA = getLocalState(anim.children.a) // { x: 0, y: 0 }
 ```
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:316](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L316)
+[Animate/Animatable.ts:316](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L316)

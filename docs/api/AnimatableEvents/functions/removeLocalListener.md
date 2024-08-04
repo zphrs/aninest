@@ -3,7 +3,7 @@
 # ~~removeLocalListener()~~
 
 ```ts
-removeLocalListener<Animating, Event>(
+function removeLocalListener<Animating, Event>(
    anim, 
    type, 
    listener): void
@@ -11,11 +11,11 @@ removeLocalListener<Animating, Event>(
 
 Removes a listener from the animation
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
-• **Event** extends [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
+• **Event** *extends* [`AnimatableEvents`](../type-aliases/AnimatableEvents.md)
 
 ## Parameters
 
@@ -27,7 +27,7 @@ The animation object
 
 See [AnimatableEvents](../type-aliases/AnimatableEvents.md)
 
-• **listener**: `Event` extends 
+• **listener**: `Event` *extends* 
   \| `"beforeStart"`
   \| `"start"`
   \| `"end"`
@@ -62,6 +62,6 @@ modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
 
 Instead use the return value of `{@link addLocalListener}`.
 
-## Source
+## Defined in
 
-[Animate/AnimatableEvents.ts:90](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L90)
+[Animate/AnimatableEvents.ts:90](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L90)

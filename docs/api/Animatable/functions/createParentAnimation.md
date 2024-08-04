@@ -3,15 +3,15 @@
 # createParentAnimation()
 
 ```ts
-createParentAnimation<Animating>(children, timing): Animation<Animating>
+function createParentAnimation<Animating>(children, timing): Animation<Animating>
 ```
 
 Creates a parent animation from a dictionary of children which will function the same
 as though the parent and children were created at once.
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -36,6 +36,6 @@ const b = createAnimation({x: 1, y: 0})
 const anim = createParentAnimation({a, b, c: 1})
 ```
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:186](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L186)
+[Animate/Animatable.ts:186](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L186)

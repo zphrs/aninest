@@ -3,7 +3,7 @@
 # mapVec()
 
 ```ts
-mapVec(v, func): Vec2
+function mapVec(v, func): Vec2
 ```
 
 Calls a function func on each component of a vector,
@@ -21,6 +21,6 @@ creating a new vector from the result of each function call.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:210](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L210)
+[Utils/vec2.ts:210](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L210)

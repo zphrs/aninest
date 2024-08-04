@@ -3,14 +3,14 @@
 # createAnimation()
 
 ```ts
-createAnimation<Init>(init, timing): Animation<Init>
+function createAnimation<Init>(init, timing): Animation<Init>
 ```
 
 Creates an animation info object, automatically inferring type from the init object.
 
-## Type parameters
+## Type Parameters
 
-• **Init** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Init** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -37,6 +37,6 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
 })
 ```
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:140](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L140)
+[Animate/Animatable.ts:140](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L140)

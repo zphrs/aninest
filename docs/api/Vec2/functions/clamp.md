@@ -3,7 +3,7 @@
 # clamp()
 
 ```ts
-clamp(
+function clamp(
    min, 
    n, 
    max): number
@@ -29,6 +29,6 @@ The maximum clamping value. If undefined, no maximum clamping is done.
 
 `number`
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:49](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L49)
+[Utils/vec2.ts:49](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L49)

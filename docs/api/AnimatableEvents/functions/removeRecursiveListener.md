@@ -3,7 +3,7 @@
 # removeRecursiveListener()
 
 ```ts
-removeRecursiveListener<Animating>(
+function removeRecursiveListener<Animating>(
    anim, 
    type, 
    listener): void
@@ -11,9 +11,9 @@ removeRecursiveListener<Animating>(
 
 Removes a recursive start listener from the animation
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -26,7 +26,7 @@ Removes a recursive start listener from the animation
   \| `"interrupt"`
   \| `"beforeEnd"`
 
-• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<[`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, [`Animatable`](../../AnimatableTypes/type-aliases/Animatable.md)\>\>\>
+• **listener**: [`Listener`](../../Listeners/type-aliases/Listener.md)\<[`Animation`](../../AnimatableTypes/type-aliases/Animation.md)\<[`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<[`Animatable`](../../AnimatableTypes/type-aliases/Animatable.md)\>\>\>
 
 ## Returns
 
@@ -46,6 +46,6 @@ removeRecursiveListener(anim, "start", listener)
 modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 ```
 
-## Source
+## Defined in
 
-[Animate/AnimatableEvents.ts:154](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableEvents.ts#L154)
+[Animate/AnimatableEvents.ts:154](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableEvents.ts#L154)

@@ -3,14 +3,14 @@
 # Mode
 
 ```ts
-type Mode: Object;
+type Mode: object;
 ```
 
 Provides on, off, and toggle functions to toggle an [ExtensionStack](../../ExtensionStack/type-aliases/ExtensionStack.md).`
 
 ## Type declaration
 
-### off
+### off()
 
 ```ts
 off: () => void;
@@ -20,7 +20,7 @@ off: () => void;
 
 `void`
 
-### on
+### on()
 
 ```ts
 on: () => void;
@@ -30,7 +30,7 @@ on: () => void;
 
 `void`
 
-### toggle
+### toggle()
 
 ```ts
 toggle: (to?) => void;
@@ -50,6 +50,6 @@ and undefined to toggle.
 
 `void`
 
-## Source
+## Defined in
 
-[Animate/Mode.ts:12](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Mode.ts#L12)
+[Animate/Mode.ts:12](https://github.com/zphrs/aninest/tree//core/src/Animate/Mode.ts#L12)

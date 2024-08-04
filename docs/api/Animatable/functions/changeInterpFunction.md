@@ -3,7 +3,7 @@
 # changeInterpFunction()
 
 ```ts
-changeInterpFunction<Animating>(
+function changeInterpFunction<Animating>(
    anim, 
    interp, 
    mask): void
@@ -31,9 +31,9 @@ respective values you could do:
 const {x: {value: x}, y: {value: y}} = getStateTree(anim.children.a)
 ```
 
-## Type parameters
+## Type Parameters
 
-• **Animating** extends [`Recursive`](../../RecursiveHelpers/type-aliases/Recursive.md)\<`number`, `unknown`\>
+• **Animating** *extends* [`RecursiveAnimatable`](../../AnimatableTypes/type-aliases/RecursiveAnimatable.md)\<`unknown`\>
 
 ## Parameters
 
@@ -41,7 +41,7 @@ const {x: {value: x}, y: {value: y}} = getStateTree(anim.children.a)
 
 • **interp**: [`Interp`](../../module:Interp/type-aliases/Interp.md)
 
-• **mask**: `Partial`\<[`Mask`](../../RecursiveHelpers/type-aliases/Mask.md)\<`Animating`\>\>= `{}`
+• **mask**: `Partial`\<[`Mask`](../../RecursiveHelpers/type-aliases/Mask.md)\<`Animating`\>\> = `{}`
 
 Assumes default of true for all keys. It is optional.
 
@@ -62,6 +62,6 @@ updateAnimation(anim, 0.5)
 getStateTree(anim) // {a: {x: 0.5, y: 0.5}, b: {x: 0.75, y: 0.75}}
 ```
 
-## Source
+## Defined in
 
-[Animate/Animatable.ts:495](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/Animatable.ts#L495)
+[Animate/Animatable.ts:495](https://github.com/zphrs/aninest/tree//core/src/Animate/Animatable.ts#L495)

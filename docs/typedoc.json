@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["../src/**/*.ts"],
+  "entryPoints": ["../core/src/**/*.ts"],
   "out": "./api",
   "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "githubPages": false,
@@ -7,7 +7,10 @@
   "indexFormat": "table",
   "useCodeBlocks": true,
   "disableSources": false,
+  "gitRemote": "origin",
+  "sourceLinkTemplate": "https://github.com/zphrs/aninest/tree/{gitRevision}/core/src/{path}#L{line}",
   "excludeInternal": true,
+  "disableGit": true,
   "excludeNotDocumented": true,
   "textContentMappings": {
     "title.indexPage": "API Reference",

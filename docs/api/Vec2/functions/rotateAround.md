@@ -3,7 +3,7 @@
 # rotateAround()
 
 ```ts
-rotateAround(
+function rotateAround(
    v, 
    pivot, 
    angle): Vec2
@@ -31,6 +31,6 @@ The angle to rotate the vector by in radians.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:174](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L174)
+[Utils/vec2.ts:174](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L174)

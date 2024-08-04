@@ -3,7 +3,7 @@
 # vecToIter()
 
 ```ts
-vecToIter(v): readonly [number, number]
+function vecToIter(v): readonly [number, number]
 ```
 
 Converts a vector to an array.
@@ -19,6 +19,6 @@ readonly [`number`, `number`]
 
 An array with the x and y components of the vector in the format [x, y].
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:115](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L115)
+[Utils/vec2.ts:115](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L115)

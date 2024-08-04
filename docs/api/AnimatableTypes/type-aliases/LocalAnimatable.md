@@ -8,6 +8,10 @@ type LocalAnimatable<T>: { [P in keyof T]: T[P] extends number ? number : undefi
 
 A local slice of the Animatable type.
 
+## Type Parameters
+
+• **T**
+
 ## Example
 
 ```ts
@@ -19,10 +23,6 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 { x: 0, y: 0 }
 ```
 
-## Type parameters
+## Defined in
 
-• **T**
-
-## Source
-
-[Animate/AnimatableTypes.ts:62](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L62)
+[Animate/AnimatableTypes.ts:64](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L64)

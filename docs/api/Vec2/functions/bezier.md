@@ -3,7 +3,7 @@
 # bezier()
 
 ```ts
-bezier(
+function bezier(
    v1, 
    v2, 
    p1, 
@@ -41,6 +41,6 @@ The time value to interpolate by (should be between 0 and 1).
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:232](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L232)
+[Utils/vec2.ts:232](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L232)

@@ -3,7 +3,7 @@
 # copy()
 
 ```ts
-copy(v): Vec2
+function copy(v): Vec2
 ```
 
 Duplicates the vector.
@@ -18,6 +18,6 @@ Duplicates the vector.
 
 The duplicated vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:187](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L187)
+[Utils/vec2.ts:187](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L187)

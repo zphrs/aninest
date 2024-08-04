@@ -3,7 +3,7 @@
 # dot()
 
 ```ts
-dot(v1, v2): number
+function dot(v1, v2): number
 ```
 
 Calculates the dot product of two vectors.
@@ -20,6 +20,6 @@ Calculates the dot product of two vectors.
 
 A scalar.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:145](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L145)
+[Utils/vec2.ts:145](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L145)

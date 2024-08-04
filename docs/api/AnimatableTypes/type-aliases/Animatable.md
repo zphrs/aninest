@@ -3,11 +3,15 @@
 # Animatable
 
 ```ts
-type Animatable: Object;
+type Animatable: object;
 ```
 
 The local state of the animation, meaning only the numbers in the topmost 
 level of the animation.
+
+## Index Signature
+
+ \[`key`: `string`\]: `number`
 
 ## Example
 
@@ -19,10 +23,6 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 { x: 0, y: 0 }
 ```
 
-## Index signature
+## Defined in
 
- \[`key`: `string`\]: `number`
-
-## Source
-
-[Animate/AnimatableTypes.ts:22](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Animate/AnimatableTypes.ts#L22)
+[Animate/AnimatableTypes.ts:22](https://github.com/zphrs/aninest/tree//core/src/Animate/AnimatableTypes.ts#L22)

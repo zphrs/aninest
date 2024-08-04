@@ -3,7 +3,7 @@
 # normalize()
 
 ```ts
-normalize(v): Vec2
+function normalize(v): Vec2
 ```
 
 Returnes a normalized version of the vector.
@@ -18,6 +18,6 @@ Returnes a normalized version of the vector.
 
 A new vector.
 
-## Source
+## Defined in
 
-[Utils/vec2.ts:129](https://github.com/zphrs/aninest/blob/f1bf3a3/src/Utils/vec2.ts#L129)
+[Utils/vec2.ts:129](https://github.com/zphrs/aninest/tree//core/src/Utils/vec2.ts#L129)
