@@ -1,7 +1,7 @@
 {
-  "name": "aninest",
-  "version": "3.0.0",
-  "description": "A nested animation library: typed, interruptible, extensible, and performant.",
+  "name": "@aninest/extensions",
+  "version": "1.0.0",
+  "description": "A collection of extensions for the aninest library.",
   "main": "lib/index.js",
   "type": "module",
   "private": false,
