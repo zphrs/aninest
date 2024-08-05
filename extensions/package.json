@@ -20,8 +20,6 @@
   "scripts": {
     "build": "tsc -b && tsc-alias",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest",
-    "predeploy": "pnpm predocs:dev && pnpm docs:build",
-    "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
     "prepublish": "pnpm build",
     "preversion": "pnpm test",
     "version": "pnpm run build && pnpm run predeploy && pnpm run deploy"
