@@ -21,6 +21,7 @@ import {
   BEFORE_END,
   START,
   separateChildren,
+  Layer,
 } from "aninest"
 
 export function snapGridExtension<Animating extends UnknownRecursiveAnimatable>(
@@ -140,6 +141,37 @@ export function snapPointExtension<
   shouldSnap: ShouldSnap<Animating, Point>
 ): Extension<Animating> {
   return anim => setSnapPoint(anim, snapPoint, shouldSnap)
+}
+
+export function getSnapPointLayer<
+  Animating extends RecursiveAnimatable<unknown>,
+  Point extends PartialRecursiveAnimatable<Animating>
+>(
+  snapPoint: Point,
+  shouldSnap: ShouldSnap<Animating, Point>
+): Layer<Animating> & { changeSnapPoint: (point: Point) => void } {
+  let unsub: unsubscribe | null = null
+  let anim: Animation<Animating> | null = null
+  const mount = (a: Animation<Animating>) => {
+    anim = a
+    unsub = setSnapPoint(anim, snapPoint, shouldSnap)
+    return () => {
+      if (unsub) unsub()
+    }
+  }
+  const changeSnapPoint = (point: Point) => {
+    snapPoint = point
+    if (unsub) unsub()
+    if (anim) {
+      unsub = setSnapPoint(anim, snapPoint, shouldSnap)
+    } else {
+      unsub = null
+    }
+  }
+  return {
+    mount,
+    changeSnapPoint,
+  }
 }
 
 /**
