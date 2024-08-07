@@ -376,7 +376,7 @@ const stateB = getStateTree(anim.children.b) // {x: 1, y: 1}
  */
 export function getStateTree<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
-  into: object = {} as object,
+  into: object = {},
   skipFrom = false
 ): Animating {
   const out = into as Animating

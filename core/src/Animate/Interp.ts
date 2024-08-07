@@ -22,7 +22,13 @@ export type Interp = (t: number) => number | undefined
  */
 export const NO_INTERP = (_t: number) => undefined
 
-function getProgress(t: number, duration: number) {
+/**
+ * Gets the linear progress of an animation based on time and duration, clamped between 0 and 1.
+ * @param t
+ * @param duration
+ * @returns
+ */
+export function getProgress(t: number, duration: number) {
   return clamp(0, t / duration, 1)
 }
 
