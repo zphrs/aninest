@@ -54,7 +54,7 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <pg-split ref="split" >
+    <pg-split ref="split">
       <span slot="first">
         <CodeMirror v-model:doc="doc" lang="html"></CodeMirror>
       </span>
