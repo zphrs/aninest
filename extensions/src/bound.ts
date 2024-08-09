@@ -152,6 +152,7 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     mount: anim => {
       const localUnsub = addLocalListener(anim, BEFORE_END, checkLocalBounds)
       unsubs.add(localUnsub)
+      checkLocalBounds(getLocalState(anim))
 
       for (const [k, c] of Object.entries(childMap)) {
         const key = k as keyof Animating
