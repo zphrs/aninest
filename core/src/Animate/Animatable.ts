@@ -46,9 +46,8 @@ function getProgress<Animating extends Animatable>(
  * @group Status
  * @param anim The animation object
  * @returns whether the animation needs to be updated
- * @internal
  */
-function animationNeedsUpdate<Animating extends Animatable>(
+export function animationNeedsUpdate<Animating extends Animatable>(
   anim: Animation<Animating>
 ) {
   return anim._to != null && getProgress(anim) != undefined
