@@ -122,14 +122,16 @@ export function addRecursiveListener<
   const unsub = () => {
     unsubscribers.forEach(unsub => unsub())
   }
-  unsubscribers.push(addLocalListener(anim, type, unsub as Listener<unknown>))
+  unsubscribers.push(
+    addLocalListener(anim, type, listener as Listener<unknown>)
+  )
   for (const childInfo of Object.values(
     anim.children as unknown as {
       [s: string]: UnknownAnimation
     }
   )) {
     unsubscribers.push(
-      addRecursiveListener(childInfo, type, unsub as Listener<unknown>)
+      addRecursiveListener(childInfo, type, listener as Listener<unknown>)
     )
   }
   return unsub
