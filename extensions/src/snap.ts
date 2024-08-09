@@ -156,7 +156,11 @@ export function getSnapPointLayer<
     anim = a
     unsub = setSnapPoint(anim, snapPoint, shouldSnap)
     return () => {
-      if (unsub) unsub()
+      if (unsub) {
+        unsub()
+        unsub = null
+        anim = null
+      }
     }
   }
   const changeSnapPoint = (point: Point) => {
