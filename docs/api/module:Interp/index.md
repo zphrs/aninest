@@ -19,4 +19,5 @@ Several interpolation function constructors.
 | [NO\_INTERP](functions/NO_INTERP.md) | - |
 | [getCubicBezier](functions/getCubicBezier.md) | Returns a cubic bezier interpolation function. |
 | [getLinearInterp](functions/getLinearInterp.md) | Returns a linear interpolation function. |
+| [getProgress](functions/getProgress.md) | Gets the linear progress of an animation based on time and duration, clamped between 0 and 1. |
 | [getSlerp](functions/getSlerp.md) | Returns a smooth interpolation function based on the sine function. |

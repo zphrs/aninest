@@ -17,4 +17,4 @@ being optional.
 
 ## Defined in
 
-[Animate/RecursiveHelpers.ts:46](https://github.com/zphrs/aninest/blob/765f2ede3df887f1f3a3e1391afab09a932de29a/core/src/Animate/RecursiveHelpers.ts#L46)
+[Animate/RecursiveHelpers.ts:46](https://github.com/zphrs/aninest/blob/c0759892862ca3c4697d159317f2939666662924/core/src/Animate/RecursiveHelpers.ts#L46)

@@ -142,3 +142,26 @@ test("end event of parent", done => {
   })
   updateAnimation(anim, 1)
 }, 200)
+
+test("big nested interp", () => {
+  const anim = createAnimation(
+    {
+      pos: { x: 0, y: 0 },
+      b: { x: 0, y: 0 },
+      styles: { colors: { background: { r: 0, g: 0, b: 0 } } },
+    },
+    NO_INTERP
+  )
+  changeInterpFunction(anim.children.styles, getLinearInterp(2))
+  modifyTo(anim, {
+    pos: { x: 1, y: 1 },
+    b: { x: 1, y: 1 },
+    styles: { colors: { background: { r: 255, g: 255, b: 255 } } },
+  })
+  updateAnimation(anim, 1)
+  expect(getStateTree(anim)).toStrictEqual({
+    pos: { x: 1, y: 1 },
+    b: { x: 1, y: 1 },
+    styles: { colors: { background: { r: 127.5, g: 127.5, b: 127.5 } } },
+  })
+})

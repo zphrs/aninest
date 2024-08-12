@@ -24,4 +24,4 @@ A new vector.
 
 ## Defined in
 
-[Utils/vec2.ts:161](https://github.com/zphrs/aninest/blob/765f2ede3df887f1f3a3e1391afab09a932de29a/core/src/Utils/vec2.ts#L161)
+[Utils/vec2.ts:161](https://github.com/zphrs/aninest/blob/c0759892862ca3c4697d159317f2939666662924/core/src/Utils/vec2.ts#L161)

@@ -35,3 +35,9 @@ This module deals with creating and modifying Animations.
 | [getLocalInterpingToValue](functions/getLocalInterpingToValue.md) | Gets a value |
 | [getLocalState](functions/getLocalState.md) | Gets the current local state of the animation, meaning only the numbers in the topmost level of the animation. To access the local state of a child, use `anim.children.childName` as the input. |
 | [getStateTree](functions/getStateTree.md) | Gets the full state of the animation, including all children. |
+
+### Status
+
+| Function | Description |
+| ------ | ------ |
+| [animationNeedsUpdate](functions/animationNeedsUpdate.md) | Returns whether the animation needs to be updated. |

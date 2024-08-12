@@ -78,7 +78,7 @@ export function perMaskedChild<Base, Shape extends UnknownRecursive>(
   fn: (child: HasChildren<Base, UnknownRecursive>) => void
 ) {
   const filteredChildren = Object.keys(anim.children).filter(
-    key => mask[key as keyof typeof mask] !== false
+    key => mask == undefined || mask[key as keyof typeof mask] !== false
   )
   for (const key of filteredChildren) {
     const child = anim.children[key as keyof Shape]
@@ -87,9 +87,9 @@ export function perMaskedChild<Base, Shape extends UnknownRecursive>(
     }
     perMaskedChild(
       child as HasChildren<Base, UnknownRecursive>,
-      mask[key as keyof typeof mask] as Partial<
+      (mask?.[key as keyof typeof mask] as Partial<
         Mask<UnknownRecursiveAnimatable>
-      >,
+      >) ?? undefined,
       fn
     )
   }

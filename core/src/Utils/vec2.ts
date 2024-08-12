@@ -44,7 +44,10 @@ export const ZERO_VEC2 = { x: 0, y: 0 } as { x: 0; y: 0 }
  * @param min The minimum clamping value. If undefined, no minimum clamping is done.
  * @param n The value to clamp.
  * @param max The maximum clamping value. If undefined, no maximum clamping is done.
- * @returns
+@example
+let value = 1.5
+let clampedValue = clamp(0, value, 1) // clampedValue is 1
+ * @returns The clamped value.
  */
 export const clamp = (
   min: number | undefined,

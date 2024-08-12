@@ -6,7 +6,9 @@
     "docs:dev": "pnpm --filter ./docs run docs:dev",
     "docs:build": "pnpm --filter ./docs run docs:build",
     "docs:preview": "pnpm --filter ./docs run docs:preview",
-    "predocs:dev": "pnpm --filter ./docs run predocs:dev"
+    "predocs:dev": "pnpm --filter ./docs --filter ./extensionDocs run predocs:dev",
+    "predeploy": "pnpm predocs:dev && pnpm docs:build",
+    "deploy": "gh-pages -d ./docs/.vitepress/dist -t true"
   },
   "jest": {
     "testPathIgnorePatterns": [
@@ -21,6 +23,7 @@
   "author": "zephiris",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.5.12"
+    "@types/jest": "^29.5.12",
+    "gh-pages": "^6.1.1"
   }
 }
