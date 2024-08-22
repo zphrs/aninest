@@ -54,7 +54,7 @@ export function getUpdateLayer<
     function update(time: number) {
       if (unmounted) return
       const dt = lastTime ? time - lastTime : 0
-      const needsUpdate = updateAnimation(anim, dt)
+      const needsUpdate = updateAnimation(anim, dt / 1000)
       broadcast(listeners.update, anim)
       lastTime = time
       if (needsUpdate) requestAnimationFrame(update)
