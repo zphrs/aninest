@@ -101,6 +101,13 @@ export function localMomentumLayer<
    * @returns velocity in units/second
    */
   getVelocity: () => number
+  /**
+   * useful for clearing the recorded states to prevent weird interpolation
+   * based on manually setting the state rather than setting it based on a user
+   * gesture
+   * @returns
+   */
+  clearRecordedStates: () => void
 } {
   let frictionForce: number
   const updateFriction = () => {
@@ -278,6 +285,9 @@ export function localMomentumLayer<
     },
     getVelocity() {
       return currentVelocity
+    },
+    clearRecordedStates() {
+      prevStates.clear()
     },
   }
 }
