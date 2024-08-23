@@ -209,11 +209,14 @@ export function createParentAnimation<
  * @param to The new partial state of the animation. A partial state
  * means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
  * the new target state will be `{ a 1, b: 0 }`.
+ * @param suppressListeners If true, the listeners will not be called. Useful for
+ * when you want to modify the animation within a start listener without causing an infinite loop.
  *
  */
 export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
-  to: PartialRecursiveAnimatable<Animating>
+  to: PartialRecursiveAnimatable<Animating>,
+  suppressListeners = false
 ) {
   const [localTo, children] = separateChildren(to as UnknownRecursiveAnimatable)
   let completeTo = localTo as Partial<LocalAnimatable<Animating>>
@@ -222,7 +225,7 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
     saveState(anim, getLocalState(anim, anim._from, true))
     broadcast(anim.interruptListeners, completeTo)
   }
-  if (Object.keys(localTo).length !== 0) {
+  if (Object.keys(localTo).length !== 0 && !suppressListeners) {
     // condition due to conditional early exit below
     // used to keep track of if the full modifyTo tree is terminated
     broadcast(anim.beforeStartListeners, completeTo) // (
@@ -233,13 +236,14 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
     if (!childInfo) continue
     modifyTo<Animating>(
       childInfo as Animation<Animating>,
-      childValue as PartialRecursiveAnimatable<unknown>
+      childValue as PartialRecursiveAnimatable<unknown>,
+      suppressListeners
     ) // recursive call a: (something)
   }
   if (Object.keys(localTo).length === 0) return
   anim._time = 0
   anim._to = completeTo
-  broadcast(anim.startListeners, completeTo) // )
+  if (!suppressListeners) broadcast(anim.startListeners, completeTo)
   updateAnimation(anim, 0)
 }
 
