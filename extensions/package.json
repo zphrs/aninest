@@ -36,6 +36,6 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "aninest": "link:../core"
+    "aninest": "^4.3.0"
   }
 }
