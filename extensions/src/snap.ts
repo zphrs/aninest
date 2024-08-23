@@ -8,10 +8,8 @@ import {
   Mount,
   getLocalState,
   modifyTo,
-  getStateTree,
   addLocalListener,
   addRecursiveListener,
-  removeRecursiveListener,
   RecursiveAnimatable,
   PartialRecursiveAnimatable,
   unsubscribe,
@@ -22,6 +20,7 @@ import {
   START,
   separateChildren,
   Layer,
+  getInterpingToTree,
 } from "aninest"
 
 export function snapGridExtension<Animating extends UnknownRecursiveAnimatable>(
@@ -214,18 +213,18 @@ export function setSnapPoint<
   snapPoint: Point,
   shouldSnap: ShouldSnap<Animating, Point>
 ): unsubscribe {
-  const beforeEnd = () => {
-    const state = getStateTree(anim)
+  const onStart = () => {
+    const state = getInterpingToTree(anim)
     if (
       shouldSnap(snapPoint, state) &&
-      distanceSquaredBetween(snapPoint, state) > Number.EPSILON
+      distanceSquaredBetween(snapPoint, state) > Number.EPSILON * 2
     ) {
-      modifyTo(anim, snapPoint)
+      modifyTo(anim, snapPoint, true)
     }
   }
-  addRecursiveListener(anim, BEFORE_END, beforeEnd)
-  beforeEnd()
-  return () => removeRecursiveListener(anim, BEFORE_END, beforeEnd)
+  const unsub = addRecursiveListener(anim, START, onStart)
+  onStart()
+  return unsub
 }
 
 /**
