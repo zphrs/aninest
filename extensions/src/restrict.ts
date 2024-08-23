@@ -2,7 +2,6 @@ import {
   addLocalListener,
   clamp,
   Extension,
-  getLocalInterpingTo,
   LocalAnimatable,
   UnknownRecursiveAnimatable,
 } from "aninest"
