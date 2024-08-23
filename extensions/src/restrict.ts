@@ -35,7 +35,7 @@ export function restrictFromFunctionExtension<
 ): Extension<Animating> {
   const restrictExtension: Extension<Animating> = anim => {
     const local = getInterpingToProxy(anim) as LocalAnimatable<Animating>
-    const unsub = addLocalListener(anim, "beforeStart", () => {
+    const unsub = addLocalListener(anim, "start", () => {
       restriction(local)
     })
     return unsub

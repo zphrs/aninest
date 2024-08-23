@@ -143,11 +143,9 @@ export function localMomentumLayer<
   let currentVelocity = 0
   // returns true if the animation is now gliding
   const beforeEnd = (anim: Animation<Animating>) => {
-    console.log("beforeEnd", prevStates.length)
     if (prevStates.length < 2) {
       return false
     }
-    console.log("more than 2", prevStates.length, prevStates)
     let divisor = 0
     const avgVel: LocalAnimatable<unknown> = Object.keys(
       prevStates[0].state
