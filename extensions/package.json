@@ -1,6 +1,6 @@
 {
   "name": "@aninest/extensions",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A collection of extensions for the aninest library.",
   "main": "lib/index.js",
   "type": "module",
