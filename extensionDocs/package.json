@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "typedoc"
+    "build": "typedoc",
+    "predocs:dev": "typedoc"
   },
   "repository": {
     "type": "git",

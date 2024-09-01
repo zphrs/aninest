@@ -47,4 +47,4 @@ addReactor(anim, ({pos}) => {
 
 ## Defined in
 
-[../../extensions/src/reactor.ts:49](https://github.com/zphrs/aninest/blob/d10ff1271505e062a71fdb453fe27ee5103a9c80/extensions/src/reactor.ts#L49)
+[../../extensions/src/reactor.ts:49](https://github.com/zphrs/aninest/blob/b669292333243ef725d764f354c403b2c4bde014/extensions/src/reactor.ts#L49)

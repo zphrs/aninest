@@ -3,6 +3,8 @@ import {
   clamp,
   Extension,
   LocalAnimatable,
+  modifyTo,
+  PartialRecursiveAnimatable,
   UnknownRecursiveAnimatable,
 } from "aninest"
 import { Bounds } from "./bound"
@@ -17,6 +19,7 @@ export function restrictFromBoundsExtension<
     ) as (keyof Animating)[]
   )
   const restrictExtension = restrictFromFunctionExtension<Animating>(local => {
+    const local1 = local as { x: number; y: number }
     for (const k in keys) {
       const key = k as keyof Animating
       const value = local[key] as number
@@ -34,7 +37,7 @@ export function restrictFromFunctionExtension<
   restriction: (state: LocalAnimatable<Animating>) => void
 ): Extension<Animating> {
   const restrictExtension: Extension<Animating> = anim => {
-    const local = getInterpingToProxy(anim) as LocalAnimatable<Animating>
+    const local = getInterpingToProxy(anim, true) as LocalAnimatable<Animating>
     const unsub = addLocalListener(anim, "start", () => {
       restriction(local)
     })

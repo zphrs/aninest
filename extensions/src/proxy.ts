@@ -25,7 +25,7 @@ import {
 
 export function getInterpingToProxy<
   Animating extends UnknownRecursiveAnimatable
->(anim: Animation<Animating>): Animating {
+>(anim: Animation<Animating>, suppressListeners: boolean = false): Animating {
   const localProxy = getLocalInterpingToProxy(anim)
   const initialTo = getInterpingToTree(anim)
   const childrenProxies = {} as Record<string, Animating[keyof Animating]>
@@ -44,7 +44,7 @@ export function getInterpingToProxy<
       if (typeof newValue === "number" || typeof newValue === "object") {
         modifyTo(anim, {
           [p.toString()]: newValue,
-        } as PartialRecursiveAnimatable<Animating>)
+        } as PartialRecursiveAnimatable<Animating>, suppressListeners)
         return true
       }
       return false

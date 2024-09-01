@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "docs:dev": "pnpm --filter ./docs run docs:dev",
-    "docs:build": "pnpm --filter ./docs run docs:build",
+    "docs:build": "pnpm predocs:dev && pnpm --filter ./docs run docs:build",
     "docs:preview": "pnpm --filter ./docs run docs:preview",
     "predocs:dev": "pnpm --filter ./docs --filter ./extensionDocs run predocs:dev",
     "predeploy": "pnpm predocs:dev && pnpm docs:build",

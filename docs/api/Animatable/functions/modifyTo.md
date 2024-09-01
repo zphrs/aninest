@@ -3,7 +3,10 @@
 # modifyTo()
 
 ```ts
-function modifyTo<Animating>(anim, to): void
+function modifyTo<Animating>(
+   anim, 
+   to, 
+   suppressListeners): void
 ```
 
 Sets the final stopping point of the animation.
@@ -25,6 +28,11 @@ The animation object
 The new partial state of the animation. A partial state
 means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
 the new target state will be `{ a 1, b: 0 }`.
+
+• **suppressListeners**: `boolean` = `false`
+
+If true, the listeners will not be called. Useful for
+when you want to modify the animation within a start listener without causing an infinite loop.
 
 ## Returns
 
@@ -50,4 +58,4 @@ modifyTo<{a: Vec2, b: Vec2}>(anim.children.a, {x: 1})
 
 ## Defined in
 
-[Animate/Animatable.ts:214](https://github.com/zphrs/aninest/blob/c0759892862ca3c4697d159317f2939666662924/core/src/Animate/Animatable.ts#L214)
+[Animate/Animatable.ts:216](https://github.com/zphrs/aninest/blob/b669292333243ef725d764f354c403b2c4bde014/core/src/Animate/Animatable.ts#L216)
