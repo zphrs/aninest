@@ -209,21 +209,36 @@ export function createParentAnimation<
  * @param to The new partial state of the animation. A partial state
  * means that if the complete state is `{ a: 0, b: 0 }` and you call `modifyTo(anim, { a: 1 })`,
  * the new target state will be `{ a 1, b: 0 }`.
- * @param suppressListeners If true, the listeners will not be called. Useful for
+ * @param suppressStartListeners If true, the start listeners will not be called. Useful for
  * when you want to modify the animation within a start listener without causing an infinite loop.
+ * You can also pass an object with `start` and `interrupt` keys to selectively suppress listeners.
+ * By default `true` suppresses the start listeners while `false` suppresses nothing. This means
+ * that if you want to suppress the interrupt listeners, you must pass an object with `interrupt: true`.
  *
  */
 export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
   to: PartialRecursiveAnimatable<Animating>,
-  suppressListeners = false
+  suppressListeners:
+    | boolean
+    | {
+        start?: boolean
+        interrupt?: boolean
+      } = { start: false, interrupt: false }
 ) {
+  if (suppressListeners === true) {
+    suppressListeners = { start: true, interrupt: false }
+  } else if (suppressListeners === false) {
+    suppressListeners = { start: false, interrupt: false }
+  }
+
   const [localTo, children] = separateChildren(to as UnknownRecursiveAnimatable)
   let completeTo = localTo as Partial<LocalAnimatable<Animating>>
   if (anim._to) {
     completeTo = mergeDicts(anim._to, localTo)
     saveState(anim, getLocalState(anim, anim._from, true))
-    broadcast(anim.interruptListeners, completeTo)
+    if (!suppressListeners.interrupt)
+      broadcast(anim.interruptListeners, completeTo)
   }
   const completeToLength = Object.keys(completeTo).length
   // if ("borderWidth" in anim._from) {
@@ -234,7 +249,7 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   //     localTo,
   //   })
   // }
-  if (completeToLength !== 0 && !suppressListeners) {
+  if (completeToLength !== 0 && !suppressListeners.start) {
     // condition due to conditional early exit below
     // used to keep track of if the full modifyTo tree is terminated
     broadcast(anim.beforeStartListeners, completeTo) // (
@@ -252,7 +267,7 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   if (completeToLength === 0) return
   anim._time = 0
   anim._to = completeTo
-  if (!suppressListeners) broadcast(anim.startListeners, completeTo)
+  if (!suppressListeners.start) broadcast(anim.startListeners, completeTo)
   updateAnimation(anim, 0)
 }
 
