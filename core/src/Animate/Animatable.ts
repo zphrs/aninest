@@ -225,7 +225,16 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
     saveState(anim, getLocalState(anim, anim._from, true))
     broadcast(anim.interruptListeners, completeTo)
   }
-  if (Object.keys(localTo).length !== 0 && !suppressListeners) {
+  const completeToLength = Object.keys(completeTo).length
+  // if ("borderWidth" in anim._from) {
+  //   console.log({
+  //     completeTo,
+  //     completeToLength,
+  //     animTo: anim._to,
+  //     localTo,
+  //   })
+  // }
+  if (completeToLength !== 0 && !suppressListeners) {
     // condition due to conditional early exit below
     // used to keep track of if the full modifyTo tree is terminated
     broadcast(anim.beforeStartListeners, completeTo) // (
@@ -240,7 +249,7 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
       suppressListeners
     ) // recursive call a: (something)
   }
-  if (Object.keys(localTo).length === 0) return
+  if (completeToLength === 0) return
   anim._time = 0
   anim._to = completeTo
   if (!suppressListeners) broadcast(anim.startListeners, completeTo)
