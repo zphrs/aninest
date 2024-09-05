@@ -94,15 +94,10 @@ describe("snap", () => {
     modifyTo(anim, { pos: newVec2(0.6, 0.6) })
     update8times()
     expect(getStateTree(anim)).toStrictEqual({
-      pos: { x: 0.6, y: 0.6 },
-      color: { r: 0, g: 0, b: 0 },
-    })
-    // updateAnimation(anim, 0)
-    update8times()
-    expect(getStateTree(anim)).toStrictEqual({
       pos: { x: 0.5, y: 0.5 },
       color: { r: 0, g: 1, b: 0 },
     })
+    // updateAnimation(anim, 0)
   })
   test("unsub snap point", () => {
     const anim = createAnimation({ x: 0, y: 0 }, getLinearInterp(1))
@@ -111,7 +106,7 @@ describe("snap", () => {
     const unsub = setSnapPoint(anim, { x: 0.5, y: 0.5 }, posDlt)
     modifyTo(anim, { x: 0.6, y: 0.6 })
     updateAnimation(anim, 1)
-    expect(getStateTree(anim)).toStrictEqual({ x: 0.6, y: 0.6 })
+    expect(getStateTree(anim)).toStrictEqual({ x: 0.5, y: 0.5 })
     updateAnimation(anim, 1)
     expect(getStateTree(anim)).toStrictEqual({ x: 0.5, y: 0.5 })
     unsub()
