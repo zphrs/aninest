@@ -83,9 +83,9 @@ type InternalUpdateLayer<Animating extends UnknownRecursiveAnimatable> =
     _updateWithDt: (dt: number) => boolean
   }
 
-if (!global.requestAnimationFrame)
-  global.requestAnimationFrame = callback => {
-    global.setImmediate(() => {
+if (!globalThis.requestAnimationFrame)
+  globalThis.requestAnimationFrame = callback => {
+    globalThis.setImmediate(() => {
       callback(performance.now())
     })
     return 0
