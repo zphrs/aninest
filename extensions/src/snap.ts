@@ -226,7 +226,6 @@ export function setSnapPoint<
   onStart()
   return unsub
 }
-
 /**
  * Returns a function of whether the provided {@link distance} is smaller than the distance between the current state and an arbitrary point.
  * Mainly meant as a utility function for {@link setSnapPoint}.
