@@ -72,4 +72,4 @@ be set directly, but the children can be set.
 
 ## Defined in
 
-[../../extensions/src/proxy.ts:125](https://github.com/zphrs/aninest/blob/93165c72e5bf58f07554172fb8f04e60bd3cd7ed/extensions/src/proxy.ts#L125)
+[../../extensions/src/proxy.ts:125](https://github.com/zphrs/aninest/blob/8022a4b034c124b0e4bb28675a7ce9bcdf9da3b9/extensions/src/proxy.ts#L125)

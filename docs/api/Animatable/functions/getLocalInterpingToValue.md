@@ -24,4 +24,4 @@ Gets a value
 
 ## Defined in
 
-[Animate/Animatable.ts:597](https://github.com/zphrs/aninest/blob/93165c72e5bf58f07554172fb8f04e60bd3cd7ed/core/src/Animate/Animatable.ts#L597)
+[Animate/Animatable.ts:597](https://github.com/zphrs/aninest/blob/8022a4b034c124b0e4bb28675a7ce9bcdf9da3b9/core/src/Animate/Animatable.ts#L597)

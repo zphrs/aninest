@@ -42,4 +42,4 @@ updateBounds({lower: {a: 0.5}})
 
 ## Defined in
 
-[../../extensions/src/bound.ts:84](https://github.com/zphrs/aninest/blob/93165c72e5bf58f07554172fb8f04e60bd3cd7ed/extensions/src/bound.ts#L84)
+[../../extensions/src/bound.ts:84](https://github.com/zphrs/aninest/blob/8022a4b034c124b0e4bb28675a7ce9bcdf9da3b9/extensions/src/bound.ts#L84)

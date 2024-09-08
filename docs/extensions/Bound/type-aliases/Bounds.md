@@ -30,4 +30,4 @@ const bounds: PartialRecursiveBounds<{a: Vec2, b: Vec2}> = {
 
 ## Defined in
 
-[../../extensions/src/bound.ts:66](https://github.com/zphrs/aninest/blob/93165c72e5bf58f07554172fb8f04e60bd3cd7ed/extensions/src/bound.ts#L66)
+[../../extensions/src/bound.ts:66](https://github.com/zphrs/aninest/blob/8022a4b034c124b0e4bb28675a7ce9bcdf9da3b9/extensions/src/bound.ts#L66)

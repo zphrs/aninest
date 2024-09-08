@@ -7,7 +7,7 @@
     "docs:build": "pnpm predocs:dev && pnpm --filter ./docs run docs:build",
     "docs:preview": "pnpm --filter ./docs run docs:preview",
     "predocs:dev": "pnpm --filter ./docs --filter ./extensionDocs run predocs:dev",
-    "predeploy": "pnpm predocs:dev && pnpm docs:build",
+    "predeploy": "pnpm docs:build",
     "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
     "publish": "pnpm --filter ./extensions --filter ./core publish"
   },
