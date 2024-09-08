@@ -8,7 +8,8 @@
     "docs:preview": "pnpm --filter ./docs run docs:preview",
     "predocs:dev": "pnpm --filter ./docs --filter ./extensionDocs run predocs:dev",
     "predeploy": "pnpm predocs:dev && pnpm docs:build",
-    "deploy": "gh-pages -d ./docs/.vitepress/dist -t true"
+    "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
+    "publish": "pnpm --filter ./extensions --filter ./core publish"
   },
   "jest": {
     "testPathIgnorePatterns": [
