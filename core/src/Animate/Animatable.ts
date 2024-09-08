@@ -544,6 +544,21 @@ export function changeInterpFunction<
   )
 }
 
+/**
+ * Updates the interpolation function of the animation only for the topmost level.
+ * @param anim
+ * @param interp
+ */
+export function changeLocalInterpFunction<
+  Animating extends UnknownRecursiveAnimatable
+>(anim: Animation<Animating>, interp: Interp) {
+  anim._timingFunction = interp
+  const to = getLocalInterpingTo(anim)
+  saveState(anim, getLocalState(anim, anim._from, true))
+  anim._to = to
+  updateAnimationInner(anim, 0)
+}
+
 export function getInterpFunction<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>
 ) {

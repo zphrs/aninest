@@ -3,7 +3,7 @@
 # getUpdateLayer()
 
 ```ts
-function getUpdateLayer<Animating>(): UpdateLayer<Animating>
+function getUpdateLayer<Animating>(queueNextUpdate): UpdateLayer<Animating>
 ```
 
 Updates the animation every frame, providing a subscribe function which allows
@@ -16,10 +16,14 @@ listening to:
 
 • **Animating** *extends* `RecursiveAnimatable`\<`unknown`\>
 
+## Parameters
+
+• **queueNextUpdate** = `requestAnimationFrame`
+
 ## Returns
 
 [`UpdateLayer`](../type-aliases/UpdateLayer.md)\<`Animating`\>
 
 ## Defined in
 
-[../../extensions/src/update.ts:48](https://github.com/zphrs/aninest/blob/b669292333243ef725d764f354c403b2c4bde014/extensions/src/update.ts#L48)
+[../../extensions/src/update.ts:104](https://github.com/zphrs/aninest/blob/93165c72e5bf58f07554172fb8f04e60bd3cd7ed/extensions/src/update.ts#L104)

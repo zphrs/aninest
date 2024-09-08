@@ -6,6 +6,12 @@ This module deals with creating and modifying Animations.
 
 ## Index
 
+### Functions
+
+| Function | Description |
+| ------ | ------ |
+| [changeLocalInterpFunction](functions/changeLocalInterpFunction.md) | Updates the interpolation function of the animation only for the topmost level. |
+
 ### Construction
 
 | Function | Description |

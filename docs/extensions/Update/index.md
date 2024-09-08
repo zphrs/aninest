@@ -16,7 +16,7 @@ been started and there are still things to animate.
 
 | Type alias | Description |
 | ------ | ------ |
-| [UpdateLayer](type-aliases/UpdateLayer.md) | An update layer that can be mounted to an animation. Allows listening to: - **start** - when the animation starts to be updated, - **stop** - when the animation finishes animating everything - **update** - each update frame |
+| [UpdateLayer](type-aliases/UpdateLayer.md) | An update layer that can be mounted to an animation. Allows listening to: - **start** - when the animation starts to be updated, - **stop** - when the animation finishes animating everything - **update** - each update frame - **updateWithDeltaTime** - each update frame with the time since the last update - **afterUpdate** - after each update frame - **childStart** - when a child UpdateLayer starts to be updated - **childEnd** - when a child UpdateLayer finishes animating everything, including its children |
 
 ### Functions
 
