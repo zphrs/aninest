@@ -43,4 +43,4 @@ function (after `duration`).
 
 ## Defined in
 
-[../../extensions/src/dynamicDuration.ts:67](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/extensions/src/dynamicDuration.ts#L67)
+[../../extensions/src/dynamicDuration.ts:67](https://github.com/zphrs/aninest/blob/4def9b51a0eda7ca5b3d63922b6674c9f9434175/extensions/src/dynamicDuration.ts#L67)

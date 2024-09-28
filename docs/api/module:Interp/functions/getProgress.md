@@ -20,4 +20,4 @@ Gets the linear progress of an animation based on time and duration, clamped bet
 
 ## Defined in
 
-[Animate/Interp.ts:31](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/core/src/Animate/Interp.ts#L31)
+[Animate/Interp.ts:31](https://github.com/zphrs/aninest/blob/4def9b51a0eda7ca5b3d63922b6674c9f9434175/core/src/Animate/Interp.ts#L31)

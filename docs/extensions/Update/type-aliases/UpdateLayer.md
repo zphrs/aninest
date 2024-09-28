@@ -15,6 +15,7 @@ Allows listening to:
 - **afterUpdate** - after each update frame
 - **childStart** - when a child UpdateLayer starts to be updated
 - **childEnd** - when a child UpdateLayer finishes animating everything, including its children
+- **done** - when the animation finishes animating everything and pauses the updates
 
 ## Type declaration
 
@@ -42,7 +43,7 @@ setParent: (parentLayer) => unsubscribe;
 
 • **type**: `Event`
 
-• **sub**: `Event` *extends* `"updateWithDeltaTime"` ? `Listener`\<`number`\> : `Event` *extends* `ChildEvents` ? `Listener`\<`InternalUpdateLayer`\<`RecursiveAnimatable`\<`unknown`\>\>\> : `Listener`\<`Animation`\<`Animating`\>\>
+• **sub**: `Event` *extends* `"updateWithDeltaTime"` ? `Listener`\<`number`\> : `Event` *extends* `ChildEvents` ? `Listener`\<`InternalUpdateLayer`\<`RecursiveAnimatable`\<`unknown`\>\>\> : `Event` *extends* `"done"` ? `Listener`\<`undefined`\> : `Listener`\<`Animation`\<`Animating`\>\>
 
 #### Returns
 
@@ -54,4 +55,4 @@ setParent: (parentLayer) => unsubscribe;
 
 ## Defined in
 
-[../../extensions/src/update.ts:53](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/extensions/src/update.ts#L53)
+[../../extensions/src/update.ts:56](https://github.com/zphrs/aninest/blob/4def9b51a0eda7ca5b3d63922b6674c9f9434175/extensions/src/update.ts#L56)
