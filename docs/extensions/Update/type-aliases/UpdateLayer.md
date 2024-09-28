@@ -8,9 +8,9 @@ type UpdateLayer<Animating>: Layer<Animating> & object;
 
 An update layer that can be mounted to an animation.
 Allows listening to:
-- **start** - when the animation starts to be updated,
-- **stop** - when the animation finishes animating everything
-- **update** - each update frame
+- **start** - when any child animation starts to be updated,
+- **stop** - when any child animation finishes animating everything
+- **update** - when any child animation is updated
 - **updateWithDeltaTime** - each update frame with the time since the last update
 - **afterUpdate** - after each update frame
 - **childStart** - when a child UpdateLayer starts to be updated
@@ -54,4 +54,4 @@ setParent: (parentLayer) => unsubscribe;
 
 ## Defined in
 
-[../../extensions/src/update.ts:53](https://github.com/zphrs/aninest/blob/8022a4b034c124b0e4bb28675a7ce9bcdf9da3b9/extensions/src/update.ts#L53)
+[../../extensions/src/update.ts:53](https://github.com/zphrs/aninest/blob/ba102fd602fb72315102b5ca371477900b4b57ce/extensions/src/update.ts#L53)

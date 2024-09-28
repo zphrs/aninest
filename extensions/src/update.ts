@@ -42,9 +42,9 @@ type UpdateLayerEvents =
 /**
  * An update layer that can be mounted to an animation.
  * Allows listening to:
- * - **start** - when the animation starts to be updated,
- * - **stop** - when the animation finishes animating everything
- * - **update** - each update frame
+ * - **start** - when any child animation starts to be updated,
+ * - **stop** - when any child animation finishes animating everything
+ * - **update** - when any child animation is updated
  * - **updateWithDeltaTime** - each update frame with the time since the last update
  * - **afterUpdate** - after each update frame
  * - **childStart** - when a child UpdateLayer starts to be updated
@@ -130,14 +130,12 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   // has no children so it doesn't have anything to update yet
   let needsUpdate = () =>
     animsNeedingUpdate.size > 0 || childrenNeedingUpdate.size > 0
-  /** very sad function name :( */
-  let orphanMyself: unsubscribe | undefined = undefined
   const setParent = (
     parentLayer: UpdateLayer<UnknownRecursiveAnimatable>
   ): unsubscribe => {
     parent = parentLayer as InternalUpdateLayer<UnknownRecursiveAnimatable>
     const haveParentUnsubscribe = parent._setChild(out)
-    orphanMyself = () => {
+    const orphanMyself = () => {
       parent = undefined
       haveParentUnsubscribe()
     }
@@ -151,6 +149,7 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
       if (!parent) queueNextUpdate(update)
       else broadcast(listeners.childStart, child)
     })
+    children.add(child)
     return () => {
       children.delete(child)
       childrenNeedingUpdate.delete(child)
@@ -158,19 +157,19 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     }
   }
   let lastTime: number | undefined = undefined
-  const isUnmounted = () => {
-    return anims.size === 0
-  }
+  // const isUnmounted = () => {
+  //   return anims.size === 0 && children.size === 0
+  // }
   const updateWithDeltaTime = (dt: number): boolean => {
+    broadcast(listeners.updateWithDeltaTime, dt)
     for (const anim of animsNeedingUpdate) {
       const animNeedsUpdate = updateAnimation(anim, dt)
+      broadcast(listeners.update, anim)
+      broadcast(listeners.afterUpdate, anim)
       if (!animNeedsUpdate) {
         animsNeedingUpdate.delete(anim)
         broadcast(listeners.end, anim)
       }
-      broadcast(listeners.update, anim)
-      broadcast(listeners.updateWithDeltaTime, dt)
-      broadcast(listeners.afterUpdate, anim)
     }
     for (const child of childrenNeedingUpdate) {
       const childNeedsUpdate = child._updateWithDt(dt)
@@ -183,16 +182,16 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     return out
   }
   const update = (time: milliseconds) => {
-    if (isUnmounted()) return
+    // if (isUnmounted()) return
     const dt = lastTime ? (time - lastTime) / 1000 : 0
     updateWithDeltaTime(dt)
     lastTime = time
-    if (needsUpdate() && !parent) queueNextUpdate(update)
+    if (!parent && needsUpdate()) queueNextUpdate(update)
   }
   const onMount = (anim: Animation<Animating>) => {
     const unsub = addRecursiveListener(anim, START, () => {
-      broadcast(listeners.start, anim)
       animsNeedingUpdate.add(anim)
+      broadcast(listeners.start, anim)
       if (!parent) queueNextUpdate(update)
     })
     anims.add(anim)
@@ -203,7 +202,7 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     }
   }
   const subscribe: UpdateLayer<Animating>["subscribe"] = (type, sub) => {
-    const listener: (typeof listeners)[typeof type] = listeners[type]
+    const listener = listeners[type]
 
     listener.set(sub as Listener<unknown>, undefined)
     return () => listener.delete(sub as Listener<unknown>)
