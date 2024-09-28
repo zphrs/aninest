@@ -27,4 +27,4 @@ A function that unmounts all the extensions in the stack.
 
 ## Defined in
 
-[Animate/ExtensionStack.ts:63](https://github.com/zphrs/aninest/blob/ba102fd602fb72315102b5ca371477900b4b57ce/core/src/Animate/ExtensionStack.ts#L63)
+[Animate/ExtensionStack.ts:63](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/core/src/Animate/ExtensionStack.ts#L63)

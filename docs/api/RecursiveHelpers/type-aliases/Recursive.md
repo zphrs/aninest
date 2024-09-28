@@ -17,4 +17,4 @@ which either has a value of type `Base` or a subtree of the same type.
 
 ## Defined in
 
-[Animate/RecursiveHelpers.ts:36](https://github.com/zphrs/aninest/blob/ba102fd602fb72315102b5ca371477900b4b57ce/core/src/Animate/RecursiveHelpers.ts#L36)
+[Animate/RecursiveHelpers.ts:36](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/core/src/Animate/RecursiveHelpers.ts#L36)

@@ -24,4 +24,4 @@ await sleep(1) // sleep for 1 second
 
 ## Defined in
 
-[Utils/sleep.ts:9](https://github.com/zphrs/aninest/blob/ba102fd602fb72315102b5ca371477900b4b57ce/core/src/Utils/sleep.ts#L9)
+[Utils/sleep.ts:9](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/core/src/Utils/sleep.ts#L9)

@@ -38,4 +38,4 @@ anim.getStateTree() // {a: 0, b: 0}
 
 ## Defined in
 
-[../../extensions/src/loop.ts:49](https://github.com/zphrs/aninest/blob/ba102fd602fb72315102b5ca371477900b4b57ce/extensions/src/loop.ts#L49)
+[../../extensions/src/loop.ts:49](https://github.com/zphrs/aninest/blob/faa26c191e539bfffb0686de3335249d40ae5db1/extensions/src/loop.ts#L49)
