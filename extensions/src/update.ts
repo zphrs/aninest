@@ -155,11 +155,16 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
       if (!parent) queueNextUpdate(update)
       else broadcast(listeners.childStart, child)
     })
+    const unsubRecursiveStart = child.subscribe("childStart", () => {
+      if (!parent) queueNextUpdate(update)
+      else broadcast(listeners.childStart, child)
+    })
     children.add(child)
     return () => {
       children.delete(child)
       childrenNeedingUpdate.delete(child)
       unsubStart()
+      unsubRecursiveStart()
     }
   }
   let lastTime: number | undefined = undefined
