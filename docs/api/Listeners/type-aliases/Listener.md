@@ -38,4 +38,4 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 ## Defined in
 
-[Listeners.ts:15](https://github.com/zphrs/aninest/blob/4def9b51a0eda7ca5b3d63922b6674c9f9434175/core/src/Listeners.ts#L15)
+[Listeners.ts:15](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/core/src/Listeners.ts#L15)

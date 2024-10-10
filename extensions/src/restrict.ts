@@ -1,3 +1,10 @@
+/**
+ * Restricts the animation to predetermined states. Similar to `snap` but
+ * it restricts the animation before it starts animating rather than after it's
+ * done animating.
+ * @module Restrict
+ */
+
 import {
   addLocalListener,
   clamp,
@@ -28,6 +35,19 @@ export function restrictFromBoundsExtension<
   return restrictExtension
 }
 
+/**
+ *
+ * @param restriction A function which takes in a proxy to the local animation state
+ * which you can directly set to in order to collapse the allowed state of the
+ * animation.
+ * @example
+function restrictToWholeNumbersExtension() {
+  return restrictFromFunctionExtension(local => {
+    for (const key in local) local[key] = Math.round(local[key])
+  })
+}
+  * @returns an extension which calls the restriction function 
+ */
 export function restrictFromFunctionExtension<
   Animating extends UnknownRecursiveAnimatable
 >(

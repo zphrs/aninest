@@ -9,7 +9,7 @@ function getUpdateLayer<Animating>(queueNextUpdate): UpdateLayer<Animating>
 Updates the animation every frame, providing a subscribe function which allows
 listening to:
 - **start** - when the animation starts to be updated,
-- **stop** - when the animation finishes animating everything
+- **done** - when the animation finishes animating everything
 - **update** - each update frame
 
 ## Type Parameters
@@ -26,4 +26,4 @@ listening to:
 
 ## Defined in
 
-[../../extensions/src/update.ts:109](https://github.com/zphrs/aninest/blob/4def9b51a0eda7ca5b3d63922b6674c9f9434175/extensions/src/update.ts#L109)
+[../../extensions/src/update.ts:109](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/extensions/src/update.ts#L109)
