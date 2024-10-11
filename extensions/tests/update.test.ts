@@ -103,5 +103,29 @@ describe("update with subchild", () => {
     subchild.subscribe("start", () => console.log("started"))
     modifyTo(anim, { x: 1 })
   })
-  test("update sub-sub child")
+})
+
+describe("update with sub subchild", () => {
+  let time = 0
+  const requestUpdate = (callback: (time: milliseconds) => void) => {
+    time += 500
+    callback(time)
+  }
+  const mainLayer = getUpdateLayer(requestUpdate)
+  const child = getUpdateLayer(requestUpdate)
+  child.setParent(mainLayer)
+  const subchild = getUpdateLayer(requestUpdate)
+  subchild.setParent(child)
+  const subSubchild = getUpdateLayer(requestUpdate)
+  subSubchild.setParent(subchild)
+  test("update sub subchild", done => {
+    const anim = createAnimation({ x: 0 }, getLinearInterp(1))
+    subSubchild.mount(anim)
+    subSubchild.subscribe("end", () => {
+      expect(getLocalState(anim)).toEqual({ x: 1 })
+      done()
+    })
+    subSubchild.subscribe("start", () => console.log("started"))
+    modifyTo(anim, { x: 1 })
+  })
 })
