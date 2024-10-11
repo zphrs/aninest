@@ -63,7 +63,8 @@ export type UpdateLayer<Animating extends UnknownRecursiveAnimatable> =
         ? Listener<InternalUpdateLayer<UnknownRecursiveAnimatable>>
         : Event extends Done
         ? Listener<undefined>
-        : Listener<Animation<Animating>>
+        : Listener<Animation<Animating>>,
+      options?: { signal?: AbortSignal }
     ): unsubscribe
     /**
      * Will mount the current update layer onto another update layer so that
@@ -155,7 +156,8 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
       if (!parent) queueNextUpdate(update)
       else broadcast(listeners.childStart, child)
     })
-    const unsubRecursiveStart = child.subscribe("childStart", () => {
+    const unsubRecursiveStart = child.subscribe("childStart", _subchild => {
+      childrenNeedingUpdate.add(child)
       if (!parent) queueNextUpdate(update)
       else broadcast(listeners.childStart, child)
     })
@@ -174,8 +176,8 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   const updateWithDeltaTime = (dt: number) => {
     broadcast(listeners.updateWithDeltaTime, dt)
     for (const anim of animsNeedingUpdate) {
-      const animNeedsUpdate = updateAnimation(anim, dt)
       broadcast(listeners.update, anim)
+      const animNeedsUpdate = updateAnimation(anim, dt)
       broadcast(listeners.afterUpdate, anim)
       if (!animNeedsUpdate) {
         animsNeedingUpdate.delete(anim)
@@ -216,11 +218,20 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
       animsNeedingUpdate.delete(anim)
     }
   }
-  const subscribe: UpdateLayer<Animating>["subscribe"] = (type, sub) => {
+  const subscribe: UpdateLayer<Animating>["subscribe"] = (
+    type,
+    sub,
+    options = {}
+  ) => {
     const listener = listeners[type]
 
     listener.set(sub as Listener<unknown>, undefined)
-    return () => listener.delete(sub as Listener<unknown>)
+    const out = () => listener.delete(sub as Listener<unknown>)
+    const { signal } = options
+    if (signal) {
+      signal.addEventListener("abort", out, { once: true })
+    }
+    return out
   }
   const out = {
     mount: onMount,
