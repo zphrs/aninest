@@ -18,4 +18,4 @@ A list of extensions which will be mounted to an animation in order.
 
 ## Defined in
 
-[Animate/ExtensionStack.ts:14](https://github.com/zphrs/aninest/blob/8c5d5cec878cb0688cbcb852e4de66105e356f88/core/src/Animate/ExtensionStack.ts#L14)
+[Animate/ExtensionStack.ts:14](https://github.com/zphrs/aninest/blob/638398f3759b1c9c8747db3d93d805b9d84d9bf5/core/src/Animate/ExtensionStack.ts#L14)
