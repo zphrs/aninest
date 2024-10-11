@@ -4,7 +4,7 @@ import {
   getLocalState,
   modifyTo,
 } from "aninest"
-import { getUpdateLayer } from "../src"
+import { getUpdateLayer, milliseconds } from "../src"
 
 describe("update nested", () => {
   let time = 0
@@ -80,4 +80,28 @@ describe("update with many children", () => {
     })
     modifyTo(anim1, { x: 1, y: 1 })
   })
+})
+
+describe("update with subchild", () => {
+  let time = 0
+  const requestUpdate = (callback: (time: milliseconds) => void) => {
+    time += 500
+    callback(time)
+  }
+  const mainLayer = getUpdateLayer(requestUpdate)
+  const child = getUpdateLayer(requestUpdate)
+  child.setParent(mainLayer)
+  const subchild = getUpdateLayer(requestUpdate)
+  subchild.setParent(child)
+  test("update subchild", done => {
+    const anim = createAnimation({ x: 0 }, getLinearInterp(1))
+    subchild.mount(anim)
+    subchild.subscribe("end", () => {
+      expect(getLocalState(anim)).toEqual({ x: 1 })
+      done()
+    })
+    subchild.subscribe("start", () => console.log("started"))
+    modifyTo(anim, { x: 1 })
+  })
+  test("update sub-sub child")
 })
