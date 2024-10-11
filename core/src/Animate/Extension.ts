@@ -19,7 +19,8 @@ export type unmount = unsubscribe
  * A function that mounts an extension to the animation.
  */
 export type Mount<Animating extends UnknownRecursiveAnimatable> = (
-  anim: Animation<Animating>
+  anim: Animation<Animating>,
+  options?: { signal?: AbortSignal }
 ) => unmount
 
 /**

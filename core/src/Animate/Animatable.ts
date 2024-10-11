@@ -147,13 +147,12 @@ export function createAnimation<Init extends UnknownRecursiveAnimatable>(
   ) as WritableAnimation<Init>
 
   info.children = {} as WritableAnimation<Init>["children"]
-  for (const [key, child] of Object.entries(children)) {
-    info.children[key as keyof typeof info.children] = createAnimation(
+  for (const [k, child] of Object.entries(children)) {
+    const key = k as keyof typeof children
+    info.children[key] = createAnimation(
       child as UnknownRecursiveAnimatable,
       timing
-    ) as Init[keyof Init] extends number
-      ? undefined
-      : Animation<RecursiveAnimatable<Init[keyof Init]>>
+    ) as (typeof info.children)[typeof key]
   }
   addRecursiveListeners(info as UnknownAnimation)
   return info as Animation<Init>
