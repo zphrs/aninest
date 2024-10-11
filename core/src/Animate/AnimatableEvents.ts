@@ -152,10 +152,6 @@ export function addRecursiveListener<
       )
     )
   }
-  const { signal } = options
-  if (signal) {
-    signal.addEventListener("abort", unsub, { once: true })
-  }
   return unsub
 }
 
