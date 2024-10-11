@@ -10,8 +10,8 @@
     "predocs:dev": "pnpm --filter ./docs --filter ./extensionDocs run predocs:dev",
     "predeploy": "pnpm docs:build",
     "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
-    "prepublish": "pnpm run deploy",
-    "publish": "pnpm --filter ./extensions --filter ./core publish"
+    "publish": "pnpm --filter ./extensions --filter ./core publish",
+    "postpublish": "pnpm run deploy"
   },
   "jest": {
     "testPathIgnorePatterns": [

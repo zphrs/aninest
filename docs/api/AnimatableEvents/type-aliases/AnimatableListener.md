@@ -17,4 +17,4 @@ All events aside from `update` return a dictionary of local values which are cur
 
 ## Defined in
 
-[Animate/AnimatableEvents.ts:201](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/AnimatableEvents.ts#L201)
+[Animate/AnimatableEvents.ts:201](https://github.com/zphrs/aninest/blob/8c5d5cec878cb0688cbcb852e4de66105e356f88/core/src/Animate/AnimatableEvents.ts#L201)

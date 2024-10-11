@@ -37,4 +37,4 @@ dlt2({x: 1, y: 1}, {x: 0, y: 0}) // true
 
 ## Defined in
 
-[../../extensions/src/snap.ts:240](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/extensions/src/snap.ts#L240)
+[../../extensions/src/snap.ts:240](https://github.com/zphrs/aninest/blob/8c5d5cec878cb0688cbcb852e4de66105e356f88/extensions/src/snap.ts#L240)

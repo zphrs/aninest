@@ -28,4 +28,4 @@ a function to remove the snap grid
 
 ## Defined in
 
-[../../extensions/src/snap.ts:76](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/extensions/src/snap.ts#L76)
+[../../extensions/src/snap.ts:76](https://github.com/zphrs/aninest/blob/8c5d5cec878cb0688cbcb852e4de66105e356f88/extensions/src/snap.ts#L76)
