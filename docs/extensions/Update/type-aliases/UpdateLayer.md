@@ -45,6 +45,10 @@ setParent: (parentLayer) => unsubscribe;
 
 • **sub**: `Event` *extends* `"updateWithDeltaTime"` ? `Listener`\<`number`\> : `Event` *extends* `ChildEvents` ? `Listener`\<`InternalUpdateLayer`\<`RecursiveAnimatable`\<`unknown`\>\>\> : `Event` *extends* `"done"` ? `Listener`\<`undefined`\> : `Listener`\<`Animation`\<`Animating`\>\>
 
+• **options?**
+
+• **options.signal?**: `AbortSignal`
+
 #### Returns
 
 `unsubscribe`
@@ -55,4 +59,4 @@ setParent: (parentLayer) => unsubscribe;
 
 ## Defined in
 
-[../../extensions/src/update.ts:56](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/extensions/src/update.ts#L56)
+[../../extensions/src/update.ts:56](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/extensions/src/update.ts#L56)

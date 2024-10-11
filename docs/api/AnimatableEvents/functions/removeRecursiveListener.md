@@ -1,6 +1,6 @@
 [aninest](../../index.md) / [AnimatableEvents](../index.md) / removeRecursiveListener
 
-# removeRecursiveListener()
+# ~~removeRecursiveListener()~~
 
 ```ts
 function removeRecursiveListener<Animating>(
@@ -46,6 +46,12 @@ removeRecursiveListener(anim, "start", listener)
 modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
 ```
 
+## Deprecated
+
+Instead use the return value of `{@link addRecursiveListener}`
+or the AbortSignal passed into `{@link addRecursiveListener}` with the `options`'
+`signal` field.
+
 ## Defined in
 
-[Animate/AnimatableEvents.ts:155](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/core/src/Animate/AnimatableEvents.ts#L155)
+[Animate/AnimatableEvents.ts:176](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableEvents.ts#L176)

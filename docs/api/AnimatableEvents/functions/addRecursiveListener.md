@@ -6,7 +6,8 @@
 function addRecursiveListener<Animating>(
    anim, 
    type, 
-   listener): unsubscribe
+   listener, 
+   options): unsubscribe
 ```
 
 Adds a recursive start listener to the animation. This listener will trigger on any child modification.
@@ -26,6 +27,12 @@ Animation listeners are called in the order in which they were added.
 
 () => boolean Returns whether to remove the listener. Void or false to keep the listener.
 
+• **options** = `{}`
+
+Contains one option, `signal` which supports passing in an AbortSignal.
+
+• **options.signal?**: `AbortSignal`
+
 ## Returns
 
 [`unsubscribe`](../../AnimatableTypes/type-aliases/unsubscribe.md)
@@ -41,4 +48,4 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
 
 ## Defined in
 
-[Animate/AnimatableEvents.ts:114](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/core/src/Animate/AnimatableEvents.ts#L114)
+[Animate/AnimatableEvents.ts:126](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableEvents.ts#L126)

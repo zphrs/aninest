@@ -60,8 +60,10 @@ modifyTo(anim, {a: {x: 0}}) // will not trigger the listener
 
 ## Deprecated
 
-Instead use the return value of `{@link addLocalListener}`.
+Instead use the return value of `{@link addLocalListener}`
+or the AbortSignal passed into `{@link addLocalListener}` with the `options`'
+`signal` field.
 
 ## Defined in
 
-[Animate/AnimatableEvents.ts:90](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/core/src/Animate/AnimatableEvents.ts#L90)
+[Animate/AnimatableEvents.ts:101](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableEvents.ts#L101)

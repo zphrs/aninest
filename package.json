@@ -1,7 +1,8 @@
 {
-  "name": "aninest",
+  "name": "aninest root",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "scripts": {
     "docs:dev": "pnpm --filter ./docs run docs:dev",
     "docs:build": "pnpm predocs:dev && pnpm --filter ./docs run docs:build",

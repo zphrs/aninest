@@ -22,4 +22,4 @@ A function that mounts an extension to the animation.
 
 ## Defined in
 
-[Animate/Extension.ts:21](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/core/src/Animate/Extension.ts#L21)
+[Animate/Extension.ts:21](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Extension.ts#L21)

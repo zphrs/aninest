@@ -6,7 +6,8 @@
 function addLocalListener<Animating, Event>(
    anim, 
    type, 
-   listener): unsubscribe
+   listener, 
+   options): unsubscribe
 ```
 
 Adds a local listener to the animation. You can listen to the  events listed in [AnimatableEvents](../type-aliases/AnimatableEvents.md).
@@ -38,6 +39,12 @@ See [AnimatableEvents](../type-aliases/AnimatableEvents.md)
 
 The listener function - return true from the function to remove the listener
 
+• **options** = `{}`
+
+Contains one option, `signal` which supports passing in an AbortSignal.
+
+• **options.signal?**: `AbortSignal`
+
 ## Returns
 
 [`unsubscribe`](../../AnimatableTypes/type-aliases/unsubscribe.md)
@@ -59,4 +66,4 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
 
 ## Defined in
 
-[Animate/AnimatableEvents.ts:58](https://github.com/zphrs/aninest/blob/0970e35cce1ccab01b8ce4df8a59f00baff5cfda/core/src/Animate/AnimatableEvents.ts#L58)
+[Animate/AnimatableEvents.ts:59](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableEvents.ts#L59)
