@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [AnimatableTypes](../index.md) / PartialRecursiveAnimatable
+[aninest root](../../index.md) / [AnimatableTypes](../index.md) / PartialRecursiveAnimatable
 
 # PartialRecursiveAnimatable\<T\>
 
@@ -31,4 +31,4 @@ const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y:
 
 ## Defined in
 
-[Animate/AnimatableTypes.ts:85](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableTypes.ts#L85)
+[Animate/AnimatableTypes.ts:85](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/AnimatableTypes.ts#L85)

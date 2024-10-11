@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Extension](../index.md) / Mount
+[aninest root](../../index.md) / [Extension](../index.md) / Mount
 
 # Mount()\<Animating\>
 
@@ -22,4 +22,4 @@ A function that mounts an extension to the animation.
 
 ## Defined in
 
-[Animate/Extension.ts:21](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Extension.ts#L21)
+[Animate/Extension.ts:21](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Extension.ts#L21)

@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [module:Interp](../index.md) / Interp
+[aninest root](../../index.md) / [module:Interp](../index.md) / Interp
 
 # Interp()
 
@@ -20,4 +20,4 @@ A value or undefined if the animation is finished.
 
 ## Defined in
 
-[Animate/Interp.ts:17](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Interp.ts#L17)
+[Animate/Interp.ts:17](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Interp.ts#L17)

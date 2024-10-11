@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Animatable](../index.md) / changeLocalInterpFunction
+[aninest root](../../index.md) / [Animatable](../index.md) / changeLocalInterpFunction
 
 # changeLocalInterpFunction()
 
@@ -24,4 +24,4 @@ Updates the interpolation function of the animation only for the topmost level.
 
 ## Defined in
 
-[Animate/Animatable.ts:552](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Animatable.ts#L552)
+[Animate/Animatable.ts:552](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Animatable.ts#L552)

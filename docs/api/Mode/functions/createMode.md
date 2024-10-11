@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Mode](../index.md) / createMode
+[aninest root](../../index.md) / [Mode](../index.md) / createMode
 
 # createMode()
 
@@ -27,4 +27,4 @@ used to toggle the [ExtensionStack](../../ExtensionStack/type-aliases/ExtensionS
 
 ## Defined in
 
-[Animate/Mode.ts:31](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Mode.ts#L31)
+[Animate/Mode.ts:31](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Mode.ts#L31)

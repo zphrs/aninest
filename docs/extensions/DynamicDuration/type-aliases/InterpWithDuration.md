@@ -22,4 +22,4 @@ function of the interpolation.
 
 ## Defined in
 
-[../../extensions/src/dynamicDuration.ts:30](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/extensions/src/dynamicDuration.ts#L30)
+[../../extensions/src/dynamicDuration.ts:30](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/extensions/src/dynamicDuration.ts#L30)

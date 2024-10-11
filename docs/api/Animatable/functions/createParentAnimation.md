@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Animatable](../index.md) / createParentAnimation
+[aninest root](../../index.md) / [Animatable](../index.md) / createParentAnimation
 
 # createParentAnimation()
 
@@ -38,4 +38,4 @@ const anim = createParentAnimation({a, b, c: 1})
 
 ## Defined in
 
-[Animate/Animatable.ts:185](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Animatable.ts#L185)
+[Animate/Animatable.ts:185](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Animatable.ts#L185)

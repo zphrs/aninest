@@ -34,4 +34,4 @@ setSnapGrid(anim, {x: 1, y: 1}) // will snap to integer values before ending
 
 ## Defined in
 
-[../../extensions/src/snap.ts:44](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/extensions/src/snap.ts#L44)
+[../../extensions/src/snap.ts:44](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/extensions/src/snap.ts#L44)

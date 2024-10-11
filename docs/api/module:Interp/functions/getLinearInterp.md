@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [module:Interp](../index.md) / getLinearInterp
+[aninest root](../../index.md) / [module:Interp](../index.md) / getLinearInterp
 
 # getLinearInterp()
 
@@ -18,4 +18,4 @@ Returns a linear interpolation function.
 
 ## Defined in
 
-[Animate/Interp.ts:38](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Interp.ts#L38)
+[Animate/Interp.ts:38](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Interp.ts#L38)

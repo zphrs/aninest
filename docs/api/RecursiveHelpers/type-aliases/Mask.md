@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [RecursiveHelpers](../index.md) / Mask
+[aninest root](../../index.md) / [RecursiveHelpers](../index.md) / Mask
 
 # Mask\<T\>
 
@@ -23,4 +23,4 @@ const mask: Mask<typeof init> = {a: false, b: {x: false}}
 
 ## Defined in
 
-[Animate/RecursiveHelpers.ts:63](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/RecursiveHelpers.ts#L63)
+[Animate/RecursiveHelpers.ts:63](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/RecursiveHelpers.ts#L63)

@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [ExtensionStack](../index.md) / ExtensionStack
+[aninest root](../../index.md) / [ExtensionStack](../index.md) / ExtensionStack
 
 # ExtensionStack\<Animating\>
 
@@ -18,4 +18,4 @@ A list of extensions which will be mounted to an animation in order.
 
 ## Defined in
 
-[Animate/ExtensionStack.ts:14](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/ExtensionStack.ts#L14)
+[Animate/ExtensionStack.ts:14](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/ExtensionStack.ts#L14)

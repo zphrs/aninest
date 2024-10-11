@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [AnimatableTypes](../index.md) / Animation
+[aninest root](../../index.md) / [AnimatableTypes](../index.md) / Animation
 
 # Animation\<Animating\>
 
@@ -38,4 +38,4 @@ const anim: Animation<{a: Vec2}> = createAnimation({a: {x: 0, y: 0}})
 
 ## Defined in
 
-[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableTypes.ts#L121)
+[Animate/AnimatableTypes.ts:121](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/AnimatableTypes.ts#L121)

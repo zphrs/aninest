@@ -1,4 +1,4 @@
-[aninest](../index.md) / Vec2
+[aninest root](../index.md) / Vec2
 
 # Vec2
 

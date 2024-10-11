@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [RecursiveHelpers](../index.md) / Recursive
+[aninest root](../../index.md) / [RecursiveHelpers](../index.md) / Recursive
 
 # Recursive\<Base, Shape\>
 
@@ -17,4 +17,4 @@ which either has a value of type `Base` or a subtree of the same type.
 
 ## Defined in
 
-[Animate/RecursiveHelpers.ts:36](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/RecursiveHelpers.ts#L36)
+[Animate/RecursiveHelpers.ts:36](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/RecursiveHelpers.ts#L36)

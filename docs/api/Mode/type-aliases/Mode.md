@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Mode](../index.md) / Mode
+[aninest root](../../index.md) / [Mode](../index.md) / Mode
 
 # Mode
 
@@ -52,4 +52,4 @@ and undefined to toggle.
 
 ## Defined in
 
-[Animate/Mode.ts:12](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Mode.ts#L12)
+[Animate/Mode.ts:12](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Mode.ts#L12)

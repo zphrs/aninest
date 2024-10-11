@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Listeners](../index.md) / Listener
+[aninest root](../../index.md) / [Listeners](../index.md) / Listener
 
 # Listener()\<T\>
 
@@ -38,4 +38,4 @@ The listener can return `true` to remove itself from the listener set, `false` t
 
 ## Defined in
 
-[Listeners.ts:15](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Listeners.ts#L15)
+[Listeners.ts:15](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Listeners.ts#L15)

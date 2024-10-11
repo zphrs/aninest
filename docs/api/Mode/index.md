@@ -1,4 +1,4 @@
-[aninest](../index.md) / Mode
+[aninest root](../index.md) / Mode
 
 # Mode
 

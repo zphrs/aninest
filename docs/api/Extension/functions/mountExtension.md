@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [Extension](../index.md) / mountExtension
+[aninest root](../../index.md) / [Extension](../index.md) / mountExtension
 
 # mountExtension()
 
@@ -26,4 +26,4 @@ A function that unmounts an extension from the animation.
 
 ## Defined in
 
-[Animate/Extension.ts:37](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/Extension.ts#L37)
+[Animate/Extension.ts:37](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/Extension.ts#L37)

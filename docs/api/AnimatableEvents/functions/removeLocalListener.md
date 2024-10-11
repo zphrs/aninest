@@ -1,4 +1,4 @@
-[aninest](../../index.md) / [AnimatableEvents](../index.md) / removeLocalListener
+[aninest root](../../index.md) / [AnimatableEvents](../index.md) / removeLocalListener
 
 # ~~removeLocalListener()~~
 
@@ -66,4 +66,4 @@ or the AbortSignal passed into `{@link addLocalListener}` with the `options`'
 
 ## Defined in
 
-[Animate/AnimatableEvents.ts:101](https://github.com/zphrs/aninest/blob/988b5e8ac7585d70f507e793229537041ab3eea8/core/src/Animate/AnimatableEvents.ts#L101)
+[Animate/AnimatableEvents.ts:101](https://github.com/zphrs/aninest/blob/efdac3830228dc951d7e8e69ab0c7db89aa8723f/core/src/Animate/AnimatableEvents.ts#L101)
