@@ -53,6 +53,7 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @param anim The animation object
  * @param type See {@link AnimatableEvents}
  * @param listener The listener function - return true from the function to remove the listener
+ * @param options Contains one option, `signal` which supports passing in an AbortSignal.
  * @returns A function to remove the listener
  */
 export function addLocalListener<
@@ -63,10 +64,17 @@ export function addLocalListener<
   type: Event,
   listener: Event extends AnimatableEventsWithValue
     ? Listener<Partial<LocalAnimatable<Animating>>>
-    : Listener<undefined>
+    : Listener<undefined>,
+  options: { signal?: AbortSignal } = {}
 ): unsubscribe {
   anim[`${type}Listeners`].set(listener as Listener<unknown>, undefined)
-  return () => anim[`${type}Listeners`].delete(listener as Listener<unknown>)
+  const out = () =>
+    anim[`${type}Listeners`].delete(listener as Listener<unknown>)
+  const { signal } = options
+  if (signal) {
+    signal.addEventListener("abort", out, { once: true })
+  }
+  return out
 }
 
 /**
@@ -85,7 +93,10 @@ removeLocalListener(anim, "start", listener)
  * @param anim The animation object
  * @param type See {@link AnimatableEvents}
  * @param listener The listener function to remove
- * @deprecated Instead use the return value of `{@link addLocalListener}`.
+ * @deprecated Instead use the return value of `{@link addLocalListener}`
+ * or the AbortSignal passed into `{@link addLocalListener}` with the `options`'
+ * `signal` field.
+ * 
  */
 export function removeLocalListener<
   Animating extends UnknownRecursiveAnimatable,
@@ -109,6 +120,7 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
  * @param anim
  * @param type
  * @param listener () => boolean Returns whether to remove the listener. Void or false to keep the listener.
+ * @param options Contains one option, `signal` which supports passing in an AbortSignal.
  * @returns A function to remove the listener
  */
 export function addRecursiveListener<
@@ -116,14 +128,15 @@ export function addRecursiveListener<
 >(
   anim: Animation<Animating>,
   type: AnimatableEvents,
-  listener: Listener<UnknownAnimation> | Listener<undefined>
+  listener: Listener<UnknownAnimation> | Listener<undefined>,
+  options: { signal?: AbortSignal } = {}
 ): unsubscribe {
   let unsubscribers: unsubscribe[] = []
   const unsub = () => {
     unsubscribers.forEach(unsub => unsub())
   }
   unsubscribers.push(
-    addLocalListener(anim, type, listener as Listener<unknown>)
+    addLocalListener(anim, type, listener as Listener<unknown>, options)
   )
   for (const childInfo of Object.values(
     anim.children as unknown as {
@@ -131,8 +144,17 @@ export function addRecursiveListener<
     }
   )) {
     unsubscribers.push(
-      addRecursiveListener(childInfo, type, listener as Listener<unknown>)
+      addRecursiveListener(
+        childInfo,
+        type,
+        listener as Listener<unknown>,
+        options
+      )
     )
+  }
+  const { signal } = options
+  if (signal) {
+    signal.addEventListener("abort", unsub, { once: true })
   }
   return unsub
 }
@@ -149,8 +171,11 @@ modifyTo(anim.children.a, {x: 1}) // will trigger the listener
 
 removeRecursiveListener(anim, "start", listener)
 modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
-@param anim
-@param listener
+ * @param anim
+ * @param listener
+ * @deprecated Instead use the return value of `{@link addRecursiveListener}`
+ * or the AbortSignal passed into `{@link addRecursiveListener}` with the `options`'
+ * `signal` field.
 */
 export function removeRecursiveListener<
   Animating extends UnknownRecursiveAnimatable
