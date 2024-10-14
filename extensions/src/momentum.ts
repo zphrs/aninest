@@ -21,7 +21,7 @@ import {
 /**
  * @internal
  */
-class RingQueue<T extends UnknownRecursiveAnimatable> {
+export class RingQueue<T extends UnknownRecursiveAnimatable> {
   [k: number]: T
   private queue: T[]
   private size: number
@@ -259,7 +259,7 @@ export function localMomentumLayer<
       animation = anim
       const unsubs: unsubscribe[] = []
       unsubs.push(
-        addLocalListener(anim, "update", () => {
+        addLocalListener(anim, "start", () => {
           onUpdate(anim, performance.now())
         })
       )
