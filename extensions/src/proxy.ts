@@ -42,9 +42,13 @@ export function getInterpingToProxy<
     },
     set(_target, p, newValue, _receiver) {
       if (typeof newValue === "number" || typeof newValue === "object") {
-        modifyTo(anim, {
-          [p.toString()]: newValue,
-        } as PartialRecursiveAnimatable<Animating>, suppressListeners)
+        modifyTo(
+          anim,
+          {
+            [p.toString()]: newValue,
+          } as PartialRecursiveAnimatable<Animating>,
+          suppressListeners
+        )
         return true
       }
       return false
@@ -186,7 +190,7 @@ export function getLocalStateProxy<
 } {
   const currentState = getLocalState(anim)
   type StampedValue = { value: number; counter: number }
-  const currentMap = new Map<string | Symbol, StampedValue>()
+  const currentMap = new Map<keyof Animating, StampedValue>()
 
   let counter = 0
   const unsubscribers: unsubscribe[] = []
@@ -196,9 +200,9 @@ export function getLocalStateProxy<
     for (const key of localKeys) {
       const keyStr = key.toString() as keyof Animating
       if (to[keyStr] !== undefined) {
-        currentMap.set(key, { value: getLocalValue(anim, keyStr), counter })
+        currentMap.set(keyStr, { value: getLocalValue(anim, keyStr), counter })
       } else {
-        currentMap.delete(key)
+        currentMap.delete(keyStr)
       }
     }
   })
@@ -212,12 +216,13 @@ export function getLocalStateProxy<
 
   const proxy = new Proxy(currentState, {
     get(_obj, prop, _receiver) {
-      const stamp = currentMap.get(prop)
+      const key = prop.toString() as keyof Animating
+      const stamp = currentMap.get(key)
       if (stamp && stamp.counter === counter) {
         return stamp.value
       }
       const value = getLocalValue(anim, prop.toString() as keyof Animating)
-      currentMap.set(prop, { value, counter })
+      currentMap.set(key, { value, counter })
       return value
     },
     set(_target, p, newValue, _receiver) {
