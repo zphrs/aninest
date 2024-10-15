@@ -142,7 +142,6 @@ export function localMomentumLayer<
   let oldInterp: Interp = NO_INTERP // NO_INTERP is a placeholder
   const resetOriginalInterp = (anim: Animation<Animating>) => {
     currentVelocity = 0
-    console.log("resetting original interp", prevStates.length)
     changeInterpFunction(anim, oldInterp)
     prevStates.clear()
     inMomentumState = false
@@ -204,7 +203,6 @@ export function localMomentumLayer<
       return false
     }
     const duration = vel0 / (2 * frictionForce)
-    console.log("duration", duration)
     // add the average to the current state
     const curr = prevStates.getFromQueue(prevStates.length - 1)!
 
@@ -229,7 +227,6 @@ export function localMomentumLayer<
     let unsubs: unsubscribe[] = []
     unsubs.push(
       addRecursiveListener(anim, BEFORE_END, () => {
-        console.log("before end", prevStates.length)
         unsubs.forEach(unsub => unsub())
         if (inMomentumState) {
           inMomentumState = false
@@ -240,7 +237,6 @@ export function localMomentumLayer<
     )
     unsubs.push(
       addRecursiveListener(anim, INTERRUPT, () => {
-        console.log("interrupted", prevStates.length)
         unsubs.forEach(unsub => unsub())
         if (inMomentumState) {
           inMomentumState = false
@@ -273,7 +269,6 @@ export function localMomentumLayer<
     },
     // returns true if the animation is now gliding
     startGlide() {
-      console.log("starting glide")
       if (!animation) {
         return false
       }
