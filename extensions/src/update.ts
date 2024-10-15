@@ -21,25 +21,53 @@ import {
   UnknownRecursiveAnimatable,
   unsubscribe,
   ListenerSet,
+  END,
+  UPDATE,
 } from "aninest"
 import {} from "../../core/lib"
+import {
+  SignalOption,
+  supportAbortSignalOption,
+} from "./abortSignal"
 
 export type seconds = number
 export type milliseconds = number
 
-type UpdateWithDeltaTime = "updateWithDeltaTime"
-type ChildStart = "childStart"
-type ChildEnd = "childEnd"
-type Done = "done"
-type ChildEvents = ChildStart | ChildEnd
-type UpdateLayerEvents =
-  | "start"
-  | "end"
-  | "update"
-  | "afterUpdate"
-  | Done
-  | UpdateWithDeltaTime
-  | ChildEvents
+const UPDATE_WITH_DELTA_TIME = "updateWithDeltaTime" as const
+const CHILD_START = "childStart" as const
+const CHILD_END = "childEnd" as const
+const DONE = "done" as const
+const CHILD_EVENTS = [CHILD_START, CHILD_END] as const
+const AFTER_UPDATE = "afterUpdate" as const
+const UPDATE_LAYER_EVENTS = [
+  START,
+  END,
+  UPDATE,
+  AFTER_UPDATE,
+  DONE,
+  UPDATE_WITH_DELTA_TIME,
+  ...CHILD_EVENTS,
+] as const
+const STARTS = [START, CHILD_START] as const
+type UpdateWithDeltaTime = typeof UPDATE_WITH_DELTA_TIME
+type Done = typeof DONE
+type ChildEvents = (typeof CHILD_EVENTS)[number]
+type UpdateLayerEvents = (typeof UPDATE_LAYER_EVENTS)[number]
+
+type UpdateLayerType<
+  Event,
+  Animating extends UnknownRecursiveAnimatable
+> = Event extends UpdateWithDeltaTime
+  ? seconds
+  : Event extends ChildEvents
+  ? InternalUpdateLayer<UnknownRecursiveAnimatable>
+  : Event extends Done
+  ? undefined
+  : Animation<Animating>
+
+type UpdateLayerSets<Animating extends UnknownRecursiveAnimatable> = {
+  [Key in UpdateLayerEvents]: ListenerSet<UpdateLayerType<Key, Animating>>
+}
 
 /**
  * An update layer that can be mounted to an animation.
@@ -57,14 +85,8 @@ export type UpdateLayer<Animating extends UnknownRecursiveAnimatable> =
   Layer<Animating> & {
     subscribe<Event extends UpdateLayerEvents>(
       type: Event,
-      sub: Event extends UpdateWithDeltaTime
-        ? Listener<seconds>
-        : Event extends ChildEvents
-        ? Listener<InternalUpdateLayer<UnknownRecursiveAnimatable>>
-        : Event extends Done
-        ? Listener<undefined>
-        : Listener<Animation<Animating>>,
-      options?: { signal?: AbortSignal }
+      sub: Listener<UpdateLayerType<Event, Animating>>,
+      options?: SignalOption
     ): unsubscribe
     /**
      * Will mount the current update layer onto another update layer so that
@@ -76,14 +98,16 @@ export type UpdateLayer<Animating extends UnknownRecursiveAnimatable> =
      * @returns
      */
     setParent: (
-      parentLayer: UpdateLayer<UnknownRecursiveAnimatable>
+      parentLayer: UpdateLayer<UnknownRecursiveAnimatable>,
+      options?: SignalOption
     ) => unsubscribe
   }
 
 type InternalUpdateLayer<Animating extends UnknownRecursiveAnimatable> =
   UpdateLayer<Animating> & {
     _setChild: (
-      child: InternalUpdateLayer<UnknownRecursiveAnimatable>
+      child: InternalUpdateLayer<UnknownRecursiveAnimatable>,
+      options?: SignalOption
     ) => unsubscribe
     /**
      *
@@ -112,20 +136,10 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     callback: (time: milliseconds) => void
   ) => void = requestAnimationFrame
 ): UpdateLayer<Animating> {
-  const listeners = {
-    start: new Map() as ListenerSet<Animation<Animating>>,
-    childStart: new Map() as ListenerSet<
-      InternalUpdateLayer<UnknownRecursiveAnimatable>
-    >,
-    childEnd: new Map() as ListenerSet<
-      InternalUpdateLayer<UnknownRecursiveAnimatable>
-    >,
-    end: new Map() as ListenerSet<Animation<Animating>>,
-    update: new Map() as ListenerSet<Animation<Animating>>,
-    updateWithDeltaTime: new Map() as ListenerSet<seconds>,
-    afterUpdate: new Map() as ListenerSet<Animation<Animating>>,
-    done: new Map() as ListenerSet<undefined>,
-  }
+  const listeners = UPDATE_LAYER_EVENTS.reduce((acc, key) => {
+    acc[key] = new Map()
+    return acc
+  }, {} as UpdateLayerSets<Animating>)
   const anims = new Set<Animation<Animating>>()
   const animsNeedingUpdate = new Set<Animation<Animating>>()
   const children = new Set<InternalUpdateLayer<UnknownRecursiveAnimatable>>()
@@ -141,38 +155,32 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     parentLayer: UpdateLayer<UnknownRecursiveAnimatable>
   ): unsubscribe => {
     parent = parentLayer as InternalUpdateLayer<UnknownRecursiveAnimatable>
-    const haveParentUnsubscribe = parent._setChild(out)
+    const controller = new AbortController()
+    parent._setChild(out, controller)
     const orphanMyself = () => {
       parent = undefined
-      haveParentUnsubscribe()
+      controller.abort()
     }
     return orphanMyself
   }
   const _setChild = (
     child: InternalUpdateLayer<UnknownRecursiveAnimatable>
   ) => {
-    const unsubStart = child.subscribe("start", () => {
+    const controller = new AbortController()
+    const onStart = () => {
       childrenNeedingUpdate.add(child)
       if (!parent) queueNextUpdate(update)
       else broadcast(listeners.childStart, child)
-    })
-    const unsubRecursiveStart = child.subscribe("childStart", _subchild => {
-      childrenNeedingUpdate.add(child)
-      if (!parent) queueNextUpdate(update)
-      else broadcast(listeners.childStart, child)
-    })
+    }
+    STARTS.forEach(event => child.subscribe(event, onStart, controller))
     children.add(child)
     return () => {
       children.delete(child)
       childrenNeedingUpdate.delete(child)
-      unsubStart()
-      unsubRecursiveStart()
+      controller.abort()
     }
   }
   let lastTime: number | undefined = undefined
-  // const isUnmounted = () => {
-  //   return anims.size === 0 && children.size === 0
-  // }
   const updateWithDeltaTime = (dt: number) => {
     broadcast(listeners.updateWithDeltaTime, dt)
     for (const anim of animsNeedingUpdate) {
@@ -195,7 +203,6 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     return out
   }
   const update = (time: milliseconds) => {
-    // if (isUnmounted()) return
     const dt = lastTime ? (time - lastTime) / 1000 : 0
     const shouldUpdate = updateWithDeltaTime(dt)
     lastTime = time
@@ -218,26 +225,17 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
       animsNeedingUpdate.delete(anim)
     }
   }
-  const subscribe: UpdateLayer<Animating>["subscribe"] = (
-    type,
-    sub,
-    options = {}
-  ) => {
+  const subscribe: UpdateLayer<Animating>["subscribe"] = (type, sub) => {
     const listener = listeners[type]
 
     listener.set(sub as Listener<unknown>, undefined)
-    const out = () => listener.delete(sub as Listener<unknown>)
-    const { signal } = options
-    if (signal) {
-      signal.addEventListener("abort", out, { once: true })
-    }
-    return out
+    return () => listener.delete(sub as Listener<unknown>)
   }
   const out = {
-    mount: onMount,
-    setParent,
-    _setChild,
-    subscribe,
+    mount: supportAbortSignalOption(onMount),
+    setParent: supportAbortSignalOption(setParent),
+    _setChild: supportAbortSignalOption(_setChild),
+    subscribe: supportAbortSignalOption(subscribe),
     _updateWithDt: updateWithDeltaTime,
   } as InternalUpdateLayer<UnknownRecursiveAnimatable>
   return out as UpdateLayer<Animating>

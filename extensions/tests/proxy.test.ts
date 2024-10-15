@@ -1,4 +1,10 @@
-import { createAnimation, getLinearInterp, updateAnimation } from "aninest"
+import {
+  createAnimation,
+  getLinearInterp,
+  modifyTo,
+  newVec2,
+  updateAnimation,
+} from "aninest"
 import { getLocalStateProxy, getStateTreeProxy } from "../src"
 describe("proxy", () => {
   test("local proxy", () => {
@@ -51,5 +57,38 @@ describe("proxy", () => {
     expect(proxy.a).toEqual({ x: 0.5, y: 0.5 })
     updateAnimation(anim, 0.5)
     expect(proxy.a).toEqual({ x: 0, y: 1 })
+  })
+
+  test("deep proxy", () => {
+    const anim = createAnimation(
+      {
+        pos: newVec2(0, 0),
+        size: { radius: 0, width: 0, height: 0 },
+        styles: {
+          colors: {
+            backgroundColor: { r: 0, g: 0, b: 0, a: 0 },
+            borderColor: { r: 0, g: 0, b: 0, a: 0 },
+          },
+          borderWidth: 1,
+        },
+      },
+      getLinearInterp(1)
+    )
+    const { proxy } = getStateTreeProxy(anim)
+    expect(proxy.pos).toEqual({ x: 0, y: 0 })
+    expect(proxy.size).toEqual({ radius: 0, width: 0, height: 0 })
+    expect(proxy.styles).toEqual({
+      colors: {
+        backgroundColor: { r: 0, g: 0, b: 0, a: 0 },
+        borderColor: { r: 0, g: 0, b: 0, a: 0 },
+      },
+      borderWidth: 1,
+    })
+    modifyTo(anim, {
+      pos: newVec2(1, 1),
+    })
+    expect(proxy.pos).toEqual({ x: 0, y: 0 })
+    updateAnimation(anim, 0.5)
+    expect(proxy.pos).toEqual({ x: 0.5, y: 0.5 })
   })
 })

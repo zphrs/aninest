@@ -22,6 +22,7 @@ import {
   Mask,
   separateChildren,
 } from "aninest"
+import { supportAbortSignalOption } from "./abortSignal"
 
 /**
    * The bounds of the animation. The animation will be loosely clamped to these bounds.
@@ -148,29 +149,28 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     modifyTo(anim, modified as PartialRecursiveAnimatable<Animating>)
   }
   let unsubs = new Set<unsubscribe>()
+  const mount = (anim: Animation<Animating>) => {
+    const localUnsub = addLocalListener(anim, BEFORE_END, checkLocalBounds)
+    unsubs.add(localUnsub)
+    checkLocalBounds(getLocalState(anim))
+
+    for (const [k, c] of Object.entries(childMap)) {
+      const key = k as keyof Animating
+      const child = c as BoundsLayer<RecursiveAnimatable<Animating[typeof key]>>
+      const animChild = anim.children[key] as Animation<
+        RecursiveAnimatable<Animating[typeof key]>
+      >
+      const childUnsub = child.mount(animChild)
+      unsubs.add(childUnsub)
+    }
+
+    return () => {
+      unsubs.forEach(unsub => unsub())
+      unsubs.clear()
+    }
+  }
   return {
-    mount: anim => {
-      const localUnsub = addLocalListener(anim, BEFORE_END, checkLocalBounds)
-      unsubs.add(localUnsub)
-      checkLocalBounds(getLocalState(anim))
-
-      for (const [k, c] of Object.entries(childMap)) {
-        const key = k as keyof Animating
-        const child = c as BoundsLayer<
-          RecursiveAnimatable<Animating[typeof key]>
-        >
-        const animChild = anim.children[key] as Animation<
-          RecursiveAnimatable<Animating[typeof key]>
-        >
-        const childUnsub = child.mount(animChild)
-        unsubs.add(childUnsub)
-      }
-
-      return () => {
-        unsubs.forEach(unsub => unsub())
-        unsubs.clear()
-      }
-    },
+    mount: supportAbortSignalOption(mount),
     update: (
       bounds: PartialFullBounds<PartialRecursiveAnimatable<Animating>>
     ) => {
