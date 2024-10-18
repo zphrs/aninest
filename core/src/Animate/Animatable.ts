@@ -195,6 +195,8 @@ export function createParentAnimation<
   addRecursiveListeners(info as UnknownAnimation)
   return info as Animation<Animating>
 }
+
+type ListenerSuppressor = boolean | { start?: boolean; interrupt?: boolean }
 /**
  * Sets the final stopping point of the animation.
  * The animation will start to interpolate to the new state the next
@@ -218,12 +220,7 @@ export function createParentAnimation<
 export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   anim: Animation<Animating>,
   to: PartialRecursiveAnimatable<Animating>,
-  suppressListeners:
-    | boolean
-    | {
-        start?: boolean
-        interrupt?: boolean
-      } = { start: false, interrupt: false }
+  suppressListeners: ListenerSuppressor = { start: false, interrupt: false }
 ) {
   if (suppressListeners === true) {
     suppressListeners = { start: true, interrupt: false }
