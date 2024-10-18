@@ -196,7 +196,9 @@ export function createParentAnimation<
   return info as Animation<Animating>
 }
 
-type ListenerSuppressor = boolean | { start?: boolean; interrupt?: boolean }
+export type ListenerSuppressor =
+  | boolean
+  | { start?: boolean; interrupt?: boolean }
 /**
  * Sets the final stopping point of the animation.
  * The animation will start to interpolate to the new state the next
