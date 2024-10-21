@@ -23,12 +23,10 @@ import {
   ListenerSet,
   END,
   UPDATE,
+  IMMUTABLE_START,
 } from "aninest"
 import {} from "../../core/lib"
-import {
-  SignalOption,
-  supportAbortSignalOption,
-} from "./abortSignal"
+import { SignalOption, supportAbortSignalOption } from "./abortSignal"
 
 export type seconds = number
 export type milliseconds = number
@@ -73,7 +71,6 @@ type UpdateLayerSets<Animating extends UnknownRecursiveAnimatable> = {
  * An update layer that can be mounted to an animation.
  * Allows listening to:
  * - **start** - when any child animation starts to be updated,
- * - **done** - when any child animation finishes animating everything
  * - **update** - when any child animation is updated
  * - **updateWithDeltaTime** - each update frame with the time since the last update
  * - **afterUpdate** - after each update frame
@@ -213,7 +210,7 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     if (!parent && shouldUpdate) queueNextUpdate(update)
   }
   const onMount = (anim: Animation<Animating>) => {
-    const unsub = addRecursiveListener(anim, START, () => {
+    const unsub = addRecursiveListener(anim, IMMUTABLE_START, () => {
       animsNeedingUpdate.add(anim)
       broadcast(listeners.start, anim)
       if (!parent) queueNextUpdate(update)

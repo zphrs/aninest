@@ -1,6 +1,7 @@
 /**
  * Minimizes the number of start events triggered.
  * @module DeduplicatedStart
+ * @deprecated
  */
 
 import {
@@ -15,6 +16,7 @@ import {
 /**
  * Enables mounting to an animation and subscribing to the deduplicated start
  * events.
+ * @deprecated
  */
 export type DeduplicatedStartLayer<
   Animating extends UnknownRecursiveAnimatable
@@ -24,6 +26,7 @@ export type DeduplicatedStartLayer<
 
 /**
  * Creates a DeduplicatedStartLayer which broadcasts deduplicated start events.
+ * @deprecated
  */
 export function getDeduplicatedStartLayer<
   Animating extends UnknownRecursiveAnimatable

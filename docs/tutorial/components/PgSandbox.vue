@@ -21,7 +21,7 @@ const { html, sandbox } = defineProps({
       </div>
       <pg-sandbox-inner
         :html="html"
-        csp="default-src 'unsafe-inline';"
+        csp="default-src 'unsafe-inline' https://esm.run https://cdn.jsdelivr.net;"
         :sandbox="sandbox"
       />
     </ClientOnly>

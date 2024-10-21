@@ -13,7 +13,7 @@ import {
   UnknownRecursiveAnimatable,
 } from "aninest"
 import { Bounds } from "./bound"
-import { getInterpingToProxy } from "./proxy"
+import { getLocalInterpingToProxy } from "./proxy"
 
 export function restrictFromBoundsExtension<
   Animating extends UnknownRecursiveAnimatable
@@ -54,7 +54,10 @@ export function restrictFromFunctionExtension<
   restriction: (state: LocalAnimatable<Animating>) => void
 ): Extension<Animating> {
   const restrictExtension: Extension<Animating> = anim => {
-    const local = getInterpingToProxy(anim, true) as LocalAnimatable<Animating>
+    const local = getLocalInterpingToProxy(
+      anim,
+      true
+    ) as LocalAnimatable<Animating>
     const unsub = addLocalListener(anim, "start", () => {
       restriction(local)
     })

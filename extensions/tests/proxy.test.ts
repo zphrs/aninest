@@ -3,6 +3,7 @@ import {
   getLinearInterp,
   modifyTo,
   newVec2,
+  NO_INTERP,
   updateAnimation,
 } from "aninest"
 import { getLocalStateProxy, getStateTreeProxy } from "../src"
@@ -90,5 +91,21 @@ describe("proxy", () => {
     expect(proxy.pos).toEqual({ x: 0, y: 0 })
     updateAnimation(anim, 0.5)
     expect(proxy.pos).toEqual({ x: 0.5, y: 0.5 })
+  })
+
+  test("edge case", () => {
+    type ScalarAnim = {
+      value: number
+    }
+
+    const anim = createAnimation<ScalarAnim>({ value: 1.0 }, NO_INTERP)
+
+    const { proxy } = getStateTreeProxy(anim)
+
+    expect(proxy.value).toBe(1.0)
+    modifyTo(anim, { value: 0.0 })
+    const { value } = proxy
+    expect(proxy.value).toBe(0.0)
+    console.log(value)
   })
 })

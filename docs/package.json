@@ -34,8 +34,10 @@
     "@plexigraph/plex-ui": "^0.0.8",
     "@replit/codemirror-lang-svelte": "^6.0.0",
     "@typescript/vfs": "^1.5.3",
+    "@valtown/codemirror-ts": "^2.2.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "codemirror": "^6.0.1",
+    "comlink": "^4.4.1",
     "vue": "^3.4.27"
   }
 }

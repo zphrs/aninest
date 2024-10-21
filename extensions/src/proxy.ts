@@ -13,8 +13,9 @@ import {
   getLocalValue,
   getStateTree,
   modifyTo,
+  type ListenerSuppressor,
   addLocalListener,
-  START,
+  IMMUTABLE_START,
   UPDATE,
   Animation,
   UnknownRecursiveAnimatable,
@@ -60,6 +61,7 @@ export function getInterpingToProxy<
 
 /**
  * Returns a proxy object that allows you to interact with the local state of the animation.
+@example
 const anim = createAnimation({a: 0, b: 0}, getLinearInterp(1))
 const proxy = getLocalInterpingToProxy(anim)
 proxy.a // 0
@@ -68,12 +70,16 @@ proxy.a = 1
 proxy.a // 1
 proxy.b // 0
  * @param anim 
+ * @param suppressListeners whether to suppress the 
  * @returns 
  * @internal
  * @example
  */
-function getLocalInterpingToProxy<Animating extends UnknownRecursiveAnimatable>(
-  anim: Animation<Animating>
+export function getLocalInterpingToProxy<
+  Animating extends UnknownRecursiveAnimatable
+>(
+  anim: Animation<Animating>,
+  suppressListeners?: ListenerSuppressor
 ): LocalAnimatable<Animating> {
   const initialTo = getLocalInterpingTo(anim)
   const proxy = new Proxy(initialTo, {
@@ -84,9 +90,13 @@ function getLocalInterpingToProxy<Animating extends UnknownRecursiveAnimatable>(
       if (typeof newValue !== "number") {
         return false
       }
-      modifyTo(anim, {
-        [prop.toString()]: newValue,
-      } as PartialRecursiveAnimatable<Animating>)
+      modifyTo(
+        anim,
+        {
+          [prop.toString()]: newValue,
+        } as PartialRecursiveAnimatable<Animating>,
+        suppressListeners
+      )
       return true
     },
   })
@@ -194,7 +204,7 @@ export function getLocalStateProxy<
 
   let counter = 0
   const unsubscribers: unsubscribe[] = []
-  const unsubStart = addLocalListener(anim, START, to => {
+  const unsubStart = addLocalListener(anim, IMMUTABLE_START, to => {
     counter = 0
     const localKeys = Object.getOwnPropertySymbols(currentState)
     for (const key of localKeys) {
@@ -202,6 +212,9 @@ export function getLocalStateProxy<
       if (to[keyStr] !== undefined) {
         currentMap.set(keyStr, { value: getLocalValue(anim, keyStr), counter })
       } else {
+        // TODO: potentially inneficient,
+        // try using an invalidate boolean field on StampedValue
+        // rather than deleting from this map
         currentMap.delete(keyStr)
       }
     }

@@ -17,6 +17,7 @@ import {
   addRecursiveListener,
   INTERRUPT,
   BEFORE_END,
+  IMMUTABLE_START,
 } from "aninest"
 /**
  * @internal
@@ -255,7 +256,7 @@ export function localMomentumLayer<
       animation = anim
       const unsubs: unsubscribe[] = []
       unsubs.push(
-        addLocalListener(anim, "start", () => {
+        addLocalListener(anim, IMMUTABLE_START, () => {
           onUpdate(anim, performance.now())
         })
       )
