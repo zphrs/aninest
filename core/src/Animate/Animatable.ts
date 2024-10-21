@@ -239,14 +239,6 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
       broadcast(anim.interruptListeners, completeTo)
   }
   const completeToLength = Object.keys(completeTo).length
-  // if ("borderWidth" in anim._from) {
-  //   console.log({
-  //     completeTo,
-  //     completeToLength,
-  //     animTo: anim._to,
-  //     localTo,
-  //   })
-  // }
   if (completeToLength !== 0 && !suppressListeners.start) {
     // condition due to conditional early exit below
     // used to keep track of if the full modifyTo tree is terminated
@@ -266,6 +258,7 @@ export function modifyTo<Animating extends UnknownRecursiveAnimatable>(
   anim._time = 0
   anim._to = completeTo
   if (!suppressListeners.start) broadcast(anim.startListeners, completeTo)
+  broadcast(anim.immutableStartListeners, completeTo)
   updateAnimation(anim, 0)
 }
 
@@ -546,6 +539,7 @@ export function changeInterpFunction<
  * Updates the interpolation function of the animation only for the topmost level.
  * @param anim
  * @param interp
+ * @group Interpolation
  */
 export function changeLocalInterpFunction<
   Animating extends UnknownRecursiveAnimatable

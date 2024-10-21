@@ -12,22 +12,63 @@ import type {
   Animation,
   unsubscribe,
 } from "./AnimatableTypes"
-import { updateAnimation, modifyTo } from "./Animatable"
+import { modifyTo } from "./Animatable"
 import { Listener } from "../Listeners"
 import { capitalizeFirstLetter } from "../Utils"
 
+/**
+ * Broadcasts before the animation recurses into its children to update their values.
+ * Only broadcasted if there is a local change to the animation at the level
+ * this event is attached to.
+ * @group EventTypes
+ */
 export const BEFORE_START = "beforeStart"
+/**
+ * Same as {@link `START`} but by convention no {@link modifyTo} calls should be made in any
+ * listeners attached to this event. This is useful for extensions which
+ * need to know when the animation is starting such as the proxy extension but which
+ * don't need to trigger any modifications to any animation states.
+ * @group EventTypes
+ */
+export const IMMUTABLE_START = "immutableStart"
+/**
+ * Broadcasts after an animation's target state is set to a new value.
+ * @group EventTypes
+ */
 export const START = "start"
+/**
+ * Broadcasts at the end of an interpolation, excluding any interruptions triggered
+ * before the animation fully comes to rest, including interruptions created on the
+ * {@link BEFORE_END} event.
+ * @group EventTypes
+ */
 export const END = "end"
+/**
+ * Broadcasts right before the animation ends to allow for the animation to be interrupted
+ * before it ends. This is useful to create snapping, looping, or bouncing animations without
+ * triggering any {@link END} events.
+ * @group EventTypes
+ */
 export const BEFORE_END = "beforeEnd"
+/**
+ * Broadcasts when a new target state is set while the animation is not at its resting state
+ * yet. This event is useful for reverting any changes made to the animation state before
+ * continuing the animation. See the momentum extension for an example of this.
+ * @group EventTypes
+ */
 export const INTERRUPT = "interrupt"
+/**
+ * Broadcasts every time the animation state's time is updated so long as the animation is running.
+ * @group EventTypes
+ */
 export const UPDATE = "update"
 /**
- * List of event types which provide the values which the animation is interpolating to.
- * @internal
+ * List of event types which provide the values which the animation is interpolating to
+ * (or in the case of `end` the final values).
  */
 export const ANIM_TYPES_WITH_VALUE = [
   BEFORE_START,
+  IMMUTABLE_START,
   START,
   END,
   INTERRUPT,
@@ -37,6 +78,7 @@ export const ANIM_TYPES = [...ANIM_TYPES_WITH_VALUE, UPDATE] as const
 /**
  * Animation Events which return the values which the animation is interpolating to.
  * Only excludes the `update` event.
+ * @group EventTypes
  */
 export type AnimatableEventsWithValue = (typeof ANIM_TYPES_WITH_VALUE)[number]
 
@@ -206,19 +248,9 @@ export type AnimatableListener<
   : Listener<undefined>
 
 /**
- * The various event types that are emitted by the animation.
- * Here are the possible events:
- * - **start**: when the animation's target state is changed by calling {@link modifyTo}
- * and the new state is different from the current state.
- * Returns a {@link LocalAnimatable} of the new local state with only the changed values.
- * - **end**: when the animation fully comes to a stop, provides the resting state
- * Returns an {@link Animatable} of the new local state with the final resting state.
- * - **beforeEnd**: when the animation is about to end
- * Useful for preventing the animation from ending to instead loop/bounce/snap etc.
- * - **interrupt**: when a new `modifyTo` is called before the animation is finished
- * Returns a {@link LocalAnimatable} of the new local state with all of the currently in progress values.
- * - **update**: when the current state of the animation changes, usually from a call to
- * {@link updateAnimation}.
+ * The collection of events which can be listened to on an animation.
  * Returns `undefined`
+ * @see AnimatableEvents/EventTypes for a list of events which return values.
+ * @group EventTypes
  */
-export type AnimatableEvents = AnimatableEventsWithValue | "update"
+export type AnimatableEvents = AnimatableEventsWithValue | typeof UPDATE
