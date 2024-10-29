@@ -24,6 +24,16 @@ describe("edge cases of modifyTo", () => {
   })
 })
 
+describe("string as a key", () => {
+  const anim = createAnimation({ hex: "#fff" }, getLinearInterp(1))
+  test("modifyTo with string as a key", () => {
+    modifyTo(anim, { hex: "#000" })
+    expect(getStateTree(anim)).toStrictEqual({ hex: "#fff" })
+    updateAnimation(anim, 0.5)
+    expect(getStateTree(anim)).toStrictEqual({ hex: "#000" })
+  })
+})
+
 describe("add recursive start listener", () => {
   const anim = createAnimation({ a: newVec2(0, 0) }, NO_INTERP)
   test("add recursive start listener", done => {

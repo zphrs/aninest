@@ -6,7 +6,13 @@
 import { ListenerSet, Listeners } from "../Listeners"
 import { AnimatableEventsWithValue } from "./AnimatableEvents"
 import { Interp } from "./Interp"
-import { PartialRecursive } from "./RecursiveHelpers"
+
+/**
+ * @internal
+ */
+export type Root<T> = T extends number ? number : string
+
+type UnknownRoot = Root<number | string>
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost 
@@ -19,7 +25,7 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 // Looking at the 'a' child:
 { x: 0, y: 0 }
  */
-export type Animatable = { [key: string]: number }
+export type Animatable = { [key: string]: UnknownRoot }
 
 /**
  * Generic unsubscribe function which will remove event listeners.
@@ -32,7 +38,7 @@ export type unsubscribe = () => void
  */
 export type UnknownRecursiveAnimatable = RecursiveAnimatable<unknown>
 /**
- * Convenient way to write `UnknownAnimation`.
+ * Convenient way to write `Animation<UnknownRecursiveAnimatable>`.
  * Usually used to cast an animation to this more generic type.
  */
 export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
@@ -47,7 +53,9 @@ export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
 }
  */
 export type RecursiveAnimatable<T> = {
-  [P in keyof T]: T[P] extends number ? number : RecursiveAnimatable<T[P]>
+  [P in keyof T]: T[P] extends Root<T[P]>
+    ? Root<T[P]>
+    : RecursiveAnimatable<T[P]>
 }
 
 /**
@@ -62,7 +70,7 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 { x: 0, y: 0 }
  */
 export type LocalAnimatable<T> = {
-  [P in keyof T]: T[P] extends number ? number : undefined
+  [P in keyof T]: T[P] extends Root<T[P]> ? Root<T[P]> : undefined
 } & Animatable
 
 /**
@@ -82,7 +90,12 @@ const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y:
 // example 1
 {}
   */
-export type PartialRecursiveAnimatable<T> = PartialRecursive<number, T>
+export type PartialRecursiveAnimatable<T> = {
+  [P in keyof T]?: T[P] extends Root<T[P]>
+    ? Root<T[P]>
+    : PartialRecursiveAnimatable<T[P]>
+}
+// PartialRecursive<number, T>
 
 /**
  * The local animation object. This is a recursive type, meaning that it can
@@ -121,7 +134,7 @@ export type AnimationWithoutChildren<
 export type Animation<Animating extends UnknownRecursiveAnimatable> =
   AnimationWithoutChildren<Animating> & {
     readonly children: {
-      [P in keyof Animating]: Animating[P] extends number
+      [P in keyof Animating]: Animating[P] extends Root<Animating[P]>
         ? undefined
         : Animation<RecursiveAnimatable<Animating[P]>>
     }
