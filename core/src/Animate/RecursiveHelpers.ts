@@ -7,18 +7,19 @@
 
 import { UnknownRecursiveAnimatable } from "./AnimatableTypes"
 type ChildrenOfRecursive<Base, T> = {
-  [P in keyof T]: T[P] extends Recursive<Base, unknown> ? T[P] : undefined
+  [P in keyof T]: T[P] extends Recursive<Base, unknown> ? T[P] : never
 }
 
 export function separateChildren<Base, T extends Recursive<Base, unknown>>(
   obj: T
 ): [Local<Base, T>, ChildrenOfRecursive<Base, T>] {
-  const anim = {} as Local<Base, T>
+  const local = {} as Local<Base, T>
   const children = {} as ChildrenOfRecursive<Base, T>
-  for (const key in obj) {
+  for (const k in obj) {
+    const key = k as keyof T
     const value = obj[key]
     if (typeof value !== "object") {
-      anim[key] = value as Local<Base, T>[keyof T]
+      local[key] = value as T[keyof T] extends Base ? T[keyof T] : never
     } else {
       children[key] = value as unknown as ChildrenOfRecursive<Base, T>[Extract<
         keyof T,
@@ -26,7 +27,28 @@ export function separateChildren<Base, T extends Recursive<Base, unknown>>(
       >]
     }
   }
-  return [anim, children]
+  return [local, children]
+}
+
+export function copyObject<T>(obj: T, into: T = {} as T): T {
+  const out = into as T
+  for (const key in obj) {
+    out[key] = obj[key]
+  }
+  return out
+}
+
+export function recursivelyCopyObject<T>(obj: T): T {
+  const out = {} as T
+  for (const key in obj) {
+    const value = obj[key]
+    if (typeof value !== "object") {
+      out[key] = value
+    } else {
+      out[key] = recursivelyCopyObject(value)
+    }
+  }
+  return out
 }
 
 /**
@@ -45,12 +67,12 @@ type UnknownRecursive = Recursive<unknown, unknown>
  */
 export type PartialRecursive<Base, Shape> = {
   [P in keyof Shape]?: Shape[P] extends Base
-    ? Base
+    ? Shape[P]
     : PartialRecursive<Base, Shape[P]>
 }
 
 export type Local<Base, Shape extends Recursive<Base, unknown>> = {
-  [P in keyof Shape]: Shape[P] extends Base ? Base : undefined
+  [P in keyof Shape]: Shape[P] extends Base ? Shape[P] : never
 }
 /**
  * Mask over animation. Set any key to `false` in order to mask out
@@ -67,7 +89,7 @@ export type Mask<T> = {
 export type HasChildren<Base, Shape> = {
   readonly children: {
     [P in keyof Shape]: Shape[P] extends Base
-      ? undefined
+      ? never
       : HasChildren<Base, Shape[P]>
   }
 }

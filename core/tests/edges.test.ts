@@ -24,13 +24,22 @@ describe("edge cases of modifyTo", () => {
   })
 })
 
-describe("string as a key", () => {
+describe("string as a value", () => {
   const anim = createAnimation({ hex: "#fff" }, getLinearInterp(1))
-  test("modifyTo with string as a key", () => {
+  test("modifyTo with string as a value", () => {
     modifyTo(anim, { hex: "#000" })
     expect(getStateTree(anim)).toStrictEqual({ hex: "#fff" })
     updateAnimation(anim, 0.5)
     expect(getStateTree(anim)).toStrictEqual({ hex: "#000" })
+  })
+})
+
+describe("function as a value", () => {
+  const toString = () => "lolz"
+  const anim = createAnimation({ a: newVec2(0, 0), toString }, NO_INTERP)
+  test("modifyTo with function as a value", () => {
+    modifyTo(anim, { a: newVec2(1, 1) })
+    expect(getStateTree(anim)).toStrictEqual({ a: { x: 1, y: 1 }, toString })
   })
 })
 

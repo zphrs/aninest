@@ -6,13 +6,20 @@
 import { ListenerSet, Listeners } from "../Listeners"
 import { AnimatableEventsWithValue } from "./AnimatableEvents"
 import { Interp } from "./Interp"
+import { HasChildren, Local } from "./RecursiveHelpers"
 
 /**
  * @internal
  */
-export type Root<T> = T extends number ? number : string
+export type Root<T> = T extends Function
+  ? T
+  : T extends object
+  ? never
+  : T extends undefined
+  ? never
+  : T
 
-type UnknownRoot = Root<number | string>
+export type UnknownRoot = number | string | Function
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost 
@@ -53,7 +60,7 @@ export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
 }
  */
 export type RecursiveAnimatable<T> = {
-  [P in keyof T]: T[P] extends Root<T[P]>
+  [P in keyof T]: T[P] extends UnknownRoot
     ? Root<T[P]>
     : RecursiveAnimatable<T[P]>
 }
@@ -69,9 +76,8 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 // looking at the 'a' child
 { x: 0, y: 0 }
  */
-export type LocalAnimatable<T> = {
-  [P in keyof T]: T[P] extends Root<T[P]> ? Root<T[P]> : undefined
-} & Animatable
+export type LocalAnimatable<T extends UnknownRecursiveAnimatable> = Animatable &
+  Local<UnknownRoot, T>
 
 /**
  * A subtree of the Animatable type.
@@ -91,8 +97,8 @@ const startingState: RecursiveAnimatable<{a: number, b: number}> = {a: {x: 0, y:
 {}
   */
 export type PartialRecursiveAnimatable<T> = {
-  [P in keyof T]?: T[P] extends Root<T[P]>
-    ? Root<T[P]>
+  [P in keyof T]?: T[P] extends UnknownRoot
+    ? Root<T[P]> | undefined
     : PartialRecursiveAnimatable<T[P]>
 }
 // PartialRecursive<number, T>
@@ -134,11 +140,11 @@ export type AnimationWithoutChildren<
 export type Animation<Animating extends UnknownRecursiveAnimatable> =
   AnimationWithoutChildren<Animating> & {
     readonly children: {
-      [P in keyof Animating]: Animating[P] extends Root<Animating[P]>
-        ? undefined
+      [P in keyof Animating]: Animating[P] extends UnknownRoot
+        ? never
         : Animation<RecursiveAnimatable<Animating[P]>>
     }
-  }
+  } & HasChildren<UnknownRoot, Animating>
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] }
 
