@@ -149,17 +149,17 @@ export function localMomentumLayer<
   }
   let currentVelocity = 0
   // returns true if the animation is now gliding
-  const beforeEnd = (anim: Animation<Animating>) => {
+  const beforeEnd = (anim: Animation<Animating>): boolean => {
     if (prevStates.length < 2) {
       return false
     }
     let divisor = 0
-    const avgVel: LocalAnimatable<unknown> = Object.keys(
+    const avgVel: { [key: string]: number } = Object.keys(
       prevStates[0].state
     ).reduce((acc, key) => {
       acc[key] = 0
       return acc
-    }, {} as LocalAnimatable<unknown>)
+    }, {} as { [key: string]: number })
     let currTime = prevStates[prevStates.length - 1].time
     for (let i = prevStates.length - 2; i >= 0; i--) {
       let prev = prevStates[i]
@@ -172,8 +172,13 @@ export function localMomentumLayer<
       let curr = prevStates[i + 1]
       const dt = curr.time - prev.time
       const weight = 10 / (i - prevStates.length)
-      for (let key in curr.state) {
-        avgVel[key] += ((curr.state[key] - prev.state[key]) / dt) * weight
+      for (const key in curr.state) {
+        const currState = curr.state[key]
+        const prevState = prev.state[key]
+        if (typeof currState !== "number" && typeof prevState !== "number")
+          continue
+        avgVel[key] +=
+          (((currState as number) - (prevState as number)) / dt) * weight
       }
       divisor += weight
     }
@@ -208,7 +213,8 @@ export function localMomentumLayer<
     const curr = prevStates.getFromQueue(prevStates.length - 1)!
 
     for (let key in curr.state) {
-      ;(curr.state as LocalAnimatable<unknown>)[key] +=
+      if (typeof curr.state[key] !== "number") continue
+      ;(curr.state as { [key: string]: number })[key] +=
         avgVel[key] * duration +
         Math.sign(avgVel[key]) * 0.5 * frictionForce * duration * duration
     }

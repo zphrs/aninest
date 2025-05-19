@@ -136,6 +136,7 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
       const localVal = localTo[localKey] as number
       const lowerBound = localBounds.lower[localKey]
       const upperBound = localBounds.upper[localKey]
+      if (typeof lowerBound != "number" || typeof upperBound != "number") return
 
       const newVal = clamp(
         lowerBound,

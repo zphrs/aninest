@@ -21,6 +21,7 @@ import {
   separateChildren,
   Layer,
   getInterpingToTree,
+  UnknownAnimation,
 } from "aninest"
 
 export function snapGridExtension<Animating extends UnknownRecursiveAnimatable>(
@@ -52,7 +53,10 @@ export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
     const childInfo = anim.children[key as keyof Animating]
     if (!childInfo) continue
     unsubscribers.push(
-      setSnapGrid(childInfo, childValue as PartialRecursiveAnimatable<unknown>)
+      setSnapGrid(
+        childInfo as UnknownAnimation,
+        childValue as PartialRecursiveAnimatable<unknown>
+      )
     )
   }
   // setup the snap grid for the current animation
@@ -92,12 +96,13 @@ export function setLocalSnapGrid<
       LocalAnimatable<UnknownRecursiveAnimatable>
     > = {}
     for (const key of toSnap) {
+      if (typeof localState[key] != "number") return
       let gridValue = gridSize[key] as number
-      let multiplier = localState[key] / gridValue
+      let multiplier = (localState[key] as number) / gridValue
       if (Math.abs(Math.round(multiplier) - multiplier) < Number.EPSILON)
         continue
       snappedRestingPosition[key] =
-        Math.round(localState[key] / gridValue) * gridValue
+        Math.round((localState[key] as number) / gridValue) * gridValue
     }
     if (Object.keys(snappedRestingPosition).length === 0) return
     toSnap.clear()

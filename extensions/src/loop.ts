@@ -50,8 +50,8 @@ export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
   anim: Animation<Animating>
 ): unsubscribe {
   // only one init/towards at a time
-  let init: PartialRecursiveAnimatable<Animating> | null = null
-  let towards: PartialRecursiveAnimatable<Animating> | null = null
+  let init: PartialRecursiveAnimatable<Animating> = {}
+  let towards: PartialRecursiveAnimatable<Animating> = {}
   const onEnd = () => {
     if (init === null || towards === null) return
     removeRecursiveListener(anim, START, onStart) // must remove to prevent infinite recursion
@@ -65,8 +65,8 @@ export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
     return true
   }
   const onStart = () => {
-    init = getStateTree(anim, init || {})
-    towards = getInterpingToTree(anim, towards || {})
+    init = getStateTree(anim, init as Animating)
+    towards = getInterpingToTree(anim, towards as Animating)
     addRecursiveListener(anim, BEFORE_END, onEnd)
   }
   addRecursiveListener(anim, START, onStart)
