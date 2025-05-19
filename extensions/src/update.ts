@@ -213,7 +213,6 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   }
   const onMount = (anim: Animation<Animating>) => {
     const unsub = addRecursiveListener(anim, IMMUTABLE_START, () => {
-      const shouldQueue = !needsUpdate()
       animsNeedingUpdate.add(anim)
       broadcast(listeners.start, anim)
       if (!parent && lastTime == undefined) queueNextUpdate(update)
