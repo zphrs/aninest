@@ -27,7 +27,7 @@ export default function createLine(p1: Vec2, p2: Vec2) {
         r: 0,
         g: 0,
         b: 0,
-        toHex(c: { r: number; g: number; b: number }) {},
+        toHex(_c: { r: number; g: number; b: number }) {},
       },
     },
     getLinearInterp(0.5)
