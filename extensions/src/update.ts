@@ -25,7 +25,6 @@ import {
   UPDATE,
   IMMUTABLE_START,
 } from "aninest"
-import {} from "../../core/lib"
 import { SignalOption, supportAbortSignalOption } from "./abortSignal"
 
 export type seconds = number
@@ -153,7 +152,10 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   ): unsubscribe => {
     parent = parentLayer as InternalUpdateLayer<UnknownRecursiveAnimatable>
     const controller = new AbortController()
-    parent._setChild(out, controller)
+    parent._setChild(
+      out as unknown as InternalUpdateLayer<UnknownRecursiveAnimatable>,
+      controller
+    )
     const orphanMyself = () => {
       parent = undefined
       controller.abort()
@@ -234,7 +236,7 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     _setChild: supportAbortSignalOption(_setChild),
     subscribe: supportAbortSignalOption(subscribe),
     _updateWithDt: updateWithDeltaTime,
-  } as InternalUpdateLayer<UnknownRecursiveAnimatable>
+  } as InternalUpdateLayer<Animating>
   return out as UpdateLayer<Animating>
 }
 

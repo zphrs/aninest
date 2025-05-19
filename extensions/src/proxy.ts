@@ -199,7 +199,7 @@ export function getLocalStateProxy<
   unsubscribe: unsubscribe
 } {
   const currentState = getLocalState(anim)
-  type StampedValue = { value: number; counter: number }
+  type StampedValue = { value: LocalAnimatable<Animating>[keyof Animating]; counter: number }
   const currentMap = new Map<keyof Animating, StampedValue>()
 
   let counter = 0
