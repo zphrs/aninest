@@ -167,8 +167,10 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   ) => {
     const controller = new AbortController()
     const onStart = () => {
+      const shouldQueue = !needsUpdate()
       childrenNeedingUpdate.add(child)
-      if (!parent && lastTime == undefined) queueNextUpdate(update)
+      if (!parent && lastTime == undefined && shouldQueue)
+        queueNextUpdate(update)
       else broadcast(listeners.childStart, child)
     }
     STARTS.forEach(event => child.subscribe(event, onStart, controller))
@@ -213,9 +215,11 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   }
   const onMount = (anim: Animation<Animating>) => {
     const unsub = addRecursiveListener(anim, IMMUTABLE_START, () => {
+      const shouldQueue = !needsUpdate()
       animsNeedingUpdate.add(anim)
       broadcast(listeners.start, anim)
-      if (!parent && lastTime == undefined) queueNextUpdate(update)
+      if (!parent && lastTime == undefined && shouldQueue)
+        queueNextUpdate(update)
     })
     anims.add(anim)
     return () => {
