@@ -15,7 +15,7 @@
     "docs"
   ],
   "scripts": {
-    "build": "tsc -b && ear",
+    "build": "tsc -b && tsc-alias",
     "test": "jest",
     "predeploy": "pnpm predocs:dev && pnpm docs:build",
     "deploy": "gh-pages -d ./docs/.vitepress/dist -t true",
