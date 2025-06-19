@@ -24,7 +24,7 @@ import { capitalizeFirstLetter } from "../Utils"
  */
 export const BEFORE_START = "beforeStart"
 /**
- * Same as {@link `START`} but by convention no {@link modifyTo} calls should be made in any
+ * Same as {@link START} but by convention no {@link modifyTo} calls should be made in any
  * listeners attached to this event. This is useful for extensions which
  * need to know when the animation is starting such as the proxy extension but which
  * don't need to trigger any modifications to any animation states.

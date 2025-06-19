@@ -13,8 +13,8 @@ import {
   removeRecursiveListener,
   START,
   BEFORE_END,
-  UnknownRecursiveAnimatable,
-  RecursiveAnimatable,
+  UnknownAnimatable,
+  Animatable,
   unsubscribe,
   Animation,
   PartialRecursiveAnimatable,
@@ -23,7 +23,7 @@ import {
 } from "aninest"
 
 export function loopExtension<
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 >(): Extension<Animating> {
   return anim => {
     return loopAnimation(anim)
@@ -46,7 +46,7 @@ export function loopExtension<
    * @param anim
    * @returns A function that will stop the loop when called
    */
-export function loopAnimation<Animating extends RecursiveAnimatable<unknown>>(
+export function loopAnimation<Animating extends Animatable<unknown>>(
   anim: Animation<Animating>
 ): unsubscribe {
   // only one init/towards at a time

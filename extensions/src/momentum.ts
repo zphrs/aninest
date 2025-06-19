@@ -1,9 +1,8 @@
 import { distanceSquaredBetween } from "."
 import {
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   Animation,
   Layer,
-  LocalAnimatable,
   getLocalState,
   modifyTo,
   PartialRecursiveAnimatable,
@@ -18,11 +17,12 @@ import {
   INTERRUPT,
   BEFORE_END,
   IMMUTABLE_START,
+  SlicedAnimatable,
 } from "aninest"
 /**
  * @internal
  */
-export class RingQueue<T extends UnknownRecursiveAnimatable> {
+export class RingQueue<T extends UnknownAnimatable> {
   [k: number]: T
   private queue: T[]
   private size: number
@@ -89,9 +89,7 @@ const CM_PER_METER = 100
 const GRAVITY = 9.81
 // TODO: add pixelsPerUnit as a config option and allow it to be modified with
 // the returned object
-export function localMomentumLayer<
-  Animating extends UnknownRecursiveAnimatable
->(
+export function localMomentumLayer<Animating extends UnknownAnimatable>(
   friction: number,
   pixelsPerUnit: number
 ): Layer<Animating> & {
@@ -116,7 +114,7 @@ export function localMomentumLayer<
       (friction * GRAVITY * PIXELS_PER_CM * CM_PER_METER) / pixelsPerUnit
   }
   updateFriction()
-  type StampedState = { state: LocalAnimatable<Animating>; time: number }
+  type StampedState = { state: SlicedAnimatable<Animating>; time: number }
   let prevStates: RingQueue<StampedState> = new RingQueue(100)
 
   const onUpdate = (anim: Animation<Animating>, time: number) => {
@@ -185,8 +183,8 @@ export function localMomentumLayer<
     for (let key in avgVel) {
       avgVel[key] /= divisor
     }
-    const zeroVec: LocalAnimatable<Animating> = new Proxy(
-      {} as LocalAnimatable<Animating>,
+    const zeroVec: SlicedAnimatable<Animating> = new Proxy(
+      {} as SlicedAnimatable<Animating>,
       {
         get() {
           return 0
@@ -198,7 +196,7 @@ export function localMomentumLayer<
     )
 
     const distSquared = distanceSquaredBetween(
-      avgVel as LocalAnimatable<Animating>,
+      avgVel as SlicedAnimatable<Animating>,
       zeroVec
     )
     const vel0 = Math.sqrt(distanceSquaredBetween(avgVel, zeroVec))

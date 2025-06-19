@@ -4,7 +4,7 @@
  * @module Reactor
  */
 import {
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   PartialRecursiveAnimatable,
   Mask,
   Animation,
@@ -23,7 +23,7 @@ import { getInterpingToProxy } from "./proxy"
 
 /**
  */
-type Transform<Animating extends UnknownRecursiveAnimatable> = (
+type Transform<Animating extends UnknownAnimatable> = (
   interpingTo: Animating
 ) => PartialRecursiveAnimatable<Animating>
 
@@ -46,7 +46,7 @@ addReactor(anim, ({pos}) => {
  * properties you don't want to react to.
  * @returns
  */
-export function addReactor<Animating extends UnknownRecursiveAnimatable>(
+export function addReactor<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   reactor: Transform<Animating>,
   mask: Mask<PartialRecursiveAnimatable<Animating>>

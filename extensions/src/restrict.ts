@@ -9,15 +9,15 @@ import {
   addLocalListener,
   clamp,
   Extension,
-  LocalAnimatable,
-  UnknownRecursiveAnimatable,
+  SlicedAnimatable,
+  UnknownAnimatable,
 } from "aninest"
 import { Bounds } from "./bound"
 import { getLocalInterpingToProxy } from "./proxy"
 
 export function restrictFromBoundsExtension<
-  Animating extends UnknownRecursiveAnimatable
->(bounds: Bounds<LocalAnimatable<Animating>>): Extension<Animating> {
+  Animating extends UnknownAnimatable
+>(bounds: Bounds<SlicedAnimatable<Animating>>): Extension<Animating> {
   const keys = new Set(
     Object.keys(bounds.lower || {}).concat(
       Object.keys(bounds.upper || {})
@@ -49,15 +49,15 @@ function restrictToWholeNumbersExtension() {
   * @returns an extension which calls the restriction function 
  */
 export function restrictFromFunctionExtension<
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 >(
-  restriction: (state: LocalAnimatable<Animating>) => void
+  restriction: (state: SlicedAnimatable<Animating>) => void
 ): Extension<Animating> {
   const restrictExtension: Extension<Animating> = anim => {
     const local = getLocalInterpingToProxy(
       anim,
       true
-    ) as LocalAnimatable<Animating>
+    ) as SlicedAnimatable<Animating>
     const unsub = addLocalListener(anim, "start", () => {
       restriction(local)
     })

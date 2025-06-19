@@ -10,7 +10,7 @@ import {
   getInterpFunction,
   getLocalState,
   addLocalListener,
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   Animation,
   unsubscribe,
   UnknownAnimation,
@@ -41,9 +41,7 @@ export type InterpWithDuration = (
  * function (after `duration`).
  * @returns
  */
-export function dynamicDurationExtension<
-  Animating extends UnknownRecursiveAnimatable
->(
+export function dynamicDurationExtension<Animating extends UnknownAnimatable>(
   mask: Partial<Mask<Animating>> = {},
   interp: InterpWithDuration,
   speed: number, // speed in units per second,
@@ -65,7 +63,7 @@ export function dynamicDurationExtension<
  * @returns
  */
 export function setRecursiveDynamicDuration<
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 >(
   anim: Animation<Animating>,
   mask: Partial<Mask<Animating>> = {},
@@ -91,7 +89,7 @@ export function setRecursiveDynamicDuration<
   }
 }
 
-function setLocalDynamicDuration<Animating extends UnknownRecursiveAnimatable>(
+function setLocalDynamicDuration<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   interp: InterpWithDuration,
   speed: number, // speed in units per second

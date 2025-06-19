@@ -1,6 +1,7 @@
 /**
  * A collection of 2D vector math functions and a few other generic scalar operations.
- * @description Vectors are represented as `{x: number, y: number}` and are meant to be immutable,
+ *
+ * Vectors are represented as `{x: number, y: number}` and are meant to be immutable,
  * following a functional programming style.
  * @module Vec2
  */

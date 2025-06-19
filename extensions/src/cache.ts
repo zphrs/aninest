@@ -12,7 +12,7 @@ import {
   ListenerSet,
   getStateTree,
   addRecursiveListener,
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   Animation,
   unsubscribe,
 } from "aninest"
@@ -22,7 +22,7 @@ import { getStateTreeProxy } from "./proxy"
  * Layer used to create a cache of the current state of the animation.
  * @internal
  */
-export type CacheLayer<Animating extends UnknownRecursiveAnimatable> = {
+export type CacheLayer<Animating extends UnknownAnimatable> = {
   /**
    * Stores the current state of the animation. Reuses the same object for caching.
    */
@@ -51,7 +51,7 @@ export type CacheLayer<Animating extends UnknownRecursiveAnimatable> = {
  * current animation state.
  */
 export function getCacheLayer<
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 >(): CacheLayer<Animating> {
   const cache: Animating = {} as Animating
   const listeners: ListenerSet<Animating> = new Map()

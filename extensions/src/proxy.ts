@@ -18,15 +18,16 @@ import {
   IMMUTABLE_START,
   UPDATE,
   Animation,
-  UnknownRecursiveAnimatable,
-  LocalAnimatable,
+  UnknownAnimatable,
+  SlicedAnimatable,
   PartialRecursiveAnimatable,
   unsubscribe,
 } from "aninest"
 
-export function getInterpingToProxy<
-  Animating extends UnknownRecursiveAnimatable
->(anim: Animation<Animating>, suppressListeners: boolean = false): Animating {
+export function getInterpingToProxy<Animating extends UnknownAnimatable>(
+  anim: Animation<Animating>,
+  suppressListeners: boolean = false
+): Animating {
   const localProxy = getLocalInterpingToProxy(anim)
   const initialTo = getInterpingToTree(anim)
   const childrenProxies = {} as Record<string, Animating[keyof Animating]>
@@ -75,12 +76,10 @@ proxy.b // 0
  * @internal
  * @example
  */
-export function getLocalInterpingToProxy<
-  Animating extends UnknownRecursiveAnimatable
->(
+export function getLocalInterpingToProxy<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   suppressListeners?: ListenerSuppressor
-): LocalAnimatable<Animating> {
+): SlicedAnimatable<Animating> {
   const initialTo = getLocalInterpingTo(anim)
   const proxy = new Proxy(initialTo, {
     get(_obj, prop, _receiver) {
@@ -136,7 +135,7 @@ proxy.a // {x: 1, y: 1}
  * @returns A proxy object that allows you to interact with the animation state
  * along with an unsubscribe function that remove the proxy from the animation.
  */
-export function getStateTreeProxy<Animating extends UnknownRecursiveAnimatable>(
+export function getStateTreeProxy<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>
 ): { proxy: Animating; unsubscribe: unsubscribe } {
   const unsubscribers: unsubscribe[] = []
@@ -190,16 +189,17 @@ setTimeout(() => {
  * @internal
  * @example
  */
-export function getLocalStateProxy<
-  Animating extends UnknownRecursiveAnimatable
->(
+export function getLocalStateProxy<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>
 ): {
-  proxy: LocalAnimatable<Animating>
+  proxy: SlicedAnimatable<Animating>
   unsubscribe: unsubscribe
 } {
   const currentState = getLocalState(anim)
-  type StampedValue = { value: LocalAnimatable<Animating>[keyof Animating]; counter: number }
+  type StampedValue = {
+    value: SlicedAnimatable<Animating>[keyof Animating]
+    counter: number
+  }
   const currentMap = new Map<keyof Animating, StampedValue>()
 
   let counter = 0

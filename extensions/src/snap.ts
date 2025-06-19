@@ -10,12 +10,12 @@ import {
   modifyTo,
   addLocalListener,
   addRecursiveListener,
-  RecursiveAnimatable,
+  Animatable,
   PartialRecursiveAnimatable,
   unsubscribe,
   Animation,
-  LocalAnimatable,
-  UnknownRecursiveAnimatable,
+  SlicedAnimatable,
+  UnknownAnimatable,
   BEFORE_END,
   START,
   separateChildren,
@@ -24,7 +24,7 @@ import {
   UnknownAnimation,
 } from "aninest"
 
-export function snapGridExtension<Animating extends UnknownRecursiveAnimatable>(
+export function snapGridExtension<Animating extends UnknownAnimatable>(
   gridSize: PartialRecursiveAnimatable<Animating>
 ): Extension<Animating> {
   const mount: Mount<Animating> = anim => {
@@ -42,7 +42,7 @@ setSnapGrid(anim, {x: 1, y: 1}) // will snap to integer values before ending
  * @param gridSize A dictionary of the size of each grid square for each variable. Ex: `{x: 1, y: 1}`
  * @returns a function to remove the snap grid
  */
-export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
+export function setSnapGrid<Animating extends Animatable<unknown>>(
   anim: Animation<Animating>,
   gridSize: PartialRecursiveAnimatable<Animating>
 ): unsubscribe {
@@ -62,7 +62,7 @@ export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
   // setup the snap grid for the current animation
   const localUnsub = setLocalSnapGrid(
     anim,
-    localSnapPoints as Partial<LocalAnimatable<Animating>>
+    localSnapPoints as Partial<SlicedAnimatable<Animating>>
   )
   unsubscribers.push(localUnsub)
   return () => {
@@ -77,14 +77,12 @@ export function setSnapGrid<Animating extends RecursiveAnimatable<unknown>>(
  * @param gridSize A dictionary of the size of each grid square for each variable. Ex: `{x: 1, y: 1}`
  * @returns a function to remove the snap grid
  */
-export function setLocalSnapGrid<
-  Animating extends RecursiveAnimatable<unknown>
->(
+export function setLocalSnapGrid<Animating extends Animatable<unknown>>(
   anim: Animation<Animating>,
-  gridSize: Partial<LocalAnimatable<Animating>>
+  gridSize: Partial<SlicedAnimatable<Animating>>
 ): unsubscribe {
   const toSnap: Set<string> = new Set()
-  const onStart = (interpingTo: Partial<LocalAnimatable<Animating>>) => {
+  const onStart = (interpingTo: Partial<SlicedAnimatable<Animating>>) => {
     for (const key in interpingTo) {
       if (gridSize[key] === undefined) continue
       toSnap.add(key)
@@ -92,9 +90,8 @@ export function setLocalSnapGrid<
   }
   const beforeEnd = () => {
     const localState = getLocalState(anim) // final resting state
-    const snappedRestingPosition: Partial<
-      LocalAnimatable<UnknownRecursiveAnimatable>
-    > = {}
+    const snappedRestingPosition: Partial<SlicedAnimatable<UnknownAnimatable>> =
+      {}
     for (const key of toSnap) {
       if (typeof localState[key] != "number") return
       let gridValue = gridSize[key] as number
@@ -127,7 +124,7 @@ export function setLocalSnapGrid<
  * @group Snap
  */
 export type ShouldSnap<
-  Animating extends RecursiveAnimatable<unknown>,
+  Animating extends Animatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
 > =
   /**
@@ -138,7 +135,7 @@ export type ShouldSnap<
   (point: Point, currentState: Animating) => boolean
 
 export function snapPointExtension<
-  Animating extends RecursiveAnimatable<unknown>,
+  Animating extends Animatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
 >(
   snapPoint: Point,
@@ -148,7 +145,7 @@ export function snapPointExtension<
 }
 
 export function getSnapPointLayer<
-  Animating extends RecursiveAnimatable<unknown>,
+  Animating extends Animatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
 >(
   snapPoint: Point,
@@ -211,7 +208,7 @@ const s6 = getStateTree(anim) // {x: 1, y: 1}
  * @returns a function to remove the snap point
  */
 export function setSnapPoint<
-  Animating extends RecursiveAnimatable<unknown>,
+  Animating extends Animatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
 >(
   anim: Animation<Animating>,
@@ -243,7 +240,7 @@ dlt2({x: 1, y: 1}, {x: 0, y: 0}) // true
  current state and the point is less than {@link distance} provided.
  */
 export function distanceLessThan<
-  Animating extends RecursiveAnimatable<unknown>,
+  Animating extends Animatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
 >(distance: number): ShouldSnap<Animating, Point> {
   const distanceSquared = distance * distance
@@ -267,9 +264,9 @@ export function distanceLessThan<
      * @returns The squared euclidean distance between the {@link point} and the {@link currentState} across the features in the {@link point}.
      */
 export function distanceSquaredBetween<
-  Animating extends RecursiveAnimatable<unknown>,
+  Animating extends Animatable<unknown>,
   Point extends PartialRecursiveAnimatable<Animating>
->(point: Point, currentState: RecursiveAnimatable<Animating>) {
+>(point: Point, currentState: Animatable<Animating>) {
   let sum = 0
   const [local, children] = separateChildren(point)
   for (const key in local) {
@@ -281,8 +278,8 @@ export function distanceSquaredBetween<
   }
   for (const key in children) {
     const k = key as keyof typeof children
-    const v = children[k] as UnknownRecursiveAnimatable
-    const csv = currentState[k] as UnknownRecursiveAnimatable
+    const v = children[k] as UnknownAnimatable
+    const csv = currentState[k] as UnknownAnimatable
     sum += distanceSquaredBetween(v, csv)
   }
   return sum

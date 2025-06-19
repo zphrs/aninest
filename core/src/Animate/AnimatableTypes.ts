@@ -51,7 +51,7 @@ export type AnimatableOf<Anim extends UnknownAnimation> =
 export type unsubscribe = () => void
 
 /**
- * Convenient way to write `RecursiveAnimatable<unknown>`,
+ * Convenient way to write {@link Animatable | `Animatable<unknown>`},
  * usually used to extend a generic type.
  */
 export type UnknownAnimatable = Animatable<unknown>

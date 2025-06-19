@@ -5,7 +5,7 @@
  */
 
 import {
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   Layer,
   Listener,
   unsubscribe,
@@ -18,18 +18,17 @@ import {
  * events.
  * @deprecated
  */
-export type DeduplicatedStartLayer<
-  Animating extends UnknownRecursiveAnimatable
-> = Layer<Animating> & {
-  subscribe: (sub: Listener<undefined>) => unsubscribe
-}
+export type DeduplicatedStartLayer<Animating extends UnknownAnimatable> =
+  Layer<Animating> & {
+    subscribe: (sub: Listener<undefined>) => unsubscribe
+  }
 
 /**
  * Creates a DeduplicatedStartLayer which broadcasts deduplicated start events.
  * @deprecated
  */
 export function getDeduplicatedStartLayer<
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 >(): DeduplicatedStartLayer<Animating> {
   const listeners = new Map()
   return {

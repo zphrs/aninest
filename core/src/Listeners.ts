@@ -5,7 +5,8 @@
 
 /**
  * A listener function that is called when an event is broadcast.
- * @description The listener can return `true` to remove itself from the listener set, `false` to keep itself in the listener set, or `void` to keep itself in the listener set.
+ * 
+ * The listener can return `true` to remove itself from the listener set, `false` to keep itself in the listener set, or `void` to keep itself in the listener set.
  * @example
 () => true // remove listener
 () => false // keep listener

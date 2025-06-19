@@ -9,12 +9,12 @@ import {
   clamp,
   addLocalListener,
   BEFORE_END,
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   PartialRecursiveAnimatable,
-  LocalAnimatable,
+  SlicedAnimatable,
   Animation,
   unsubscribe,
-  RecursiveAnimatable,
+  Animatable,
   UnknownAnimation,
   applyDictTo,
   modifyTo,
@@ -64,8 +64,9 @@ const bounds: PartialRecursiveBounds<{a: Vec2, b: Vec2}> = {
   upper: { a: {x: 1, y: 1} }
 } // note that b.y is not bounded and that b.x only has a lower bound. This is perfectly valid.
  */
-export type Bounds<Animating extends UnknownRecursiveAnimatable> =
-  PartialFullBounds<PartialRecursiveAnimatable<Animating>>
+export type Bounds<Animating extends UnknownAnimatable> = PartialFullBounds<
+  PartialRecursiveAnimatable<Animating>
+>
 
 /**
  * Sets up a bounds layer for an animation.
@@ -82,7 +83,7 @@ updateBounds({lower: {a: 0.5}})
  * @param bounds 
  * @returns 
  */
-export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
+export function setupBoundsLayer<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   bounds: Bounds<Animating>,
   mask: Partial<Mask<Animating>> = {}
@@ -104,14 +105,14 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     lowerBoundsAnim,
     lowerBoundsChildren,
   ] = splitBounds(bounds)
-  const localBounds: FullBounds<LocalAnimatable<Animating>> = {
+  const localBounds: FullBounds<SlicedAnimatable<Animating>> = {
     upper: {},
     lower: {},
   }
   applyDictTo(localBounds.lower, lowerBoundsAnim)
   applyDictTo(localBounds.upper, upperBoundsAnim)
   const childMap: {
-    [key in keyof Animating]?: BoundsLayer<RecursiveAnimatable<Animating[key]>>
+    [key in keyof Animating]?: BoundsLayer<Animatable<Animating[key]>>
   } = {}
   for (const [k, c] of Object.entries(anim.children)) {
     if (mask[k as keyof Animating] === false) continue
@@ -123,13 +124,13 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
     if (!childBounds.upper && !childBounds.lower) continue
     const child = c as UnknownAnimation
     const maskKey = mask[key] !== true && mask[key] ? mask[key] : {}
-    childMap[key] = setupBoundsLayer<UnknownRecursiveAnimatable>(
+    childMap[key] = setupBoundsLayer<UnknownAnimatable>(
       child,
       childBounds,
-      maskKey as Partial<Mask<UnknownRecursiveAnimatable>>
-    ) as BoundsLayer<RecursiveAnimatable<Animating[keyof Animating]>>
+      maskKey as Partial<Mask<UnknownAnimatable>>
+    ) as BoundsLayer<Animatable<Animating[keyof Animating]>>
   }
-  const checkLocalBounds = (localTo: Partial<LocalAnimatable<Animating>>) => {
+  const checkLocalBounds = (localTo: Partial<SlicedAnimatable<Animating>>) => {
     const modified: typeof localTo = {}
     for (const key in localTo) {
       const localKey = key as keyof Animating
@@ -142,7 +143,7 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
         lowerBound,
         localVal,
         upperBound
-      ) as LocalAnimatable<Animating>[keyof Animating]
+      ) as SlicedAnimatable<Animating>[keyof Animating]
       if (newVal != localVal) {
         modified[localKey] = newVal
       }
@@ -157,9 +158,9 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
 
     for (const [k, c] of Object.entries(childMap)) {
       const key = k as keyof Animating
-      const child = c as BoundsLayer<RecursiveAnimatable<Animating[typeof key]>>
+      const child = c as BoundsLayer<Animatable<Animating[typeof key]>>
       const animChild = anim.children[key] as Animation<
-        RecursiveAnimatable<Animating[typeof key]>
+        Animatable<Animating[typeof key]>
       >
       const childUnsub = child.mount(animChild)
       unsubs.add(childUnsub)
@@ -186,14 +187,14 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
       checkLocalBounds(getLocalState(anim))
       for (const [k, c] of Object.entries(anim.children)) {
         const key = k as keyof Animating
-        const child = c as Animation<RecursiveAnimatable<Animating[typeof key]>>
+        const child = c as Animation<Animatable<Animating[typeof key]>>
         const childBounds = {
           upper: upperBoundsChildren[key],
           lower: lowerBoundsChildren[key],
         } as PartialFullBounds<PartialRecursiveAnimatable<unknown>>
         if (!childMap[key]) {
           const { mount } = (childMap[key] = setupBoundsLayer<
-            RecursiveAnimatable<Animating[typeof key]>
+            Animatable<Animating[typeof key]>
           >(child, childBounds))
           const unsub = mount(child)
           unsubs.add(unsub)
@@ -209,7 +210,7 @@ export function setupBoundsLayer<Animating extends UnknownRecursiveAnimatable>(
  * A layer used to enforce minimum and maximum bounds on an animation.
  * @see {@link setupBoundsLayer} for how to create a BoundsLayer.
  */
-export type BoundsLayer<Animating extends UnknownRecursiveAnimatable> = {
+export type BoundsLayer<Animating extends UnknownAnimatable> = {
   /**
    * Updates and overrides the previously set bounds, similar to how {@link modifyTo} works.
    * A bound updated with this function will apply immediately rather than waiting for

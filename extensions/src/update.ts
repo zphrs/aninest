@@ -18,7 +18,7 @@ import {
   addRecursiveListener,
   START,
   Animation,
-  UnknownRecursiveAnimatable,
+  UnknownAnimatable,
   unsubscribe,
   ListenerSet,
   END,
@@ -53,16 +53,16 @@ type UpdateLayerEvents = (typeof UPDATE_LAYER_EVENTS)[number]
 
 type UpdateLayerType<
   Event,
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 > = Event extends UpdateWithDeltaTime
   ? seconds
   : Event extends ChildEvents
-  ? InternalUpdateLayer<UnknownRecursiveAnimatable>
+  ? InternalUpdateLayer<UnknownAnimatable>
   : Event extends Done
   ? undefined
   : Animation<Animating>
 
-type UpdateLayerSets<Animating extends UnknownRecursiveAnimatable> = {
+type UpdateLayerSets<Animating extends UnknownAnimatable> = {
   [Key in UpdateLayerEvents]: ListenerSet<UpdateLayerType<Key, Animating>>
 }
 
@@ -77,7 +77,7 @@ type UpdateLayerSets<Animating extends UnknownRecursiveAnimatable> = {
  * - **childEnd** - when a child UpdateLayer finishes animating everything, including its children
  * - **done** - when the animation finishes animating everything and pauses the updates
  */
-export type UpdateLayer<Animating extends UnknownRecursiveAnimatable> =
+export type UpdateLayer<Animating extends UnknownAnimatable> =
   Layer<Animating> & {
     subscribe<Event extends UpdateLayerEvents>(
       type: Event,
@@ -94,15 +94,15 @@ export type UpdateLayer<Animating extends UnknownRecursiveAnimatable> =
      * @returns
      */
     setParent: (
-      parentLayer: UpdateLayer<UnknownRecursiveAnimatable>,
+      parentLayer: UpdateLayer<UnknownAnimatable>,
       options?: SignalOption
     ) => unsubscribe
   }
 
-type InternalUpdateLayer<Animating extends UnknownRecursiveAnimatable> =
+type InternalUpdateLayer<Animating extends UnknownAnimatable> =
   UpdateLayer<Animating> & {
     _setChild: (
-      child: InternalUpdateLayer<UnknownRecursiveAnimatable>,
+      child: InternalUpdateLayer<UnknownAnimatable>,
       options?: SignalOption
     ) => unsubscribe
     /**
@@ -127,7 +127,7 @@ if (!globalThis.requestAnimationFrame)
  * - **done** - when the animation finishes animating everything
  * - **update** - each update frame
  */
-export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
+export function getUpdateLayer<Animating extends UnknownAnimatable>(
   queueNextUpdate: (
     callback: (time: milliseconds) => void
   ) => void = requestAnimationFrame
@@ -138,22 +138,22 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   }, {} as UpdateLayerSets<Animating>)
   const anims = new Set<Animation<Animating>>()
   const animsNeedingUpdate = new Set<Animation<Animating>>()
-  const children = new Set<InternalUpdateLayer<UnknownRecursiveAnimatable>>()
+  const children = new Set<InternalUpdateLayer<UnknownAnimatable>>()
   const childrenNeedingUpdate = new Set<
-    InternalUpdateLayer<UnknownRecursiveAnimatable>
+    InternalUpdateLayer<UnknownAnimatable>
   >()
   // by default it drives itself until mounted onto another update layer
-  let parent: InternalUpdateLayer<UnknownRecursiveAnimatable> | undefined
+  let parent: InternalUpdateLayer<UnknownAnimatable> | undefined
   // has no children so it doesn't have anything to update yet
   let needsUpdate = () =>
     animsNeedingUpdate.size > 0 || childrenNeedingUpdate.size > 0
   const setParent = (
-    parentLayer: UpdateLayer<UnknownRecursiveAnimatable>
+    parentLayer: UpdateLayer<UnknownAnimatable>
   ): unsubscribe => {
-    parent = parentLayer as InternalUpdateLayer<UnknownRecursiveAnimatable>
+    parent = parentLayer as InternalUpdateLayer<UnknownAnimatable>
     const controller = new AbortController()
     parent._setChild(
-      out as unknown as InternalUpdateLayer<UnknownRecursiveAnimatable>,
+      out as unknown as InternalUpdateLayer<UnknownAnimatable>,
       controller
     )
     const orphanMyself = () => {
@@ -162,9 +162,7 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
     }
     return orphanMyself
   }
-  const _setChild = (
-    child: InternalUpdateLayer<UnknownRecursiveAnimatable>
-  ) => {
+  const _setChild = (child: InternalUpdateLayer<UnknownAnimatable>) => {
     const controller = new AbortController()
     const onStart = () => {
       const shouldQueue = !needsUpdate()
@@ -244,5 +242,5 @@ export function getUpdateLayer<Animating extends UnknownRecursiveAnimatable>(
   return out as UpdateLayer<Animating>
 }
 
-export const UpdateExtension: Extension<UnknownRecursiveAnimatable> =
+export const UpdateExtension: Extension<UnknownAnimatable> =
   getUpdateLayer().mount
