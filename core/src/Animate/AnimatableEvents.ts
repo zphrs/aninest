@@ -4,10 +4,10 @@
  */
 
 import type {
+  SlicedAnimatable,
   LocalAnimatable,
+  UnknownAnimatable,
   Animatable,
-  UnknownRecursiveAnimatable,
-  RecursiveAnimatable,
   UnknownAnimation,
   Animation,
   unsubscribe,
@@ -99,13 +99,13 @@ modifyTo(anim, {a: {x: 1}}) // will trigger the listener on the 'a' child
  * @returns A function to remove the listener
  */
 export function addLocalListener<
-  Animating extends UnknownRecursiveAnimatable,
+  Animating extends UnknownAnimatable,
   Event extends AnimatableEvents
 >(
   anim: Animation<Animating>,
   type: Event,
   listener: Event extends AnimatableEventsWithValue
-    ? Listener<Partial<LocalAnimatable<Animating>>>
+    ? Listener<Partial<SlicedAnimatable<Animating>>>
     : Listener<undefined>,
   options: { signal?: AbortSignal } = {}
 ): unsubscribe {
@@ -141,13 +141,13 @@ removeLocalListener(anim, "start", listener)
  * 
  */
 export function removeLocalListener<
-  Animating extends UnknownRecursiveAnimatable,
+  Animating extends UnknownAnimatable,
   Event extends AnimatableEvents
 >(
   anim: Animation<Animating>,
   type: Event,
   listener: Event extends AnimatableEventsWithValue
-    ? Listener<Partial<LocalAnimatable<Animating>>>
+    ? Listener<Partial<SlicedAnimatable<Animating>>>
     : Listener<Partial<undefined>>
 ) {
   anim[`${type}Listeners`].delete(listener as Listener<unknown>)
@@ -165,9 +165,7 @@ addRecursiveListener(anim, "start", () => console.log("started")) // will trigge
  * @param options Contains one option, `signal` which supports passing in an AbortSignal.
  * @returns A function to remove the listener
  */
-export function addRecursiveListener<
-  Animating extends UnknownRecursiveAnimatable
->(
+export function addRecursiveListener<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   type: AnimatableEvents,
   listener: Listener<UnknownAnimation> | Listener<undefined>,
@@ -215,12 +213,10 @@ modifyTo(anim.children.a, {x: 0}) // will not trigger the listener
  * or the AbortSignal passed into `{@link addRecursiveListener}` with the `options`'
  * `signal` field.
 */
-export function removeRecursiveListener<
-  Animating extends UnknownRecursiveAnimatable
->(
+export function removeRecursiveListener<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   type: AnimatableEventsWithValue,
-  listener: Listener<Animation<RecursiveAnimatable<Animatable>>>
+  listener: Listener<Animation<Animatable<LocalAnimatable>>>
 ) {
   const capitalizedType = capitalizeFirstLetter(type)
   anim[`recursive${capitalizedType}Listeners`].delete(
@@ -241,10 +237,10 @@ export function removeRecursiveListener<
  * All events aside from `update` return a dictionary of local values which are currently being animated.
  */
 export type AnimatableListener<
-  Animating extends UnknownRecursiveAnimatable,
+  Animating extends UnknownAnimatable,
   Event extends AnimatableEvents
 > = Event extends AnimatableEventsWithValue
-  ? Listener<Partial<LocalAnimatable<Animating>>>
+  ? Listener<Partial<SlicedAnimatable<Animating>>>
   : Listener<undefined>
 
 /**

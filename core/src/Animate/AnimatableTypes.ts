@@ -32,7 +32,18 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 // Looking at the 'a' child:
 { x: 0, y: 0 }
  */
-export type Animatable = { [key: string]: UnknownRoot }
+export type LocalAnimatable = { [key: string]: UnknownRoot }
+
+/**
+ * Lets you get the {@link Animatable} type out of the {@link Animation} type.
+ * @example
+const particle = createParticle();
+type Particle = AnimatableOf<(typeof particle)['anim']>;
+const updateLayer = getUpdateLayer<Particle>();
+updateLayer.mount(particle.anim)
+ */
+export type AnimatableOf<Anim extends UnknownAnimation> =
+  Anim extends Animation<infer T extends UnknownAnimatable> ? T : never
 
 /**
  * Generic unsubscribe function which will remove event listeners.
@@ -43,12 +54,12 @@ export type unsubscribe = () => void
  * Convenient way to write `RecursiveAnimatable<unknown>`,
  * usually used to extend a generic type.
  */
-export type UnknownRecursiveAnimatable = RecursiveAnimatable<unknown>
+export type UnknownAnimatable = Animatable<unknown>
 /**
  * Convenient way to write `Animation<UnknownRecursiveAnimatable>`.
  * Usually used to cast an animation to this more generic type.
  */
-export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
+export type UnknownAnimation = Animation<UnknownAnimatable>
 
 /**
  * The generic type of the animation state.
@@ -59,10 +70,8 @@ export type UnknownAnimation = Animation<UnknownRecursiveAnimatable>
   b: {x: 0, y: 0} 
 }
  */
-export type RecursiveAnimatable<T> = {
-  [P in keyof T]: T[P] extends UnknownRoot
-    ? Root<T[P]>
-    : RecursiveAnimatable<T[P]>
+export type Animatable<T> = {
+  [P in keyof T]: T[P] extends UnknownRoot ? Root<T[P]> : Animatable<T[P]>
 }
 
 /**
@@ -76,7 +85,7 @@ const startingState = {a: {x: 0, y: 0}, b: 0}
 // looking at the 'a' child
 { x: 0, y: 0 }
  */
-export type LocalAnimatable<T extends UnknownRecursiveAnimatable> = Animatable &
+export type SlicedAnimatable<T extends UnknownAnimatable> = LocalAnimatable &
   Local<UnknownRoot, T>
 
 /**
@@ -108,15 +117,13 @@ export type PartialRecursiveAnimatable<T> = {
  * contain other animations.
  * @internal
  */
-export type AnimationWithoutChildren<
-  Animating extends UnknownRecursiveAnimatable
-> = {
+export type AnimationWithoutChildren<Animating extends UnknownAnimatable> = {
   _time: number
   _timingFunction: Interp
-  _from: LocalAnimatable<Animating>
-  _prevTo: Partial<LocalAnimatable<Animating>> | null
-  _to: Partial<LocalAnimatable<Animating>> | null
-} & Listeners<AnimatableEventsWithValue, Partial<LocalAnimatable<Animating>>> &
+  _from: SlicedAnimatable<Animating>
+  _prevTo: Partial<SlicedAnimatable<Animating>> | null
+  _to: Partial<SlicedAnimatable<Animating>> | null
+} & Listeners<AnimatableEventsWithValue, Partial<SlicedAnimatable<Animating>>> &
   Listeners<"update", unknown> & {
     [key in `recursive${Capitalize<AnimatableEventsWithValue>}Listeners`]: ListenerSet<unknown>
   }
@@ -137,17 +144,17 @@ export type AnimationWithoutChildren<
   }
 }
  */
-export type Animation<Animating extends UnknownRecursiveAnimatable> =
+export type Animation<Animating extends UnknownAnimatable> =
   AnimationWithoutChildren<Animating> & {
     readonly children: {
       [P in keyof Animating]: Animating[P] extends UnknownRoot
         ? never
-        : Animation<RecursiveAnimatable<Animating[P]>>
+        : Animation<Animatable<Animating[P]>>
     }
   } & HasChildren<UnknownRoot, Animating>
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] }
 
-export type WritableAnimation<T extends UnknownRecursiveAnimatable> = Writeable<
+export type WritableAnimation<T extends UnknownAnimatable> = Writeable<
   Animation<T>
 >

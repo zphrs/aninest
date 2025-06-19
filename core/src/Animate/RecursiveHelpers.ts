@@ -5,7 +5,7 @@
  * @module RecursiveHelpers
  */
 
-import { UnknownRecursiveAnimatable } from "./AnimatableTypes"
+import { UnknownAnimatable } from "./AnimatableTypes"
 type ChildrenOfRecursive<Base, T> = {
   [P in keyof T]: T[P] extends Recursive<Base, unknown> ? T[P] : never
 }
@@ -109,9 +109,8 @@ export function perMaskedChild<Base, Shape extends UnknownRecursive>(
     }
     perMaskedChild(
       child as HasChildren<Base, UnknownRecursive>,
-      (mask?.[key as keyof typeof mask] as Partial<
-        Mask<UnknownRecursiveAnimatable>
-      >) ?? undefined,
+      (mask?.[key as keyof typeof mask] as Partial<Mask<UnknownAnimatable>>) ??
+        undefined,
       fn
     )
   }

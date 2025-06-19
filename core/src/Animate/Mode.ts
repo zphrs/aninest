@@ -3,7 +3,7 @@
  * @module Mode
  */
 
-import type { UnknownRecursiveAnimatable, Animation } from "./AnimatableTypes"
+import type { UnknownAnimatable, Animation } from "./AnimatableTypes"
 import { ExtensionStack, mountStack, unmount } from "."
 
 /**
@@ -28,7 +28,7 @@ export type Mode = {
  * @param stack
  * @returns used to toggle the {@link ExtensionStack}.
  */
-export function createMode<Animating extends UnknownRecursiveAnimatable>(
+export function createMode<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   stack: ExtensionStack<Animating>
 ): Mode {

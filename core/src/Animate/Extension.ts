@@ -4,11 +4,7 @@
  * @module Extension
  */
 
-import {
-  unsubscribe,
-  UnknownRecursiveAnimatable,
-  Animation,
-} from "./AnimatableTypes"
+import { unsubscribe, UnknownAnimatable, Animation } from "./AnimatableTypes"
 
 /**
  * A function that unmounts an extension from the animation.
@@ -18,7 +14,7 @@ export type unmount = unsubscribe
 /**
  * A function that mounts an extension to the animation.
  */
-export type Mount<Animating extends UnknownRecursiveAnimatable> = (
+export type Mount<Animating extends UnknownAnimatable> = (
   anim: Animation<Animating>,
   options?: { signal?: AbortSignal }
 ) => unmount
@@ -26,8 +22,7 @@ export type Mount<Animating extends UnknownRecursiveAnimatable> = (
 /**
  * An extension that can be mounted to an animation.
  */
-export type Extension<Animating extends UnknownRecursiveAnimatable> =
-  Mount<Animating>
+export type Extension<Animating extends UnknownAnimatable> = Mount<Animating>
 
 /**
  * A function that mounts an extension to the animation.
@@ -35,7 +30,7 @@ export type Extension<Animating extends UnknownRecursiveAnimatable> =
  * @param anim
  * @returns A function that unmounts an extension from the animation.
  */
-export function mountExtension<Animating extends UnknownRecursiveAnimatable>(
+export function mountExtension<Animating extends UnknownAnimatable>(
   extension: Extension<Animating>,
   anim: Animation<Animating>
 ): unmount {
@@ -45,7 +40,7 @@ export function mountExtension<Animating extends UnknownRecursiveAnimatable>(
 /**
  * A layer that can be mounted to an animation via its `mount` function.
  */
-export type Layer<Animating extends UnknownRecursiveAnimatable> = {
+export type Layer<Animating extends UnknownAnimatable> = {
   /**
    * Mounts a layer to a specific Animation.
    */

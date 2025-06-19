@@ -4,14 +4,14 @@
  */
 
 import { Extension, Layer, mountExtension, unmount } from "./Extension"
-import { UnknownRecursiveAnimatable, Animation } from "./AnimatableTypes"
+import { UnknownAnimatable, Animation } from "./AnimatableTypes"
 
 /**
  * A list of extensions which will be mounted to an animation in order.
  * @see {@link mountStack} to add an extension to the stack.
  * @group Extensions
  */
-export type ExtensionStack<Animating extends UnknownRecursiveAnimatable> =
+export type ExtensionStack<Animating extends UnknownAnimatable> =
   Extension<Animating>[]
 
 /**
@@ -19,7 +19,7 @@ export type ExtensionStack<Animating extends UnknownRecursiveAnimatable> =
  * @returns
  */
 export function createExtensionStack<
-  Animating extends UnknownRecursiveAnimatable
+  Animating extends UnknownAnimatable
 >(): ExtensionStack<Animating> {
   return []
 }
@@ -30,9 +30,10 @@ export function createExtensionStack<
  * @param extension
  * @group Extensions
  */
-export function addExtensionToStack<
-  Animating extends UnknownRecursiveAnimatable
->(stack: ExtensionStack<Animating>, extension: Extension<Animating>) {
+export function addExtensionToStack<Animating extends UnknownAnimatable>(
+  stack: ExtensionStack<Animating>,
+  extension: Extension<Animating>
+) {
   stack.push(extension)
 }
 
@@ -44,7 +45,7 @@ export function addExtensionToStack<
  * @returns the inputted {@link layer}
  */
 export function addLayerToStack<
-  Animating extends UnknownRecursiveAnimatable,
+  Animating extends UnknownAnimatable,
   L extends Layer<Animating>
 >(stack: ExtensionStack<Animating>, layer: L): L {
   const mount = layer.mount
@@ -60,7 +61,7 @@ export function addLayerToStack<
  * @returns A function that unmounts all the extensions in the stack.
  * @group Extensions
  */
-export function mountStack<Animating extends UnknownRecursiveAnimatable>(
+export function mountStack<Animating extends UnknownAnimatable>(
   stack: ExtensionStack<Animating>,
   anim: Animation<Animating>
 ): unmount {
