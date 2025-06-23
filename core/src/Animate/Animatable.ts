@@ -123,7 +123,7 @@ const anim = createAnimation({ a: 0, b: 0 }, getLinearInterp(1), {
 })
  * @param init The initial state of the animation
  * @param timing The timing function. See {@link Interp} for some common timing functions.
- * @returns The animation info object.
+ * @returns {Animation<Init>} The animation info object.
  */
 export function createAnimation<Init extends UnknownAnimatable>(
   init: Init,
@@ -149,7 +149,6 @@ export function createAnimation<Init extends UnknownAnimatable>(
 
 /**
  * An object which contains either numbers and strings or created animations.
- * @internal
  */
 type ParentAnimatable<Animating extends UnknownAnimatable> = {
   [K in keyof Animating]: Animating[K] extends Root<Animating[K]>

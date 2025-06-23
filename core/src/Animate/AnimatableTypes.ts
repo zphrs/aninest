@@ -115,16 +115,25 @@ export type PartialRecursiveAnimatable<T> = {
 /**
  * The local animation object. This is a recursive type, meaning that it can
  * contain other animations.
- * @internal
  */
 export type AnimationWithoutChildren<Animating extends UnknownAnimatable> = {
+  /** @internal */
   _time: number
+  /** @internal */
   _timingFunction: Interp
+  /** @internal */
   _from: SlicedAnimatable<Animating>
+  /** @internal */
   _prevTo: Partial<SlicedAnimatable<Animating>> | null
+  /** @internal */
   _to: Partial<SlicedAnimatable<Animating>> | null
-} & Listeners<AnimatableEventsWithValue, Partial<SlicedAnimatable<Animating>>> &
-  Listeners<"update", unknown> & {
+} /** @internal */ & Listeners<
+  AnimatableEventsWithValue,
+  Partial<SlicedAnimatable<Animating>>
+> &
+  /** @internal */
+  Listeners<"update", unknown> & /** @internal */ {
+    /** @internal */
     [key in `recursive${Capitalize<AnimatableEventsWithValue>}Listeners`]: ListenerSet<unknown>
   }
 
