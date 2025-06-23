@@ -92,23 +92,35 @@ const PIXELS_PER_INCH = 96
 const PIXELS_PER_CM = PIXELS_PER_INCH / 2.54
 const CM_PER_METER = 100
 const GRAVITY = 9.81
-// TODO: add pixelsPerUnit as a config option and allow it to be modified with
-// the returned object
+/**
+ * Creates a momentum layer which will allow starting a glide for an animation.
+ * Works in n-dimensions on the topmost slice of the mounted animatable
+ * (see {@link SlicedAnimatable}).
+ * @param friction friction coefficient
+ * @param pixelsPerUnit number of pixels in one animation unit
+ * @returns
+ */
 export function localMomentumLayer<Animating extends UnknownAnimatable>(
   friction: number,
   pixelsPerUnit: number
 ): Layer<Animating> & {
+  /**
+   * Should probably call at the end of a user gesture
+   * @returns whether a glide was triggered
+   */
   startGlide: () => boolean
   changePixelsPerUnit: (newPixelsPerUnit: number) => void
   /**
    *
    * @returns velocity in units/second
    */
-  getVelocity: () => number
+  getSpeed: () => number
   /**
    * useful for clearing the recorded states to prevent weird interpolation
    * based on manually setting the state rather than setting it based on a user
    * gesture
+   *
+   * Should probably call right before a gesture is started; e.g. onpointerdown
    * @returns
    */
   clearRecordedStates: () => void
@@ -145,14 +157,14 @@ export function localMomentumLayer<Animating extends UnknownAnimatable>(
   let inMomentumState = false
   let oldInterp: Interp = NO_INTERP // NO_INTERP is a placeholder
   const resetOriginalInterp = (anim: Animation<Animating>) => {
-    currentVelocity = 0
+    currentSpeed = 0
     changeInterpFunction(anim, oldInterp)
     prevStates.clear()
     inMomentumState = false
   }
-  let currentVelocity = 0
+  let currentSpeed = 0
   // returns true if the animation is now gliding
-  const beforeEnd = (anim: Animation<Animating>): boolean => {
+  const startGlide = (anim: Animation<Animating>): boolean => {
     if (prevStates.length < 2) {
       return false
     }
@@ -205,7 +217,7 @@ export function localMomentumLayer<Animating extends UnknownAnimatable>(
       zeroVec
     )
     const vel0 = Math.sqrt(distanceSquaredBetween(avgVel, zeroVec))
-    currentVelocity = vel0
+    currentSpeed = vel0
 
     console.log("vel0", vel0, distSquared, avgVel, frictionForce)
     if (vel0 < Number.EPSILON) {
@@ -255,42 +267,58 @@ export function localMomentumLayer<Animating extends UnknownAnimatable>(
         return true
       })
     )
-
-    setTimeout(() => {}, 0)
     return true
   }
   let animation: Animation<Animating> | null = null
+  let unsubPrevAnim: unsubscribe = () => {}
   return {
+    /**
+     * Mounts anim to layer, clearing previous states if they exist and
+     * unmounting any animation previously mounted to this layer.
+     * @param anim
+     * @returns an unmount function
+     */
     mount: (anim: Animation<Animating>) => {
+      unsubPrevAnim()
       animation = anim
-      const unsubs: unsubscribe[] = []
-      unsubs.push(
-        addLocalListener(anim, IMMUTABLE_START, () => {
-          onUpdate(anim, performance.now())
-        })
-      )
-      return () => {
+      const unsub = addLocalListener(animation, IMMUTABLE_START, () => {
+        onUpdate(anim, performance.now())
+      })
+
+      unsubPrevAnim = () => {
         if (inMomentumState) {
           resetOriginalInterp(anim)
         }
-        unsubs.forEach(unsub => unsub())
+        unsub()
         animation = null
+        prevStates.clear()
       }
+      return unsubPrevAnim
     },
-    // returns true if the animation is now gliding
     startGlide() {
       if (!animation) {
         return false
       }
-      return beforeEnd(animation)
+      return startGlide(animation)
     },
+    /**
+     * Changes the pixels per unit for future glides
+     * @param newPixelsPerUnit
+     */
     changePixelsPerUnit(newPixelsPerUnit: number) {
       pixelsPerUnit = newPixelsPerUnit
       updateFriction()
     },
-    getVelocity() {
-      return currentVelocity
+    /**
+     *
+     * @returns The current calculated speed
+     */
+    getSpeed() {
+      return currentSpeed
     },
+    /**
+     * clears recorded states
+     */
     clearRecordedStates() {
       prevStates.clear()
     },
