@@ -1,3 +1,8 @@
+/**
+ * Provides a momentum glide layer.
+ * @module Momentum
+ */
+
 import { distanceSquaredBetween } from "."
 import {
   UnknownAnimatable,
