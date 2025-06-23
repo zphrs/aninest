@@ -238,7 +238,6 @@ export function localMomentumLayer<Animating extends UnknownAnimatable>(
     const vel0 = Math.sqrt(distanceSquaredBetween(avgVel, zeroVec))
     currentSpeed = vel0
 
-    console.log("vel0", vel0, distSquared, avgVel, frictionForce)
     if (vel0 < Number.EPSILON) {
       return false
     }
