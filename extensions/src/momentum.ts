@@ -231,10 +231,6 @@ export function localMomentumLayer<Animating extends UnknownAnimatable>(
       }
     )
 
-    const distSquared = distanceSquaredBetween(
-      avgVel as SlicedAnimatable<Animating>,
-      zeroVec
-    )
     const vel0 = Math.sqrt(distanceSquaredBetween(avgVel, zeroVec))
     currentSpeed = vel0
 
