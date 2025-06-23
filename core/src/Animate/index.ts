@@ -1,4 +1,3 @@
-/**@internal */
 export * from "./AnimatableTypes"
 export * from "./Animatable"
 export * from "./AnimatableEvents"
