@@ -8,9 +8,6 @@ import { AnimatableEventsWithValue } from "./AnimatableEvents"
 import { Interp } from "./Interp"
 import { HasChildren, Local } from "./RecursiveHelpers"
 
-/**
- * @internal
- */
 export type Root<T> = T extends Function
   ? T
   : T extends object
@@ -19,7 +16,7 @@ export type Root<T> = T extends Function
   ? never
   : T
 
-export type UnknownRoot = number | string | Function
+export type UnknownRoot = bigint | boolean | symbol | number | string | Function
 
 /**
  * The local state of the animation, meaning only the numbers in the topmost 
