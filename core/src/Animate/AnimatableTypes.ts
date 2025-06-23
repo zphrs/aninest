@@ -141,6 +141,7 @@ export type AnimationWithoutChildren<Animating extends UnknownAnimatable> = {
   a: {
     // holds the state of a, which is currently {x: 0, y: 0}
     <private fields>
+    children: {}
   }
 }
  */

@@ -15,6 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "outDir": "lib",
+    "stripInternal": true,
 
     /* Linting */
     "strict": true,
@@ -27,7 +28,7 @@
       "@lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "css"],
   "tsc-alias": {
     "resolveFullPaths": true
   }

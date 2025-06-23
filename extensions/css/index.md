@@ -1,16 +1,14 @@
-[@aninest/extensions](../../../aninest/extensionDocs/index.md) / ../../extensions/src/css
+[Documentation](../../../../../index.md) / ../../extensions/src/css
 
 # ../../extensions/src/css
 
-## Index
+## Type Aliases
 
-### Type Aliases
-
-| Type alias | Description |
+| Type Alias | Description |
 | ------ | ------ |
 | [CSSProps](type-aliases/CSSProps.md) | Note: values have units. If you want different units then |
 
-### Functions
+## Functions
 
 | Function | Description |
 | ------ | ------ |

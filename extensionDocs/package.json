@@ -11,10 +11,9 @@
     "url": "https://github.com/zphrs/aninest.git"
   },
   "devDependencies": {
-    "@vite-pwa/vitepress": "^0.4.0",
-    "typedoc": "^0.26.11",
-    "typedoc-plugin-markdown": "^4.0.0-next.44",
-    "typedoc-vitepress-theme": "^1.0.0-next.8",
+    "typedoc": "^0.28.5",
+    "typedoc-plugin-markdown": "^4.7.0",
+    "typedoc-vitepress-theme": "^1.1.2",
     "typescript": "^5.8.3"
   }
 }

@@ -212,7 +212,7 @@ export function setupBoundsLayer<Animating extends UnknownAnimatable>(
  */
 export type BoundsLayer<Animating extends UnknownAnimatable> = {
   /**
-   * Updates and overrides the previously set bounds, similar to how {@link modifyTo} works.
+   * Updates and overrides the previously set bounds, similar to how `modifyTo` works.
    * A bound updated with this function will apply immediately rather than waiting for
    * the animation to end before snapping the state to be within the bound.
    * @param bounds

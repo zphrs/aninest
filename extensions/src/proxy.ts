@@ -129,7 +129,7 @@ updateAnimation(anim, 0.5)
 proxy.a // {x: 0.5, y: 0.5}
 updateAnimation(anim, 0.5)
 proxy.a // {x: 1, y: 1}
- * @description Note that the root object of the animation's state cannot
+ * @note Note that the root object of the animation's state cannot
  * be set directly, but the children can be set.
  * @param anim
  * @returns A proxy object that allows you to interact with the animation state

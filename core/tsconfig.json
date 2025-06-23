@@ -15,6 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "outDir": "lib",
+    "stripInternal": true,
 
     /* Linting */
     "strict": true,

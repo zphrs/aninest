@@ -23,6 +23,7 @@ import {
   BEFORE_END,
   IMMUTABLE_START,
   SlicedAnimatable,
+  Mount,
 } from "aninest"
 /**
  * @internal
@@ -92,6 +93,40 @@ const PIXELS_PER_INCH = 96
 const PIXELS_PER_CM = PIXELS_PER_INCH / 2.54
 const CM_PER_METER = 100
 const GRAVITY = 9.81
+
+/**
+ * Momentum Layer
+ */
+export type MomentumLayer<Animating extends UnknownAnimatable> =
+  Layer<Animating> & {
+    /**
+     * Mounts anim to layer, clearing previous states if they exist and
+     * unmounting any animation previously mounted to this layer.
+     * @param anim
+     * @returns an unmount function
+     */
+    mount: Mount<Animating>
+    /**
+     * Should probably call at the end of a user gesture
+     * @returns whether a glide was triggered
+     */
+    startGlide: () => boolean
+    changePixelsPerUnit: (newPixelsPerUnit: number) => void
+    /**
+     *
+     * @returns velocity in units/second
+     */
+    getSpeed: () => number
+    /**
+     * useful for clearing the recorded states to prevent weird interpolation
+     * based on manually setting the state rather than setting it based on a user
+     * gesture
+     *
+     * Should probably call right before a gesture is started; e.g. onpointerdown
+     * @returns
+     */
+    clearRecordedStates: () => void
+  }
 /**
  * Creates a momentum layer which will allow starting a glide for an animation.
  * Works in n-dimensions on the topmost slice of the mounted animatable
@@ -103,28 +138,7 @@ const GRAVITY = 9.81
 export function localMomentumLayer<Animating extends UnknownAnimatable>(
   friction: number,
   pixelsPerUnit: number
-): Layer<Animating> & {
-  /**
-   * Should probably call at the end of a user gesture
-   * @returns whether a glide was triggered
-   */
-  startGlide: () => boolean
-  changePixelsPerUnit: (newPixelsPerUnit: number) => void
-  /**
-   *
-   * @returns velocity in units/second
-   */
-  getSpeed: () => number
-  /**
-   * useful for clearing the recorded states to prevent weird interpolation
-   * based on manually setting the state rather than setting it based on a user
-   * gesture
-   *
-   * Should probably call right before a gesture is started; e.g. onpointerdown
-   * @returns
-   */
-  clearRecordedStates: () => void
-} {
+): MomentumLayer<Animating> {
   let frictionForce: number
   const updateFriction = () => {
     frictionForce =

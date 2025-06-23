@@ -1,6 +1,6 @@
 import { Extension, Animation, addRecursiveListener } from "aninest"
-import { supportAbortSignalOption } from "../abortSignal"
-import { getStateTreeProxy } from "../proxy"
+import { supportAbortSignalOption } from "../src/abortSignal"
+import { getStateTreeProxy } from "../src/proxy"
 import { Color, colorToString } from "./color"
 export * from "./color"
 
