@@ -63,4 +63,4 @@ No need for first two dashes.
 
 ## Defined in
 
-[../../extensions/src/css/index.ts:117](https://github.com/zphrs/aninest/blob/3abbfe57ec79530e3a03f1081dec571fda0e2dde/extensions/src/css/index.ts#L117)
+[../../extensions/src/css/index.ts:117](https://github.com/zphrs/aninest/blob/6f2a20a565f78d1858f4407b2e35ae4791d4a036/extensions/src/css/index.ts#L117)
