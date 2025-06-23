@@ -111,10 +111,16 @@ export type MomentumLayer<Animating extends UnknownAnimatable> =
      * @returns whether a glide was triggered
      */
     startGlide: () => boolean
+    /**
+     * Changes the pixels-per-unit used to calculate the duration of future glides
+     *
+     * Note that it does not impact any glides that have already been started
+     * @param newPixelsPerUnit
+     */
     changePixelsPerUnit: (newPixelsPerUnit: number) => void
     /**
      *
-     * @returns velocity in units/second
+     * @returns speed in units/second
      */
     getSpeed: () => number
     /**
@@ -123,7 +129,6 @@ export type MomentumLayer<Animating extends UnknownAnimatable> =
      * gesture
      *
      * Should probably call right before a gesture is started; e.g. onpointerdown
-     * @returns
      */
     clearRecordedStates: () => void
   }
