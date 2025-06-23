@@ -187,7 +187,7 @@ export function createParentAnimation<Animating extends UnknownAnimatable>(
 
 export type ListenerSuppressor =
   | boolean
-  | { start?: boolean; interrupt?: boolean }
+  | { start?: boolean; interrupt?: boolean; update?: boolean; end?: boolean }
 /**
  * Sets the final stopping point of the animation.
  * The animation will start to interpolate to the new state the next
@@ -211,7 +211,12 @@ export type ListenerSuppressor =
 export function modifyTo<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
   to: PartialRecursiveAnimatable<Animating>,
-  suppressListeners: ListenerSuppressor = { start: false, interrupt: false }
+  suppressListeners: ListenerSuppressor = {
+    start: false,
+    interrupt: false,
+    update: false,
+    end: false,
+  }
 ) {
   if (suppressListeners === true) {
     suppressListeners = { start: true, interrupt: false }
@@ -252,7 +257,7 @@ export function modifyTo<Animating extends UnknownAnimatable>(
   anim._to = completeTo
   if (!suppressListeners.start) broadcast(anim.startListeners, completeTo)
   broadcast(anim.immutableStartListeners, completeTo)
-  updateAnimation(anim, 0)
+  updateAnimation(anim, 0, suppressListeners)
 }
 
 /**
@@ -421,21 +426,29 @@ type Seconds = number
  * @param anim The animation object
  * @param dt The timestep to increment the animation by. Must be positive.
  * If negative or zero and the interpolation function is not NO_INTERP then no-op.
- * @returns {boolean} true if the animation needs to be updated again
+ * @param suppressListeners whether to suppress beforeEnd and end listeners
+ * @returns true if the animation needs to be updated again
  */
 export function updateAnimation<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
-  dt: Seconds
+  dt: Seconds,
+  suppressListeners?: { end?: boolean; update?: boolean }
 ): boolean {
+  suppressListeners = suppressListeners ?? { end: false, update: false }
   if (dt < 0) dt = 0
-  let [checkForDoneness, out] = updateAnimationInner(anim, dt)
+  let [checkForDoneness, out] = updateAnimationInner(
+    anim,
+    dt,
+    suppressListeners
+  )
   for (const child of checkForDoneness || []) {
     // needs two calls to animationNeedsUpdate
     // because listeners might call modifyTo
     // which would make info need an update
-    broadcast(child.beforeEndListeners, child._prevTo || {})
+    if (!suppressListeners.end)
+      broadcast(child.beforeEndListeners, child._prevTo || {})
     let localOut = animationNeedsUpdate(child)
-    if (!localOut) {
+    if (!localOut && !suppressListeners.end) {
       broadcast(child.endListeners, child._from)
     }
     out = out || localOut
@@ -447,8 +460,10 @@ type UnknownAnimations = UnknownAnimation[]
 
 function updateAnimationInner<Animating extends UnknownAnimatable>(
   anim: Animation<Animating>,
-  dt: number
+  dt: number,
+  suppressListeners?: { update?: boolean }
 ): [UnknownAnimations, boolean] {
+  suppressListeners = suppressListeners ?? { update: false }
   anim._time += dt
   let out = animationNeedsUpdate(anim)
   let checkForDoneness: UnknownAnimations = []
@@ -457,7 +472,7 @@ function updateAnimationInner<Animating extends UnknownAnimatable>(
   const children: UnknownAnimations = Object.values(anim.children)
   // update children
   for (const childInfo of children) {
-    let update = updateAnimationInner(childInfo, dt)
+    let update = updateAnimationInner(childInfo, dt, suppressListeners)
     out = out || update[1]
     if (update !== undefined) {
       checkForDoneness = checkForDoneness.concat(update[0])
@@ -470,7 +485,7 @@ function updateAnimationInner<Animating extends UnknownAnimatable>(
     anim._prevTo = prevTo
     checkForDoneness.push(anim as unknown as UnknownAnimation)
   }
-  if (toExists && anim._to === null && dt === 0) {
+  if (toExists && anim._to === null && dt === 0 && !suppressListeners.update) {
     broadcast(anim.updateListeners, undefined)
   }
   return [checkForDoneness, out]
