@@ -45,6 +45,16 @@ function getProgress<Animating extends LocalAnimatable>(
   }
   return progress
 }
+
+/**
+ * Time will stop incrementing once the animation has finished 
+ * (after `end` event is broadcasted).
+ * @param anim
+ * @returns how long the animation has been running for
+ */
+export function getAnimationTime(anim: UnknownAnimation): Seconds {
+  return anim._time
+}
 /**
  * Returns whether the animation needs to be updated.
  * @group Status
@@ -418,7 +428,7 @@ export function getStateTree<Animating extends UnknownAnimatable>(
   return out
 }
 
-type Seconds = number
+export type Seconds = number
 
 /**
  * Moves the animation forward by a certain amount of time.
