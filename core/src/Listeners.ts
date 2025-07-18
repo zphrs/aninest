@@ -31,7 +31,6 @@ export type Listeners<Events extends string, T> = object & /**
 }
 
 /**
- * @internal
  * Will call listeners in the order which they were added.
  */
 export function broadcast<T>(
