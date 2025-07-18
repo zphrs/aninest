@@ -3,7 +3,7 @@
  * @module module:Interp
  */
 
-import { bezierFunc, clamp } from "../Utils/vec2"
+import { bezier, bezierFunc, clamp, newVec2, Vec2 } from "../Utils/vec2"
 import type { updateAnimation } from "./Animatable"
 
 /**
@@ -45,10 +45,11 @@ export function getLinearInterp(duration: number): Interp {
  */
 export function getSlerp(duration: number): Interp {
   if (duration == 0) return NO_INTERP
-  return t =>
-    t >= duration
-      ? undefined
-      : Math.sin(getProgress(t, duration) * (Math.PI / 2))
+  return getCubicBezier(
+    duration,
+    (Math.PI - 2) / Math.PI,
+    1 - (Math.PI - 2) / Math.PI
+  )
 }
 /**
  * @param progress 0-1
@@ -67,6 +68,10 @@ function cubicBezier(progress: number, c1: number, c2: number) {
   return bezierFunc(progress, 0, c1, c2, 1)
 }
 
+function cubicBezier2D(progress: number, c1: Vec2, c2: Vec2) {
+  return bezier(newVec2(0, 0), newVec2(1, 1), c1, c2, progress)
+}
+
 /**
  * Returns a cubic bezier interpolation function.
  */
@@ -78,4 +83,12 @@ export function getCubicBezier(
   if (duration == 0) return NO_INTERP
   return t =>
     t >= duration ? undefined : cubicBezier(getProgress(t, duration), c1, c2)
+}
+
+export function getCubicBezier2D(duration: number, c1: Vec2, c2: Vec2): Interp {
+  if (duration == 0) return NO_INTERP
+  return t =>
+    t >= duration
+      ? undefined
+      : cubicBezier2D(getProgress(t, duration), c1, c2).y
 }
