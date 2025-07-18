@@ -47,7 +47,7 @@ function getProgress<Animating extends LocalAnimatable>(
 }
 
 /**
- * Time will stop incrementing once the animation has finished 
+ * Time will stop incrementing once the animation has finished
  * (after `end` event is broadcasted).
  * @param anim
  * @returns how long the animation has been running for
@@ -235,19 +235,17 @@ export function modifyTo<Animating extends UnknownAnimatable>(
   }
 
   const [localTo, children] = separateChildren(to as UnknownAnimatable)
-  let completeTo = localTo as Partial<SlicedAnimatable<Animating>>
+  let completeTo = anim._to ? mergeDicts(anim._to, localTo) : localTo
+  if (!suppressListeners.start) {
+    broadcast(anim.beforeStartListeners, mergeDicts(anim._to ?? {}, completeTo))
+  }
   if (anim._to) {
-    completeTo = mergeDicts(anim._to, localTo)
     saveState(anim, getLocalState(anim, anim._from, true))
     if (!suppressListeners.interrupt)
       broadcast(anim.interruptListeners, completeTo)
   }
   const completeToLength = Object.keys(completeTo).length
-  if (completeToLength !== 0 && !suppressListeners.start) {
-    // condition due to conditional early exit below
-    // used to keep track of if the full modifyTo tree is terminated
-    broadcast(anim.beforeStartListeners, completeTo) // (
-  }
+
   // modify children recursively
   for (const [k, child] of Object.entries<typeof children>(children)) {
     const key = k as keyof Animating
@@ -279,7 +277,6 @@ applyDictTo(base, toApply) // base == {a: 0, b: 2, c: 3}
  * @param base
  * @param toApply
  * @returns The base dictionary
- * @internal
  */
 export function applyDictTo<T1 extends object, T2 extends object>(
   base: T1,

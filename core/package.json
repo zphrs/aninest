@@ -1,6 +1,6 @@
 {
   "name": "aninest",
-  "version": "5.4.1",
+  "version": "5.4.2",
   "description": "A nested animation library: typed, interruptible, extensible, and performant.",
   "main": "lib/index.js",
   "type": "module",
