@@ -21,8 +21,7 @@ export type Listener<T> = (
  * Uses a Map instead of a Set because a Map preserves insertion order
  * when iterating through items.
  */
-export type ListenerSet<T> = Map<unknown, undefined> &
-  /** @internal */ Map<Listener<T>, undefined>
+export type ListenerSet<T> = Map<Listener<T>, undefined>
 
 export type Listeners<Events extends string, T> = object & /**
  * @internal
