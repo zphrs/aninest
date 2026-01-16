@@ -28,7 +28,7 @@
       "@lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src", "css"],
+  "include": ["src", "src/css"],
   "tsc-alias": {
     "resolveFullPaths": true
   }

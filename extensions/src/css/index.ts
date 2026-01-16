@@ -1,7 +1,25 @@
-import { Extension, Animation, addRecursiveListener } from "aninest"
-import { supportAbortSignalOption } from "../src/abortSignal"
-import { getStateTreeProxy } from "../src/proxy"
+import {
+  Extension,
+  Animation,
+  addRecursiveListener,
+  Layer,
+  changeInterpFunction,
+  addLocalListener,
+  Seconds,
+  UnknownAnimation,
+  getStateTree,
+  getInterpingToTree,
+  updateAnimation,
+} from "aninest"
+import { supportAbortSignalOption } from "../abortSignal"
+import { getStateTreeProxy } from "../proxy"
 import { Color, colorToString } from "./color"
+import {
+  CubicBezier,
+  cubicBezierToEasingFunction as cubicBezierToString,
+  cubicBezierToInterp,
+  Linear,
+} from "./interp"
 export * from "./color"
 
 type Vec3<T> = Readonly<{
@@ -111,8 +129,8 @@ type RotationUnit = (typeof rotationUnits)[number]
 export type Angle = [number, RotationUnit]
 
 /**
- * Note: values have units. If you want different units
- * then
+ * Note: values are coupled with units. If you want different units
+ * then simply use the unit you'd like in the value.
  */
 export type CSSProps = {
   transform?: Transform
@@ -121,15 +139,6 @@ export type CSSProps = {
   backgroundColor?: Color
   borderColor?: Color
   borderRadius?: BorderRadius
-
-  /**
-   * A key with camel case will be converted to skewered.
-   * If in skewer format already, key will be left alone.
-   * No need for first two dashes.
-   */
-  vars?: {
-    [key: string]: string
-  }
 }
 
 type Transform = {
@@ -200,12 +209,6 @@ export function bindElementToCssAnim(
     element.style.borderBottomLeftRadius = handleRadius(bottomLeft)
     element.style.borderBottomRightRadius = handleRadius(bottomRight)
   }
-  const getCssVarString = (varName: string) => {
-    if (varName.indexOf("-") > -1) {
-      return `--${varName}`
-    }
-    return `--${kebabize(varName)}`
-  }
   const mount = (anim: Animation<CSSProps>) => {
     const proxy = getStateTreeProxy(anim)
     const controller = new AbortController()
@@ -213,7 +216,6 @@ export function bindElementToCssAnim(
     const getTransformString = (transformProxy: Transform) => {
       const { translate, rotate, skew, scale, perspective } = transformProxy
       return (
-        `` +
         ifDef(
           translate !== undefined &&
             `translate${vec3ToString(translate, identityLength)} `
@@ -266,10 +268,6 @@ export function bindElementToCssAnim(
             scalarToVec3(transformOrigin),
             identityLength
           ))
-        // css variables
-        for (const v in proxy.proxy.vars) {
-          style.setProperty(getCssVarString(v), proxy.proxy.vars[v])
-        }
       },
       { signal }
     )
@@ -278,4 +276,122 @@ export function bindElementToCssAnim(
   }
 
   return supportAbortSignalOption(mount)
+}
+
+export function cssLayer<Animating extends CSSProps>(
+  element: HTMLElement,
+  defaultInterp: { cubicBezier: CubicBezier; duration: number } = {
+    cubicBezier: Linear,
+    duration: 0.25,
+  }
+): Layer<Animating> & {
+  changeInterp: (
+    property: keyof Animating,
+    duration: Seconds,
+    cubicBezier: CubicBezier
+  ) => void
+} {
+  let mounted: Animation<Animating> | undefined = undefined
+  let activeTransitions: {
+    [property: string]: { duration: Seconds; cubicBezier: CubicBezier }
+  } = {}
+
+  const transitionsToString = (transitions: typeof activeTransitions) => {
+    let out = []
+    for (const property in transitions) {
+      const { duration, cubicBezier } = transitions[property]
+      const cubic = cubicBezierToString(cubicBezier)
+      out.push(`${property} ${duration}s ${cubic}`)
+    }
+    return out.join(", ")
+  }
+  const mount = (anim: Animation<Animating>) => {
+    if (mounted) throw new Error("Only one anim object can be mounted at once")
+    let startedAt: number | undefined = undefined
+    const ac = new AbortController()
+    if (anim.children.backgroundColor) {
+      const curr = getInterpingToTree(anim.children.backgroundColor) as Color
+      element.style.backgroundColor = colorToString(curr)
+      addLocalListener(
+        anim.children.backgroundColor,
+        "immutableStart",
+        () => {
+          setTimeout(() => {
+            startedAt = performance.now()
+            element.style.backgroundColor = colorToString(
+              getInterpingToTree(anim.children.backgroundColor!) as Color
+            )
+          }, 0)
+        },
+        { signal: ac.signal }
+      )
+
+      addLocalListener(
+        anim.children.backgroundColor,
+        "beforeStart",
+        () => {
+          if (!startedAt || !anim.children.backgroundColor) return
+          console.log("updating animation")
+          updateAnimation(
+            anim.children.backgroundColor,
+            (performance.now() - startedAt) / 1000
+          )
+        },
+        { signal: ac.signal }
+      )
+
+      addLocalListener(
+        anim.children.backgroundColor,
+        "interrupt",
+        () => {
+          const withoutBg = Object.fromEntries(
+            Object.entries(activeTransitions).filter(
+              ([k]) => k != "background-color"
+            )
+          )
+          element.style.transition = transitionsToString(withoutBg)
+          const intermediateColor = getStateTree(
+            anim.children.backgroundColor!
+          ) as Color
+          console.log("intermediate color", intermediateColor)
+          element.style.backgroundColor = colorToString(intermediateColor)
+          setTimeout(() => {
+            element.style.transition = transitionsToString(activeTransitions)
+          }, 0)
+        },
+        { signal: ac.signal }
+      )
+    }
+    mounted = anim
+    for (const k in anim.children) {
+      changeInterp(
+        k as keyof Animating,
+        defaultInterp.duration,
+        defaultInterp.cubicBezier
+      )
+    }
+    return () => {
+      ac.abort()
+      mounted = undefined
+    }
+  }
+  const changeInterp = (
+    property: keyof Animating,
+    duration: number,
+    cubicBezier: CubicBezier
+  ) => {
+    if (!mounted) throw new Error("no animation mounted yet")
+    activeTransitions[kebabize(property.toString())] = { duration, cubicBezier }
+    console.log(mounted.children)
+    const nestedAnim: UnknownAnimation = mounted.children[
+      property
+    ] as UnknownAnimation
+    changeInterpFunction(nestedAnim, cubicBezierToInterp(duration, cubicBezier))
+    element.style.transition = transitionsToString(activeTransitions)
+  }
+
+  return {
+    mount,
+    changeInterp,
+  }
 }
