@@ -16,9 +16,6 @@ const { html, sandbox } = defineProps({
   <div class="parent">
     <ClientOnly>
       <template #fallback> </template>
-      <div class="placeholder">
-        <PgSkeleton :offset="1"></PgSkeleton>
-      </div>
       <pg-sandbox-inner
         :html="html"
         csp="default-src 'unsafe-inline' https://esm.run https://cdn.jsdelivr.net;"

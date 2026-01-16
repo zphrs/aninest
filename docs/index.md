@@ -11,8 +11,8 @@ hero:
       text: Browse API
       link: /api/
     - theme: alt
-      text: Tutorial
-      link: "/tutorial/"
+      text: Playground
+      link: "/Playground/"
 features:
   - title: Strongly Typed
     details: Written in TypeScript with a strong type system.

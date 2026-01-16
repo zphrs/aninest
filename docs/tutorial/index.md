@@ -2,8 +2,8 @@
     import Tutorial from "./Tutorial.vue"
 </script>
 
-# Tutorial
+# Playground
 
-asdf
+Feel free to try out aninest in the playground below!
 
 <Tutorial></Tutorial>
