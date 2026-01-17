@@ -12,7 +12,7 @@ hero:
       link: /api/
     - theme: alt
       text: Playground
-      link: "/Playground/"
+      link: "/playground/"
 features:
   - title: Strongly Typed
     details: Written in TypeScript with a strong type system.

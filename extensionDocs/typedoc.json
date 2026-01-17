@@ -8,6 +8,7 @@
   "indexFormat": "table",
   "useCodeBlocks": true,
   "disableSources": false,
+  "gitRemote": "origin",
   "excludeInternal": true,
   "excludeNotDocumented": true,
   "textContentMappings": {

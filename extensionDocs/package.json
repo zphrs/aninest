@@ -11,7 +11,7 @@
     "url": "https://github.com/zphrs/aninest.git"
   },
   "devDependencies": {
-    "typedoc": "^0.28.5",
+    "typedoc": "^0.28.7",
     "typedoc-plugin-markdown": "^4.7.0",
     "typedoc-vitepress-theme": "^1.1.2",
     "typescript": "^5.8.3"
