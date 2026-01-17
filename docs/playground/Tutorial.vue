@@ -4,7 +4,7 @@ import Editor from "./Editor.vue"
 import { cssLayer } from "@aninest/extensions"
 import { createAnimation, modifyTo } from "aninest"
 import { EaseIn } from "@aninest/extensions/lib/css/interp"
-import code from "./code"
+import code from "./example-code"
 let element = useTemplateRef("element")
 // Watch for changes to the element and apply the CSS layer
 const bgAnimation = createAnimation({

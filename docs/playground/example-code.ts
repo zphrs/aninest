@@ -10,9 +10,6 @@ export default `<button id="btn">animate</button>
   updateLayer.mount(anim);
   function animate() {
     modifyTo(anim, {x: Math.random() * (window.innerWidth - 55)}); 
-    setTimeout(() => {
-      console.log("AAAAA")
-    }, 0)
   }
 
   window.onresize = () => {
