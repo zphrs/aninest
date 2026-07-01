@@ -24,18 +24,18 @@ import {
   END,
   UPDATE,
   IMMUTABLE_START,
-} from "aninest"
-import { SignalOption, supportAbortSignalOption } from "./abortSignal"
+} from "aninest";
+import { SignalOption, supportAbortSignalOption } from "./abortSignal";
 
-export type seconds = number
-export type milliseconds = number
+export type seconds = number;
+export type milliseconds = number;
 
-const UPDATE_WITH_DELTA_TIME = "updateWithDeltaTime" as const
-const CHILD_START = "childStart" as const
-const CHILD_END = "childEnd" as const
-const DONE = "done" as const
-const CHILD_EVENTS = [CHILD_START, CHILD_END] as const
-const AFTER_UPDATE = "afterUpdate" as const
+const UPDATE_WITH_DELTA_TIME = "updateWithDeltaTime" as const;
+const CHILD_START = "childStart" as const;
+const CHILD_END = "childEnd" as const;
+const DONE = "done" as const;
+const CHILD_EVENTS = [CHILD_START, CHILD_END] as const;
+const AFTER_UPDATE = "afterUpdate" as const;
 const UPDATE_LAYER_EVENTS = [
   START,
   END,
@@ -44,27 +44,27 @@ const UPDATE_LAYER_EVENTS = [
   DONE,
   UPDATE_WITH_DELTA_TIME,
   ...CHILD_EVENTS,
-] as const
-const STARTS = [START, CHILD_START] as const
-type UpdateWithDeltaTime = typeof UPDATE_WITH_DELTA_TIME
-type Done = typeof DONE
-type ChildEvents = (typeof CHILD_EVENTS)[number]
-type UpdateLayerEvents = (typeof UPDATE_LAYER_EVENTS)[number]
+] as const;
+const STARTS = [START, CHILD_START] as const;
+type UpdateWithDeltaTime = typeof UPDATE_WITH_DELTA_TIME;
+type Done = typeof DONE;
+type ChildEvents = (typeof CHILD_EVENTS)[number];
+type UpdateLayerEvents = (typeof UPDATE_LAYER_EVENTS)[number];
 
 type UpdateLayerType<
   Event,
-  Animating extends UnknownAnimatable
+  Animating extends UnknownAnimatable,
 > = Event extends UpdateWithDeltaTime
   ? seconds
   : Event extends ChildEvents
-  ? InternalUpdateLayer<UnknownAnimatable>
-  : Event extends Done
-  ? undefined
-  : Animation<Animating>
+    ? InternalUpdateLayer<UnknownAnimatable>
+    : Event extends Done
+      ? undefined
+      : Animation<Animating>;
 
 type UpdateLayerSets<Animating extends UnknownAnimatable> = {
-  [Key in UpdateLayerEvents]: ListenerSet<UpdateLayerType<Key, Animating>>
-}
+  [Key in UpdateLayerEvents]: ListenerSet<UpdateLayerType<Key, Animating>>;
+};
 
 /**
  * An update layer that can be mounted to an animation.
@@ -82,8 +82,8 @@ export type UpdateLayer<Animating extends UnknownAnimatable> =
     subscribe<Event extends UpdateLayerEvents>(
       type: Event,
       sub: Listener<UpdateLayerType<Event, Animating>>,
-      options?: SignalOption
-    ): unsubscribe
+      options?: SignalOption,
+    ): unsubscribe;
     /**
      * Will mount the current update layer onto another update layer so that
      * the other layer will drive the updates to this layer rather than those
@@ -95,31 +95,38 @@ export type UpdateLayer<Animating extends UnknownAnimatable> =
      */
     setParent: (
       parentLayer: UpdateLayer<UnknownAnimatable>,
-      options?: SignalOption
-    ) => unsubscribe
-  }
+      options?: SignalOption,
+    ) => unsubscribe;
+    /**
+     * Forces update. Useful to force rerendering/running afterUpdate
+     * event listeners. Recommended to call with 0 as the value for dt.
+     * @param dt
+     * @returns
+     */
+    forceUpdate: (dt: number) => void;
+  };
 
 type InternalUpdateLayer<Animating extends UnknownAnimatable> =
   UpdateLayer<Animating> & {
     _setChild: (
       child: InternalUpdateLayer<UnknownAnimatable>,
-      options?: SignalOption
-    ) => unsubscribe
+      options?: SignalOption,
+    ) => unsubscribe;
     /**
      *
      * @param dt
      * @returns whether the child needs to be updated again
      */
-    _updateWithDt: (dt: number) => boolean
-  }
+    _updateWithDt: (dt: number) => boolean;
+  };
 
 if (!globalThis.requestAnimationFrame)
-  globalThis.requestAnimationFrame = callback => {
+  globalThis.requestAnimationFrame = (callback) => {
     globalThis.setImmediate(() => {
-      callback(performance.now())
-    })
-    return 0
-  }
+      callback(performance.now());
+    });
+    return 0;
+  };
 /**
  * Updates the animation every frame, providing a subscribe function which allows
  * listening to:
@@ -129,118 +136,119 @@ if (!globalThis.requestAnimationFrame)
  */
 export function getUpdateLayer<Animating extends UnknownAnimatable>(
   queueNextUpdate: (
-    callback: (time: milliseconds) => void
-  ) => void = requestAnimationFrame
+    callback: (time: milliseconds) => void,
+  ) => void = requestAnimationFrame,
 ): UpdateLayer<Animating> {
   const listeners = UPDATE_LAYER_EVENTS.reduce((acc, key) => {
-    acc[key] = new Map()
-    return acc
-  }, {} as UpdateLayerSets<Animating>)
-  const anims = new Set<Animation<Animating>>()
-  const animsNeedingUpdate = new Set<Animation<Animating>>()
-  const children = new Set<InternalUpdateLayer<UnknownAnimatable>>()
+    acc[key] = new Map();
+    return acc;
+  }, {} as UpdateLayerSets<Animating>);
+  const anims = new Set<Animation<Animating>>();
+  const animsNeedingUpdate = new Set<Animation<Animating>>();
+  const children = new Set<InternalUpdateLayer<UnknownAnimatable>>();
   const childrenNeedingUpdate = new Set<
     InternalUpdateLayer<UnknownAnimatable>
-  >()
+  >();
   // by default it drives itself until mounted onto another update layer
-  let parent: InternalUpdateLayer<UnknownAnimatable> | undefined
+  let parent: InternalUpdateLayer<UnknownAnimatable> | undefined;
   // has no children so it doesn't have anything to update yet
   let needsUpdate = () =>
-    animsNeedingUpdate.size > 0 || childrenNeedingUpdate.size > 0
+    animsNeedingUpdate.size > 0 || childrenNeedingUpdate.size > 0;
   const setParent = (
-    parentLayer: UpdateLayer<UnknownAnimatable>
+    parentLayer: UpdateLayer<UnknownAnimatable>,
   ): unsubscribe => {
-    parent = parentLayer as InternalUpdateLayer<UnknownAnimatable>
-    const controller = new AbortController()
+    parent = parentLayer as InternalUpdateLayer<UnknownAnimatable>;
+    const controller = new AbortController();
     parent._setChild(
       out as unknown as InternalUpdateLayer<UnknownAnimatable>,
-      controller
-    )
+      controller,
+    );
     const orphanMyself = () => {
-      parent = undefined
-      controller.abort()
-    }
-    return orphanMyself
-  }
+      parent = undefined;
+      controller.abort();
+    };
+    return orphanMyself;
+  };
   const _setChild = (child: InternalUpdateLayer<UnknownAnimatable>) => {
-    const controller = new AbortController()
+    const controller = new AbortController();
     const onStart = () => {
-      const shouldQueue = !needsUpdate()
-      childrenNeedingUpdate.add(child)
+      const shouldQueue = !needsUpdate();
+      childrenNeedingUpdate.add(child);
       if (!parent && lastTime == undefined && shouldQueue)
-        queueNextUpdate(update)
-      else broadcast(listeners.childStart, child)
-    }
-    STARTS.forEach(event => child.subscribe(event, onStart, controller))
-    children.add(child)
+        queueNextUpdate(update);
+      else broadcast(listeners.childStart, child);
+    };
+    STARTS.forEach((event) => child.subscribe(event, onStart, controller));
+    children.add(child);
     return () => {
-      children.delete(child)
-      childrenNeedingUpdate.delete(child)
-      controller.abort()
-    }
-  }
-  let lastTime: number | undefined = undefined
+      children.delete(child);
+      childrenNeedingUpdate.delete(child);
+      controller.abort();
+    };
+  };
+  let lastTime: number | undefined = undefined;
   const updateWithDeltaTime = (dt: number) => {
-    broadcast(listeners.updateWithDeltaTime, dt)
+    broadcast(listeners.updateWithDeltaTime, dt);
     for (const anim of animsNeedingUpdate) {
-      broadcast(listeners.update, anim)
-      const animNeedsUpdate = updateAnimation(anim, dt)
-      broadcast(listeners.afterUpdate, anim)
+      broadcast(listeners.update, anim);
+      const animNeedsUpdate = updateAnimation(anim, dt);
+      broadcast(listeners.afterUpdate, anim);
       if (!animNeedsUpdate) {
-        animsNeedingUpdate.delete(anim)
-        broadcast(listeners.end, anim)
+        animsNeedingUpdate.delete(anim);
+        broadcast(listeners.end, anim);
       }
     }
     for (const child of childrenNeedingUpdate) {
-      const childNeedsUpdate = child._updateWithDt(dt)
+      const childNeedsUpdate = child._updateWithDt(dt);
       if (!childNeedsUpdate) {
-        childrenNeedingUpdate.delete(child)
-        broadcast(listeners.childEnd, child)
+        childrenNeedingUpdate.delete(child);
+        broadcast(listeners.childEnd, child);
       }
     }
-    const out = needsUpdate()
-    return out
-  }
+    const out = needsUpdate();
+    return out;
+  };
   const update = (time: milliseconds) => {
-    const dt = lastTime ? (time - lastTime) / 1000 : 0
-    const shouldUpdate = updateWithDeltaTime(dt)
-    lastTime = time
+    const dt = lastTime ? (time - lastTime) / 1000 : 0;
+    const shouldUpdate = updateWithDeltaTime(dt);
+    lastTime = time;
     if (!shouldUpdate) {
-      lastTime = undefined
-      broadcast(listeners.done, undefined)
+      lastTime = undefined;
+      broadcast(listeners.done, undefined);
     }
-    if (!parent && shouldUpdate) queueNextUpdate(update)
-  }
+    if (!parent && shouldUpdate) queueNextUpdate(update);
+  };
   const onMount = (anim: Animation<Animating>) => {
     const unsub = addRecursiveListener(anim, IMMUTABLE_START, () => {
-      const shouldQueue = !needsUpdate()
-      animsNeedingUpdate.add(anim)
-      broadcast(listeners.start, anim)
+      const shouldQueue = !needsUpdate();
+      animsNeedingUpdate.add(anim);
+      broadcast(listeners.start, anim);
       if (!parent && lastTime == undefined && shouldQueue)
-        queueNextUpdate(update)
-    })
-    anims.add(anim)
+        queueNextUpdate(update);
+    });
+    anims.add(anim);
     return () => {
-      unsub()
-      anims.delete(anim)
-      animsNeedingUpdate.delete(anim)
-    }
-  }
+      unsub();
+      anims.delete(anim);
+      animsNeedingUpdate.delete(anim);
+    };
+  };
   const subscribe: UpdateLayer<Animating>["subscribe"] = (type, sub) => {
-    const listener = listeners[type]
+    const listener = listeners[type];
 
-    listener.set(sub as Listener<unknown>, undefined)
-    return () => listener.delete(sub as Listener<unknown>)
-  }
+    listener.set(sub as Listener<unknown>, undefined);
+    return () => listener.delete(sub as Listener<unknown>);
+  };
   const out = {
     mount: supportAbortSignalOption(onMount),
     setParent: supportAbortSignalOption(setParent),
+    forceUpdate: updateWithDeltaTime,
     _setChild: supportAbortSignalOption(_setChild),
     subscribe: supportAbortSignalOption(subscribe),
     _updateWithDt: updateWithDeltaTime,
-  } as InternalUpdateLayer<Animating>
-  return out as UpdateLayer<Animating>
+  } as InternalUpdateLayer<Animating>;
+  return out as UpdateLayer<Animating>;
 }
 
 export const UpdateExtension: Extension<UnknownAnimatable> =
-  getUpdateLayer().mount
+  getUpdateLayer().mount;
