@@ -1,6 +1,6 @@
 {
   "name": "@aninest/extensions",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "A collection of extensions for the aninest library.",
   "main": "lib/index.js",
   "type": "module",
@@ -40,6 +40,6 @@
     "aninest": "^5.4.2"
   },
   "peerDependencies": {
-    "aninest": "5.4.x"
+    "aninest": "^5"
   }
 }

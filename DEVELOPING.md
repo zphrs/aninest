@@ -1,3 +1,7 @@
 # Setup
 
-pn
+`pnpm install`
+
+# Scripts
+
+See commands in `package.json`.
