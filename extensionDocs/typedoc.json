@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["../extensions/src/**/*.ts"],
+  "entryPoints": ["../extensions/src/index.ts"],
   "out": "../docs/extensions/",
   "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "githubPages": false,
